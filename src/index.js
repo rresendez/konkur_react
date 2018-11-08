@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 
-import './custom-styles/normalize.css'
-import './custom-styles/styles.css'
+import './global-styles/normalize.css'
+import './global-styles/custom-styles.css'
 
 import App from './app'
 import store from './app/config'
