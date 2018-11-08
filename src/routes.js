@@ -1,20 +1,16 @@
-import React from 'react'
+import Loadable from 'react-loadable'
 
-import styles from './styles.module.css'
+import Loader from './components/Loader'
 
-const Holi = () => ((
-  <div className="holiboli">
-  holi
-    <div className={styles.bebi}>
-      holi encapsulado
-    </div>
-  </div>
-))
+const AsyncCardCreatePage = Loadable({
+  loader: () => import('./scenes/CardCreatePage'),
+  loading: Loader
+})
 
 const routes = [
   {
     path: '/',
-    component: Holi,
+    component: AsyncCardCreatePage,
     exact: true
   }
 ]
