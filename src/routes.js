@@ -1,6 +1,15 @@
 import React from 'react'
 
-const Holi = () => ((<div>holi</div>))
+import styles from './styles.module.css'
+
+const Holi = () => ((
+  <div className="holiboli">
+  holi
+    <div className={styles.bebi}>
+      holi encapsulado
+    </div>
+  </div>
+))
 
 const routes = [
   {
