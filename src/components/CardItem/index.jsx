@@ -46,12 +46,26 @@ const CardContent = styled.div`
 `
 
 const TextFieldWrapper = styled.div`
-  width: 100%;
   margin-top: 1rem;
+  width: 100%;
 
   &:first-child {
     margin-top: 0;
   }
+`
+
+const ItemLabel = styled.div`
+  color: rgba(59,59,59,1);
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+`
+
+const TimeLabel = styled.div`
+  color: rgba(161,161,161,1);
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
 `
 
 class CardItem extends React.Component {
@@ -93,6 +107,8 @@ class CardItem extends React.Component {
                 fullWidth
               />
             </TextFieldWrapper>
+            {this.props.itemCount ? (<ItemLabel>{this.props.itemCount}</ItemLabel>) : null}
+            {this.props.date ? (<TimeLabel>{this.props.date}</TimeLabel>) : null}
           </CardContent>
         </Card>
       </StyledCard>
@@ -101,17 +117,21 @@ class CardItem extends React.Component {
 }
 
 CardItem.propTypes = {
-  cardColor: PropTypes.string,
+  cardColor: PropTypes.string.isRequired,
   titleColor: PropTypes.string,
   title: PropTypes.string,
-  raised: PropTypes.bool
+  raised: PropTypes.bool,
+  itemCount: PropTypes.number,
+  date: PropTypes.string
 }
 
 CardItem.defaultProps = {
   cardColor: '#5612fe',
   titleColor: '#fff',
   title: 'fulfillment',
-  raised: false
+  raised: false,
+  itemCount: 23,
+  date: 'Wednesday, July 25, 2018'
 }
 
 export default withTheme()(CardItem)

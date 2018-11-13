@@ -3,9 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 export const materialTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
-    fontFamily: '"Arial", "Helvetica", sans-serif',
-    fontSize: 16,
-    htmlFontSize: 16
+    fontFamily: '"Arial", "Helvetica", sans-serif'
   },
   palette: {
     common: {
