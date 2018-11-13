@@ -1,0 +1,57 @@
+:local .cardDetailContainer {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 2rem;
+  width: 100%;
+}
+
+:local .cardItemWrapper {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 1rem;
+  width: calc(30% - 32px);
+}
+
+:local .editorWrapper {
+  margin: 0 1rem;
+  width: calc(70% - 32px);
+}
+
+:local .buttonWrapper {
+  margin-right: 1rem;
+  margin-top: 1rem;
+  text-align: right;
+  width: calc(100% - 16px);
+}
+
+:local .cardTagWrapper {
+  margin: 1rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+:local .helpWrapper {
+  width: 100%;
+}
+
+:local .helpListItem {
+  margin-top: .5rem;
+}
+
+:local .helpListItem:first-child {
+  margin-top: 0;
+}
+
+:local .helpLabel {
+  margin: 0;
+}
+
+:local .cardVisibleLabel {
+  margin: 0;
+  margin-bottom: .5rem;
+}

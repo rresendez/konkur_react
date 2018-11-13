@@ -126,7 +126,7 @@ CardItem.propTypes = {
 }
 
 CardItem.defaultProps = {
-  cardColor: '#5612fe',
+  cardColor: '#ffc220',
   titleColor: '#fff',
   title: 'fulfillment',
   raised: false,

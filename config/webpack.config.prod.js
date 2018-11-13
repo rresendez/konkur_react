@@ -17,6 +17,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -484,6 +485,7 @@ module.exports = {
         new RegExp('/[^/]+\\.[^/]+$'),
       ],
     }),
+    new MonacoWebpackPlugin()
   ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
