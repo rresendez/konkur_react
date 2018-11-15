@@ -1,11 +1,14 @@
 import React from 'react'
+// import PropTypes from 'prop-types'
+
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
 import Checkbox from '@material-ui/core/Checkbox'
 import Input from '@material-ui/core/Input'
 import ListItemText from '@material-ui/core/ListItemText'
 import MenuItem from '@material-ui/core/MenuItem'
-// import PropTypes from 'prop-types'
+import Card from '@material-ui/core/Card'
+
 import CardItem from '../CardItem'
 import TextEditor from '../TextEditor'
 import Icon from '../Icon'
@@ -48,41 +51,49 @@ export default class CardDetail extends React.Component {
     return (
       <div className={styles.cardDetailContainer}>
         <div className={styles.cardItemWrapper}>
-          <CardItem />
-          <div className={styles.cardTagWrapper}>
-            <h4 className={styles.cardVisibleLabel}>Visible to:</h4>
-            <Select
-              multiple
-              value={this.state.name}
-              onChange={this.handleChange}
-              input={<Input />}
-              renderValue={selected => selected.join(', ')}
-              MenuProps={MenuProps}
-            >
-              {names.map(name => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={this.state.name.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
           <div className={styles.helpWrapper}>
-            <h4 className={styles.helpLabel}>Note</h4>
-            <ol className={styles.helpListWrapper}>
-              <li className={styles.helpListItem}>
-                Cards can be created with either Teradata or DSN2 source queries.
-              </li>
-              <li className={styles.helpListItem}>
-                Not more than one source in a single card’s query.
-              </li>
-              <li className={styles.helpListItem}>
-                Item number and Department number are mandatory fields in every query.
-              </li>
-              <li className={styles.helpListItem}>
-                Data traffic peak timings: 1:00 pm to 3:00 pm daily.
-              </li>
-            </ol>
+            <Card>
+              <div className={styles.helpContainer}>
+                <h4 className={styles.helpLabel}>Note</h4>
+                <ol className={styles.helpListWrapper}>
+                  <li className={styles.helpListItem}>
+                    Cards can be created with either Teradata or DSN2 source queries.
+                  </li>
+                  <li className={styles.helpListItem}>
+                    Not more than one source in a single card’s query.
+                  </li>
+                  <li className={styles.helpListItem}>
+                    Item number and Department number are mandatory fields in every query.
+                  </li>
+                  <li className={styles.helpListItem}>
+                    Data traffic peak timings: 1:00 pm to 3:00 pm daily.
+                  </li>
+                </ol>
+              </div>
+            </Card>
+          </div>
+          <div className={styles.cardItemWrapperItem}>
+            <CardItem />
+            <div className={styles.cardTagWrapper}>
+              <h4 className={styles.cardVisibleLabel}>Visible to:</h4>
+              <div className={styles.selectWrapper}>
+                <Select
+                  multiple
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                  input={<Input />}
+                  renderValue={selected => selected.join(', ')}
+                  MenuProps={MenuProps}
+                >
+                  {names.map(name => (
+                    <MenuItem key={name} value={name}>
+                      <Checkbox checked={this.state.name.indexOf(name) > -1} />
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+            </div>
           </div>
         </div>
         <div className={styles.editorWrapper}>

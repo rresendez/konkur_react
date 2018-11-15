@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Card from '@material-ui/core/Card'
+import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import { withTheme } from '@material-ui/core/styles'
 
@@ -17,6 +18,7 @@ const Title = styled.div`
   font-weight: bold;
   letter-spacing: .5rem;
   text-transform: uppercase;
+  padding: .5rem;
 `
 
 const TitleWrapper = styled.div`
@@ -25,18 +27,16 @@ const TitleWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   padding: .5rem;
   text-align: center;
   width: 100%;
 `
 
-const CardButton = styled.button`
-  background-color: inherit;
-  border: none;
-  box-sizing: border-box;
-  cursor: pointer;
-  padding: .5rem;
+const CardButtonWrapper = styled.div`
+  display: flex;
+  justifiy-content: center;
+  align-items: center;
 `
 
 const CardContent = styled.div`
@@ -74,19 +74,21 @@ class CardItem extends React.Component {
       <StyledCard>
         <Card raised={this.props.raised}>
           <TitleWrapper cardColor={this.props.cardColor}>
-            <CardButton>
-              <Icon size="2">
-                keyboard_arrow_left
-              </Icon>
-            </CardButton>
             <Title titleColor={this.props.titleColor}>
               {this.props.title}
             </Title>
-            <CardButton>
-              <Icon size="2">
-                keyboard_arrow_right
-              </Icon>
-            </CardButton>
+            <CardButtonWrapper>
+              <Button>
+                <Icon size="2">
+                  keyboard_arrow_left
+                </Icon>
+              </Button>
+              <Button>
+                <Icon size="2">
+                  keyboard_arrow_right
+                </Icon>
+              </Button>
+            </CardButtonWrapper>
           </TitleWrapper>
           <CardContent>
             <TextFieldWrapper>
@@ -128,7 +130,7 @@ CardItem.propTypes = {
 CardItem.defaultProps = {
   cardColor: '#ffc220',
   titleColor: '#fff',
-  title: 'fulfillment',
+  title: 'fulfillment', // 'fulfillment',
   raised: false,
   itemCount: 23,
   date: 'Wednesday, July 25, 2018'

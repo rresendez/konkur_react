@@ -12,8 +12,9 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   margin: 0 1rem;
+  min-width: 16.75rem;
   width: calc(30% - 32px);
 }
 
@@ -33,10 +34,22 @@
   margin: 1rem 0;
   text-align: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 :local .helpWrapper {
-  width: 100%;
+  font-size: .8rem;
+  margin-bottom: 1rem;
+  max-width: 22.3875rem;
+}
+
+:local .helpContainer {
+  padding: 1rem;
+  box-sizing: border-box;
+  max-width: 22.3875rem;
 }
 
 :local .helpListItem {
@@ -54,4 +67,28 @@
 :local .cardVisibleLabel {
   margin: 0;
   margin-bottom: .5rem;
+  width: 100%;
 }
+
+:local .cardItemWrapperItem {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+:local .selectWrapper {
+  width: 100%;
+}
+
+@media (max-width: 62.5rem) {
+  :local .cardItemWrapper {
+    width: calc(100% - 32px);
+  }
+
+  :local .editorWrapper {
+    width: calc(100% - 33px);
+    margin-top: 1rem;
+  }
+}
+
