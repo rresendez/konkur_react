@@ -25,6 +25,7 @@ export default class TextEditor extends React.Component {
 
   handleRef = (refEditor) => {
     this.editorRef = refEditor
+    this.props.handleRef(refEditor)
   }
 
   render () {
@@ -47,6 +48,7 @@ export default class TextEditor extends React.Component {
             height="37.5rem"
             fontSize={14}
             tabSize={2}
+            defaultValue={this.props.defaultValue}
           />
         </EditorWrapper>
       </Card>

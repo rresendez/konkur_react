@@ -10,7 +10,7 @@ import Icon from '../Icon'
 
 const StyledCard = styled.div`
   box-sizing: border-box;
-  max-width: 25rem;
+  width: 100%;
 `
 
 const Title = styled.div`
@@ -79,12 +79,12 @@ class CardItem extends React.Component {
             </Title>
             <CardButtonWrapper>
               <Button>
-                <Icon size="2">
+                <Icon color="white" size="2">
                   keyboard_arrow_left
                 </Icon>
               </Button>
               <Button>
-                <Icon size="2">
+                <Icon color="white" size="2">
                   keyboard_arrow_right
                 </Icon>
               </Button>
