@@ -18,11 +18,6 @@ const EditorWrapper = styled.div`
 `
 
 export default class TextEditor extends React.Component {
-  componentDidMount () {
-    console.log(this.editorRef)
-    debugger
-  }
-
   handleRef = (refEditor) => {
     this.editorRef = refEditor
     this.props.handleRef(refEditor)

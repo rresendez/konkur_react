@@ -3,17 +3,19 @@ import React from 'react'
 
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
 import Checkbox from '@material-ui/core/Checkbox'
 import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 import IconButton from '@material-ui/core/IconButton'
-import Input from '@material-ui/core/Input'
 import ListItemText from '@material-ui/core/ListItemText'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Slide from '@material-ui/core/Slide'
 import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles'
 
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -34,27 +36,20 @@ function Transition (props) {
   return (<Slide direction="up" {...props} />)
 }
 
+const SelectedModified = withStyles({
+  root: {
+    maxWidth: '17rem',
+    minWidth: '17rem'
+  }
+})(Select)
+
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP
     }
   }
 }
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder'
-]
 
 let id = 0
 function createData (name, calories, fat, carbs, protein) {
@@ -119,21 +114,20 @@ export default class CardDetail extends React.Component {
                 Visible to:
               </h4>
               <div className={styles.selectWrapper}>
-                <Select
+                <SelectedModified
                   multiple
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  input={<Input />}
+                  value={this.props.visibleToSelected}
+                  onChange={this.props.handleOnChangeSelectedValues}
                   renderValue={selected => selected.join(', ')}
                   MenuProps={MenuProps}
                 >
-                  {names.map(name => (
+                  {this.props.visibleToData.map(name => (
                     <MenuItem key={name} value={name}>
-                      <Checkbox checked={this.state.name.indexOf(name) > -1} />
+                      <Checkbox checked={this.props.visibleToSelected.indexOf(name) > -1} />
                       <ListItemText primary={name} />
                     </MenuItem>
                   ))}
-                </Select>
+                </SelectedModified>
               </div>
             </div>
           </div>
@@ -149,14 +143,14 @@ export default class CardDetail extends React.Component {
             variant="fab"
             color="secondary"
             aria-label="Add"
-            onClick={this.props.handleOnClickSend}
+            onClick={this.props.handleSendQuery}
           >
             <Icon size="2" color="white">send</Icon>
           </Button>
         </div>
         <Dialog
           fullScreen
-          open={false}
+          open={this.props.dialogSwitch}
           // onClose={this.handleClose}
           TransitionComponent={Transition}
         >
@@ -166,10 +160,16 @@ export default class CardDetail extends React.Component {
           >
             <Toolbar>
               <div className={styles.toolbarModalButtonsWrapper}>
-                <IconButton aria-label="close">
+                <IconButton
+                  aria-label="close"
+                  onClick={this.props.handleOnCloseResultModal}
+                >
                   <Icon color="white" size="1.5">close</Icon>
                 </IconButton>
-                <IconButton aria-label="save">
+                <IconButton
+                  aria-label="save"
+                  onClick={this.props.handleOnSaveCard}
+                >
                   <Icon color="white" size="1.5">save</Icon>
                 </IconButton>
               </div>
@@ -179,11 +179,11 @@ export default class CardDetail extends React.Component {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell numeric>Calories</TableCell>
-                  <TableCell numeric>Fat (g)</TableCell>
-                  <TableCell numeric>Carbs (g)</TableCell>
-                  <TableCell numeric>Protein (g)</TableCell>
+                  <TableCell>DEPT</TableCell>
+                  <TableCell>item_nbr</TableCell>
+                  <TableCell>CID</TableCell>
+                  <TableCell>ITEM1_DESC</TableCell>
+                  <TableCell>location</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -193,16 +193,36 @@ export default class CardDetail extends React.Component {
                       <TableCell component="th" scope="row">
                         {row.name}
                       </TableCell>
-                      <TableCell numeric>{row.calories}</TableCell>
-                      <TableCell numeric>{row.fat}</TableCell>
-                      <TableCell numeric>{row.carbs}</TableCell>
-                      <TableCell numeric>{row.protein}</TableCell>
+                      <TableCell>{row.calories}</TableCell>
+                      <TableCell>{row.fat}</TableCell>
+                      <TableCell>{row.carbs}</TableCell>
+                      <TableCell>{row.protein}</TableCell>
                     </TableRow>
                   )
                 })}
               </TableBody>
             </Table>
           </div>
+          <Dialog
+            disableBackdropClick
+            disableEscapeKeyDown
+            maxWidth={false}
+            open={this.props.dialogSaveSwitch}
+            aria-labelledby="confirmation-dialog-title"
+          >
+            <DialogTitle id="confirmation-dialog-title">Save this card</DialogTitle>
+            <DialogContent>
+              Do you want to save this card?
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.props.handleOnCancelSaveCard} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.props.handleOnConfirmSaveCard} color="primary">
+                Ok
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Dialog>
       </div>
     )

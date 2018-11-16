@@ -123,7 +123,7 @@ CardItem.propTypes = {
   titleColor: PropTypes.string,
   title: PropTypes.string,
   raised: PropTypes.bool,
-  itemCount: PropTypes.number,
+  itemCount: PropTypes.string,
   date: PropTypes.string
 }
 
@@ -132,8 +132,8 @@ CardItem.defaultProps = {
   titleColor: '#fff',
   title: 'fulfillment', // 'fulfillment',
   raised: false,
-  itemCount: 23,
-  date: 'Wednesday, July 25, 2018'
+  itemCount: 'Pending item count comes here',
+  date: 'last updatedtime comes here ...' // 'Wednesday, July 25, 2018'
 }
 
 export default withTheme()(CardItem)
