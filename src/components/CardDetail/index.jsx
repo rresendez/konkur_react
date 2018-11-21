@@ -43,6 +43,12 @@ const SelectedModified = withStyles({
   }
 })(Select)
 
+const NotePaper = withStyles({
+  root: {
+    height: '100%'
+  }
+})(Paper)
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -85,31 +91,30 @@ export default class CardDetail extends React.Component {
   render () {
     return (
       <div className={styles.cardDetailContainer}>
-        <div className={styles.cardItemWrapper}>
-          <div className={styles.helpWrapper}>
-            <Paper elevation={1}>
-              <div className={styles.helpContainer}>
-                <h4 className={styles.helpLabel}>Note</h4>
-                <ol className={styles.helpListWrapper}>
-                  <li className={styles.helpListItem}>
-                    Cards can be created with either Teradata or DSN2 source queries.
-                  </li>
-                  <li className={styles.helpListItem}>
-                    Not more than one source in a single card’s query.
-                  </li>
-                  <li className={styles.helpListItem}>
-                    Item number and Department number are mandatory fields in every query.
-                  </li>
-                  <li className={styles.helpListItem}>
-                    Data traffic peak timings: 1:00 pm to 3:00 pm daily.
-                  </li>
-                </ol>
-              </div>
-            </Paper>
-          </div>
-          <div className={styles.cardItemWrapperItem}>
-            <CardItem />
-            <div className={styles.cardTagWrapper}>
+        <div className={styles.wrapperCardHelp}>
+          <NotePaper elevation={1}>
+            <div className={styles.helpContainer}>
+              <h4 className={styles.helpLabel}>Note</h4>
+              <ol className={styles.helpListWrapper}>
+                <li className={styles.helpListItem}>
+                  Cards can be created with either Teradata or DSN2 source queries.
+                </li>
+                <li className={styles.helpListItem}>
+                  Not more than one source in a single card’s query.
+                </li>
+                <li className={styles.helpListItem}>
+                  Item number and Department number are mandatory fields in every query.
+                </li>
+                <li className={styles.helpListItem}>
+                  Data traffic peak timings: 1:00 pm to 3:00 pm daily.
+                </li>
+              </ol>
+            </div>
+          </NotePaper>
+        </div>
+        <div className={styles.wrapperCardOptions}>
+          <div className={styles.cardOptionsContainer}>
+            <div className={styles.cardOptionsItem}>
               <h4 className={styles.cardVisibleLabel}>
                 Visible to:
               </h4>
@@ -130,9 +135,50 @@ export default class CardDetail extends React.Component {
                 </SelectedModified>
               </div>
             </div>
+            <div className={styles.cardOptionsItem}>
+              <h4 className={styles.cardVisibleLabel}>
+                Card priority:
+              </h4>
+              <div className={styles.selectWrapper}>
+                <SelectedModified
+                  value={'holi'}
+                  renderValue={(value) => (<div>holi</div>)}
+                  onChange={(event) => { }}
+                  MenuProps={MenuProps}
+                >
+                  {this.props.visibleToData.map(name => (
+                    <MenuItem key={name} value={name}>
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </SelectedModified>
+              </div>
+            </div>
+            <div className={styles.cardOptionsItem}>
+              <h4 className={styles.cardVisibleLabel}>
+                Schedule Time:
+              </h4>
+              <div className={styles.selectWrapper}>
+                <SelectedModified
+                  value={'holi'}
+                  renderValue={(value) => (<div>holi</div>)}
+                  onChange={(event) => { }}
+                  MenuProps={MenuProps}
+                >
+                  {this.props.visibleToData.map(name => (
+                    <MenuItem key={name} value={name}>
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </SelectedModified>
+              </div>
+            </div>
           </div>
         </div>
-        <div className={styles.editorWrapper}>
+        <div className={styles.wrapperCardItem}>
+          <CardItem />
+        </div>
+        <div className={styles.wrapperEditor}>
           <TextEditor
             handleRef={this.props.handleRefEditor}
             defaultValue={this.props.editorDefaultValue}

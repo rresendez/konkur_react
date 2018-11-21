@@ -18,9 +18,26 @@ const EditorWrapper = styled.div`
 `
 
 export default class TextEditor extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+
+    if (props.defaultValue.length > 0) {
+      this.state.editorValue = props.defaultValue
+    } else {
+      this.state.editorValue = ''
+    }
+  }
+
   handleRef = (refEditor) => {
     this.editorRef = refEditor
     this.props.handleRef(refEditor)
+  }
+
+  handleOnChange = (value, event) => {
+    this.setState({
+      editorValue: value
+    })
   }
 
   render () {
@@ -43,7 +60,9 @@ export default class TextEditor extends React.Component {
             height="37.5rem"
             fontSize={14}
             tabSize={2}
+            value={this.state.editorValue}
             defaultValue={this.props.defaultValue}
+            onChange={this.handleOnChange}
           />
         </EditorWrapper>
       </Card>
@@ -52,9 +71,11 @@ export default class TextEditor extends React.Component {
 }
 
 TextEditor.defaultProps = {
-  raised: false
+  raised: false,
+  defaultValue: ''
 }
 
 TextEditor.propTypes = {
-  raised: PropTypes.bool
+  raised: PropTypes.bool,
+  defaultValue: PropTypes.string
 }

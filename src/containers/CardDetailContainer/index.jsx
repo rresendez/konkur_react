@@ -72,7 +72,6 @@ class CardDetailContainer extends React.Component {
     }))
     console.log('handleSendQuery')
     console.log(this.refEditor.editor.getValue())
-    debugger
   }
 
   render () {
