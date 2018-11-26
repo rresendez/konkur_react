@@ -7,10 +7,20 @@ const AsyncCardCreatePage = Loadable({
   loading: Loader
 })
 
+const AsyncHomePage = Loadable({
+  loader: () => import('./scenes/HomePage'),
+  loading: Loader
+})
+
 const routes = [
   {
-    path: '/',
+    path: '/card',
     component: AsyncCardCreatePage,
+    exact: true
+  },
+  {
+    path: '/',
+    component: AsyncHomePage,
     exact: true
   }
 ]
