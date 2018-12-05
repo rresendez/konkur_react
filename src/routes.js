@@ -12,6 +12,11 @@ const AsyncHomePage = Loadable({
   loading: Loader
 })
 
+const AsyncTestPage = Loadable({
+  loader: () => import('./scenes/TestPage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
@@ -21,6 +26,11 @@ const routes = [
   {
     path: '/',
     component: AsyncHomePage,
+    exact: true
+  },
+  {
+    path: '/testing',
+    component: AsyncTestPage,
     exact: true
   }
 ]
