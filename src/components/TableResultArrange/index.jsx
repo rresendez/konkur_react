@@ -8,7 +8,18 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import IconButton from '@material-ui/core/IconButton'
+import TextField from '@material-ui/core/TextField'
+import { withTheme, withStyles } from '@material-ui/core/styles'
 import Icon from '../Icon'
+
+const TextFieldWrapper = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+
+  &:first-child {
+    margin-top: 0;
+  }
+`
 
 class TableResultArrange extends React.Component {
   constructor (props) {
@@ -50,18 +61,16 @@ class TableResultArrange extends React.Component {
       const colmuns = this.props.columns.map((column, idx) => {
         return (
           <TableCell key={column.name}>
-            <div onDragOver={this.dragoverHandler}
-              onDrop={this.dropHandler}
-            >
-              <div draggable="true"
-                data-column={JSON.stringify({ ...column, idx: idx })}
-                onDragStart={this.dragstartHandler}
-              >
-              </div>
-            </div>
+            <TextFieldWrapper>
+              <TextField
+                label={column.name === column.alias ? column.name : column.alias}
+                fullWidth
+              />
+            </TextFieldWrapper>
           </TableCell>
         )
       })
+      debugger
       return colmuns
     } else {
       const colmuns = this.props.columns.map((column, idx) => (
