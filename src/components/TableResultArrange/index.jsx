@@ -8,7 +8,18 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import IconButton from '@material-ui/core/IconButton'
+import TextField from '@material-ui/core/TextField'
+import { withTheme, withStyles } from '@material-ui/core/styles'
 import Icon from '../Icon'
+
+const TextFieldWrapper = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+
+  &:first-child {
+    margin-top: 0;
+  }
+`
 
 class TableResultArrange extends React.Component {
   constructor (props) {
@@ -18,7 +29,15 @@ class TableResultArrange extends React.Component {
     }
   }
   handleOnClickEditableButton = () => {
-    this.setState({ editable: true })
+    this.setState({ editable: !this.state.editable })
+  }
+  handleChangeInput = (event, idx) => {
+    console.log(event.target.value)
+    console.log(idx)
+    let newName = event.target.value
+    let columns = [...this.props.columns]
+    columns[idx].alias = newName
+    this.props.handleColumnsSortChange(columns)
   }
   renderRows = () => {
     const rows = this.props.rows.map((row, rowIdx) => {
@@ -34,14 +53,25 @@ class TableResultArrange extends React.Component {
   }
   renderButton = (idx) => {
     if (idx === this.props.columns.length - 1) {
-      return (
-        <IconButton
-          aria-label="save"
-          onClick={this.handleOnClickEditableButton}
-        >
-          <Icon color="black" size="1.5">save</Icon>
-        </IconButton>
-      )
+      if (this.state.editable) {
+        return (
+          <IconButton
+            aria-label="Save"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">check</Icon>
+          </IconButton>
+        )
+      } else {
+        return (
+          <IconButton
+            aria-label="Edit"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">edit</Icon>
+          </IconButton>
+        )
+      }
     }
     return null
   }
@@ -51,13 +81,30 @@ class TableResultArrange extends React.Component {
         return (
           <TableCell key={column.name}>
             <div onDragOver={this.dragoverHandler}
-              onDrop={this.dropHandler}
+              onDrop={(event) => { this.dropHandler(event, { ...column, idx: idx }) }}
             >
               <div draggable="true"
                 data-column={JSON.stringify({ ...column, idx: idx })}
                 onDragStart={this.dragstartHandler}
+                cursor="grab"
               >
+                <IconButton
+                  aria-label="Edit"
+                >
+                  <Icon color="black" size="1.5">drag_handle</Icon>
+                </IconButton>
+
               </div>
+              <TextFieldWrapper>
+                <TextField
+                  label={column.name === column.alias ? column.name : column.alias}
+                  fullWidth
+                  onChange={(event) => { this.handleChangeInput(event, idx) }}
+                />
+              </TextFieldWrapper>
+              <div>
+                {this.renderButton(idx)}
+              </div >
             </div>
           </TableCell>
         )
@@ -66,83 +113,45 @@ class TableResultArrange extends React.Component {
     } else {
       const colmuns = this.props.columns.map((column, idx) => (
         <TableCell key={column.name}>
-          <div onDragOver={this.dragoverHandler}
-            onDrop={this.dropHandler}
-          >
-            <div draggable="true"
-              data-column={JSON.stringify({ ...column, idx: idx })}
-              onDragStart={this.dragstartHandler}
-            >
-              {column.alias}
-            </div>
-            {this.renderButton(idx)}
-          </div>
+          {column.alias}
+          {this.renderButton(idx)}
         </TableCell>
       ))
       return colmuns
     }
   }
 
-  handleClick = () => {
-    const columns = [
-      {
-        name: 'item_nbr',
-        alias: 'item_nbr',
-        place: 0
-      },
-      {
-        name: 'dept_nbr',
-        alias: 'depto',
-        place: 1
-      },
-      {
-        name: 'cid_nbr',
-        alias: 'cid value',
-        place: 2
-      }
-    ]
-    const temp = columns[0]
-    columns[0] = columns[2]
-    columns[2] = temp
-    this.props.handleColumnsSortChange(columns)
-  }
   dragstartHandler = (event) => {
-    event.dataTransfer.setData('application/json', (event.target.getAttribute('data-column')))
+    console.log(event.currentTarget)
+    event.dataTransfer.setData('application/json', (event.currentTarget.getAttribute('data-column')))
     console.log(event)
   }
   dragoverHandler = (event) => {
     event.preventDefault()
     console.log('dragging')
+    this.cursor = 'grabbing'
   }
-  dropHandler = (event) => {
+  dropHandler = (event, droppedColumn) => {
     event.preventDefault()
-    const dropped = JSON.parse(event.target.getAttribute('data-column'))
     const trans = JSON.parse(event.dataTransfer.getData('application/json'))
-    const columns = this.props.columns
+    const columns = [...this.props.columns]
     const temp = columns[trans.idx]
-    columns[trans.idx] = columns[dropped.idx]
-    columns[dropped.idx] = temp
+    columns[trans.idx] = columns[droppedColumn.idx]
+    columns[droppedColumn.idx] = temp
     this.props.handleColumnsSortChange(columns)
   }
   render () {
     return (
-      <div>
-        <div>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {this.renderColumns()}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.renderRows()}
-            </TableBody>
-          </Table>
-        </div>
-        <div>
-          <button onClick={this.handleClick}></button>
-        </div>
-      </div>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {this.renderColumns()}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.renderRows()}
+        </TableBody>
+      </Table>
     )
   }
 }
