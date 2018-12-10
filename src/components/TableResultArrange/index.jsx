@@ -29,7 +29,7 @@ class TableResultArrange extends React.Component {
     }
   }
   handleOnClickEditableButton = () => {
-    this.setState({ editable: true })
+    this.setState({ editable: !this.state.editable })
   }
   renderRows = () => {
     const rows = this.props.rows.map((row, rowIdx) => {
@@ -45,14 +45,25 @@ class TableResultArrange extends React.Component {
   }
   renderButton = (idx) => {
     if (idx === this.props.columns.length - 1) {
-      return (
-        <IconButton
-          aria-label="save"
-          onClick={this.handleOnClickEditableButton}
-        >
-          <Icon color="black" size="1.5">save</Icon>
-        </IconButton>
-      )
+      if (this.state.editable) {
+        return (
+          <IconButton
+            aria-label="Save"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">save</Icon>
+          </IconButton>
+        )
+      } else {
+        return (
+          <IconButton
+            aria-label="Edit"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">edit</Icon>
+          </IconButton>
+        )
+      }
     }
     return null
   }
@@ -67,6 +78,9 @@ class TableResultArrange extends React.Component {
                 fullWidth
               />
             </TextFieldWrapper>
+            <div>
+              { this.renderButton(idx) }
+            </div >
           </TableCell>
         )
       })
