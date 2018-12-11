@@ -129,7 +129,6 @@ class TableResultArrange extends React.Component {
   dragoverHandler = (event) => {
     event.preventDefault()
     console.log('dragging')
-    this.cursor = 'grabbing'
   }
   dropHandler = (event, droppedColumn) => {
     event.preventDefault()
