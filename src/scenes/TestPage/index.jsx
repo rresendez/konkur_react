@@ -51,7 +51,7 @@ class MockChange extends React.Component {
           <TableResultArrange
             columns={this.state.columns}
             rows={mock.rows}
-            handleColumnsSortChange={this.handleColumnsSortChange}
+            handleOnChange={this.handleColumnsSortChange}
           />
         </div>
       </div>
