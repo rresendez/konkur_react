@@ -1,33 +1,27 @@
 import React from 'react'
-import TableResultArrange from '../../components/TableResultArrange'
+import CardItem from '../../components/CardItem'
 
 const mock = {
-  columns: [
+  colors: [
     {
-      name: 'item_nbr',
-      alias: 'item_nbr',
-      place: 0
+      id: 1,
+      name: 'new category',
+      color: 'rgba(193,193,193,1)'
     },
     {
-      name: 'dept_nbr',
-      alias: 'depto',
-      place: 1
+      id: 2,
+      name: 'demand',
+      color: 'rgba(244,115,33,1)'
     },
     {
-      name: 'cid_nbr',
-      alias: 'cid value',
-      place: 2
-    }
-  ],
-  rows: [
-    {
-      item_nbr: '1',
-      dept_nbr: '23'
+      id: 3,
+      name: 'fulfillment',
+      color: 'rgba(255,194,32,1)'
     },
     {
-      item_nbr: '34',
-      dept_nbr: '2233',
-      cid_nbr: '323'
+      id: 4,
+      name: 'inventory',
+      color: 'rgba(118,192,67,1)'
     }
   ]
 }
@@ -36,22 +30,21 @@ class MockChange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.columns = mock.columns
+    this.state.colors = mock.colors.reverse()
   }
 
-  handleColumnsSortChange = (columns) => {
+  handleColors = (colors) => {
     this.setState({
-      columns
+      colors
     })
   }
   render () {
     return (
       <div>
         <div>
-          <TableResultArrange
-            columns={this.state.columns}
-            rows={mock.rows}
-            handleColumnsSortChange={this.handleColumnsSortChange}
+          <CardItem
+            colors={this.state.colors}
+            handleColors={this.handleColors}
           />
         </div>
       </div>

@@ -76,22 +76,54 @@ const TimeLabel = styled.div`
 `
 
 class CardItem extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      index: 0
+    }
+  }
+
+  handleOnClick = (event) => {
+    const side = parseInt(event.currentTarget.getAttribute('data-next'))
+    if (this.state.index < this.props.colors.length - 1 && side > 0) {
+      this.setState({ index: this.state.index + side })
+      if (this.state.index === this.props.colors.length - 2) {
+        console.log('this is my last resot')
+      }
+    } else if (side < 0 && this.state.index > 0) {
+      this.setState({ index: this.state.index + side })
+    } else {
+      console.log('out')
+    }
+  }
   render () {
     return (
       <StyledCard>
         <CardItemContainer raised={this.props.raised}>
-          <TitleWrapper cardColor={this.props.cardColor}>
+          <TitleWrapper cardColor={this.props.colors[this.state.index].color}>
             <Title titleColor={this.props.titleColor}>
-              {this.props.title}
+              {this.props.colors[this.state.index].name}
             </Title>
             <CardButtonWrapper>
-              <Button>
-                <Icon color="white" size="2">
+              <Button
+                onClick={this.handleOnClick}
+                data-next="-1"
+              >
+                <Icon
+                  color="white"
+                  size="2"
+                >
                   keyboard_arrow_left
                 </Icon>
               </Button>
-              <Button>
-                <Icon color="white" size="2">
+              <Button
+                onClick={this.handleOnClick}
+                data-next="1"
+              >
+                <Icon
+                  color="white"
+                  size="2"
+                >
                   keyboard_arrow_right
                 </Icon>
               </Button>
