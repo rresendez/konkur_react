@@ -63,6 +63,7 @@
     "reselect": "^4.0.0",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
+    "serve": "^10.1.1",
     "style-loader": "0.23.0",
     "styled-components": "^4.0.3",
     "terser-webpack-plugin": "1.1.0",
@@ -76,7 +77,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "start-app": "serve -s build"
   },
   "eslintConfig": {
     "extends": [
