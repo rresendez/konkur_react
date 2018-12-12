@@ -23,6 +23,7 @@ flows:
   - npm install
   # publish last, once the binary is in Proximity, it stays
   - npm run build
+  - cp -R build/* front-builded
   - npm publish
 #  - oneops.transitionVariableUpdate(platform = '${platform}', component = '${component}', variables = {env='${environment.endpoints}', appVersion = '${version}'}))
 #  - oneops.transitionUpdate(platform = '${platform}', component = '${component}')
