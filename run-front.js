@@ -3,7 +3,7 @@ const path = require('path')
 const hostname = 'frontend-module.kunkurfrontexampledeployqa.kunkurfrontexampledeploy.bootcamp.dfw1.qa.walmart.com'
 const hostnameQA = 'frontend-module.kunkurfrontexampledeployqa.kunkurfrontexampledeploy.bootcamp.qa.walmart.com'
 
-exec(`${path.resolve(__dirname, 'node_modules', '.bin', 'serve')} -s build -l tcp://${hostnameQA}:5000`, (error, stdout, stderr) => {
+exec(`${path.resolve(__dirname, 'node_modules', '.bin', 'serve')} -s build -l tcp://0.0.0.0:5000`, (error, stdout, stderr) => {
   if (error) {
     console.error(`exec error: ${error}`)
     return
