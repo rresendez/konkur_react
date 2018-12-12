@@ -1,13 +1,11 @@
-const exec = require('child_process').exec
+const express = require('express')
 const path = require('path')
-const hostname = 'frontend-module.kunkurfrontexampledeployqa.kunkurfrontexampledeploy.bootcamp.dfw1.qa.walmart.com'
-const hostnameQA = 'frontend-module.kunkurfrontexampledeployqa.kunkurfrontexampledeploy.bootcamp.qa.walmart.com'
+const app = express()
 
-exec(`${path.resolve(__dirname, '..', '..', 'serve')} -s front-builded -l tcp://0.0.0.0:5000`, (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`)
-    return
-  }
-  console.log(`stdout: ${stdout}`)
-  console.log(`stderr: ${stderr}`)
+app.use(express.static(path.join(__dirname, 'front-builded')))
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'front-builded', 'index.html'))
 })
+
+app.listen(9000)
