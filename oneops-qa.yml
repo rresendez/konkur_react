@@ -1,0 +1,28 @@
+tools:
+    nodejs:
+        - 8.9.4
+    npm:
+        - 5.6.0
+        
+envs:
+  global:
+    variables:
+      oneops.organization: wmcretailtechnology
+      oneops.environment: qa
+      appname: KunkurInternationalFrontend
+      oneops.assembly: KunkurInternational-QA
+      platform: KunkurBackendPlatform
+      component: node-module
+      repository: npm_hosted
+      version: 0.0.2
+      environment.endpoints: QA
+
+flows:
+  # default flow is run for each commit, add whatever you want to happen then
+  default:
+  - npm install
+  # publish last, once the binary is in Proximity, it stays
+  - npm publish
+#  - oneops.transitionVariableUpdate(platform = '${platform}', component = '${component}', variables = {env='${environment.endpoints}', appVersion = '${version}'}))
+#  - oneops.transitionUpdate(platform = '${platform}', component = '${component}')
+#  - oneops.environmentCommitAndDeploy(platform = '${platform}', deployAllPlatforms = false )
