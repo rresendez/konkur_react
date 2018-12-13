@@ -45,8 +45,7 @@ class MockChange extends React.Component {
           <CardItem
             colors={this.state.colors}
             handleColors={this.handleColors}
-          >
-          </CardItem>
+          />
         </div>
       </div>
     )
