@@ -22,10 +22,10 @@ app.get('/*', function (req, res) {
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(app)
 
-https.listen(8081, () => {
+httpsServer.listen(8081, () => {
   console.log('working https server instance')
 })
 
-http.listen(8080, () => {
+httpServer.listen(8080, () => {
   console.log('working http server instance')
 })
