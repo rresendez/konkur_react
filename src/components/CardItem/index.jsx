@@ -47,6 +47,7 @@ const CardButtonWrapper = styled.div`
   display: flex;
   justifiy-content: center;
   align-items: center;
+  margin-top: auto;
 `
 
 const CardContent = styled.div`
@@ -63,7 +64,6 @@ const TextFieldWrapper = styled.div`
     margin-top: 0;
   }
 `
-
 const ItemLabel = styled.div`
   color: rgba(59,59,59,1);
   margin-top: 1rem;
@@ -79,8 +79,9 @@ const TimeLabel = styled.div`
 `
 const SaveButton = styled.div`
   text-align: right;
-  width: 100%;
+  margin-left: auto;
 `
+
 class CardItem extends React.Component {
   constructor (props) {
     super(props)
@@ -89,8 +90,13 @@ class CardItem extends React.Component {
       newColor: null,
       leftDisable: true,
       rightDisable: false,
+      editable: false,
+      newTitle: '',
       newArray: {}
     }
+  }
+  handleOnClickEditableButton = () => {
+    this.setState({ editable: !this.state.editable })
   }
 
   handleOnClick = (event) => {
@@ -118,12 +124,13 @@ class CardItem extends React.Component {
       newColor: color
     })
   }
+  handleChangeInput = (event) => {
+    this.setState({ newTitle: event.target.value })
+    console.log(this.state.newTitle)
+  }
 
   renderPicker = () => {
-    if (this.state.index === this.props.colors.length - 1) {
-      if (this.state.newColor === null) {
-        this.setState({ newColor: '#ff2800' })
-      }
+    if (this.state.editable) {
       return (
         <ColorPicker
           handleOnChange={this.handleOnChangeColor}
@@ -136,18 +143,29 @@ class CardItem extends React.Component {
     return (
       <div>
         <TextField
-          label={label}
+          placeholder={label.toUpperCase()}
+          onChange={(event) => { this.handleChangeInput(event) }}
         />
       </div>
     )
   }
-  renderSave = (index) => {
-    if (index === this.props.colors.length - 1) {
+  renderButton = () => {
+    if (this.state.editable) {
       return (
         <IconButton
           aria-label="Save"
+          onClick={this.handleOnClickEditableButton}
         >
           <Icon color="black" size="1.5">check</Icon>
+        </IconButton>
+      )
+    } else {
+      return (
+        <IconButton
+          aria-label="Edit"
+          onClick={this.handleOnClickEditableButton}
+        >
+          <Icon color="black" size="1.5">edit</Icon>
         </IconButton>
       )
     }
@@ -186,14 +204,14 @@ class CardItem extends React.Component {
               </Button>
             </CardButtonWrapper>
             <Title titleColor={this.props.titleColor}>
-              {this.state.index === this.props.colors.length - 1
+              {this.state.editable
                 ? this.renderInput(this.props.colors[this.state.index].name)
                 : this.props.colors[this.state.index].name}
             </Title>
+            <SaveButton>
+              {this.renderButton()}
+            </SaveButton>
           </TitleWrapper>
-          <SaveButton>
-            {this.renderSave(this.state.index)}
-          </SaveButton>
           <CardContent>
             <TextFieldWrapper>
               <TextField

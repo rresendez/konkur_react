@@ -2,7 +2,7 @@ import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
 import styled from 'styled-components'
-import { SliderPicker } from 'react-color'
+import { SliderPicker, Slider } from 'react-color'
 
 const StyledPaper = styled.div`
  padding: 1rem;
@@ -36,8 +36,6 @@ class ColorPicker extends React.Component {
         <ModifiedPaper>
           <StyledPaper>
             <SliderPicker
-              active={true}
-              offset={0.65}
               color={ this.state.background }
               onChangeComplete={ this.handleChangeComplete }
             />
