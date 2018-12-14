@@ -97,6 +97,15 @@ class CardItem extends React.Component {
   }
   handleOnClickEditableButton = () => {
     this.setState({ editable: !this.state.editable })
+    if (!this.state.editable) {
+      console.log('editable')
+      this.setState({ leftDisable: true })
+      this.setState({ rigthDisable: true })
+    } else {
+      console.log('editable')
+      this.setState({ leftDisable: false })
+      this.setState({ rigthDisable: false })
+    }
   }
 
   handleOnClick = (event) => {
@@ -107,6 +116,7 @@ class CardItem extends React.Component {
       this.setState({ index: this.state.index + side })
       if (this.state.index === this.props.colors.length - 2) {
         this.setState({ rightDisable: true })
+        this.setState({ editable: true })
       }
     } else if (side < 0 && this.state.index > 0) {
       this.setState({ index: this.state.index + side })
@@ -114,6 +124,7 @@ class CardItem extends React.Component {
         this.setState({ leftDisable: true })
       }
       this.setState({ newColor: null })
+      this.setState({ editable: false })
     } else {
       console.log('out')
     }
@@ -124,9 +135,16 @@ class CardItem extends React.Component {
       newColor: color
     })
   }
+
   handleChangeInput = (event) => {
     this.setState({ newTitle: event.target.value })
     console.log(this.state.newTitle)
+  }
+
+  handleLastItem = (index, event) => {
+    if (index === this.props.colors.length - 1) {
+      this.setState({ editable: true })
+    }
   }
 
   renderPicker = () => {
@@ -159,14 +177,34 @@ class CardItem extends React.Component {
           <Icon color="black" size="1.5">check</Icon>
         </IconButton>
       )
+    } else if (this.state.index !== this.props.colors.length - 1) {
+      return (
+        <div>
+          <IconButton
+            aria-label="Delete"
+          >
+            <Icon color="black" size="1.5">delete</Icon>
+          </IconButton>
+
+          <IconButton
+            aria-label="Edit"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">edit</Icon>
+          </IconButton>
+        </div>
+      )
     } else {
       return (
-        <IconButton
-          aria-label="Edit"
-          onClick={this.handleOnClickEditableButton}
-        >
-          <Icon color="black" size="1.5">edit</Icon>
-        </IconButton>
+        <div>
+          <IconButton
+            aria-label="Edit"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">edit</Icon>
+          </IconButton>
+        </div >
+
       )
     }
   }
