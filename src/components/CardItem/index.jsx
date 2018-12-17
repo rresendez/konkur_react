@@ -22,6 +22,12 @@ const StyledCard = styled.div`
   width: 100%;
   height: 100%;
 `
+const ConstructionHeader = styled.div`
+  color: red;
+  width: 100%;
+  text-align: center;
+  margin-top: 1em;
+`
 
 const Title = styled.div`
   color: ${props => props.titleColor};
@@ -98,13 +104,13 @@ class CardItem extends React.Component {
   handleOnClickEditableButton = () => {
     this.setState({ editable: !this.state.editable })
     if (!this.state.editable) {
-      console.log('editable')
+      console.log('editable on')
       this.setState({ leftDisable: true })
-      this.setState({ rigthDisable: true })
+      this.setState({ rightDisable: true })
     } else {
-      console.log('editable')
+      console.log('editable off')
       this.setState({ leftDisable: false })
-      this.setState({ rigthDisable: false })
+      this.setState({ rightDisable: false })
     }
   }
 
@@ -116,6 +122,7 @@ class CardItem extends React.Component {
       this.setState({ index: this.state.index + side })
       if (this.state.index === this.props.colors.length - 2) {
         this.setState({ rightDisable: true })
+        this.setState({ leftDisable: true })
         this.setState({ editable: true })
       }
     } else if (side < 0 && this.state.index > 0) {
@@ -167,17 +174,36 @@ class CardItem extends React.Component {
       </div>
     )
   }
-  renderButton = () => {
+  renderButton = (crud) => {
     if (this.state.editable) {
-      return (
-        <IconButton
-          aria-label="Save"
-          onClick={this.handleOnClickEditableButton}
-        >
-          <Icon color="black" size="1.5">check</Icon>
-        </IconButton>
-      )
-    } else if (this.state.index !== this.props.colors.length - 1) {
+      if (this.state.index !== this.props.colors.length - 1) {
+        return (
+          <div>
+            <IconButton
+              aria-label="Delete"
+            >
+              <Icon color="black" size="1.5">delete</Icon>
+            </IconButton>
+            <IconButton
+              aria-label="Save"
+              onClick={this.handleOnClickEditableButton}
+            >
+              <Icon color="black" size="1.5">check</Icon>
+            </IconButton>
+          </div>
+        )
+      } else {
+        return (
+          <IconButton
+            aria-label="Save"
+            onClick={this.handleOnClickEditableButton}
+          >
+            <Icon color="black" size="1.5">check</Icon>
+          </IconButton>
+        )
+      }
+    } else if (this.state.index !== this.props.colors.length - 1 &&
+      crud === 'update') {
       return (
         <div>
           <IconButton
@@ -247,7 +273,7 @@ class CardItem extends React.Component {
                 : this.props.colors[this.state.index].name}
             </Title>
             <SaveButton>
-              {this.renderButton()}
+              {this.renderButton(this.props.crud)}
             </SaveButton>
           </TitleWrapper>
           <CardContent>

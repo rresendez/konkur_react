@@ -31,7 +31,7 @@ class MockChange extends React.Component {
     super(props)
     this.state = {}
     this.state.colors = mock.colors.reverse()
-    this.state.editable = 'create || update'
+    this.state.crud = 'create || update'
   }
 
   handleColors = (colors) => {
@@ -46,7 +46,7 @@ class MockChange extends React.Component {
           <CardItem
             colors={this.state.colors}
             handleColors={this.handleColors}
-            state="update"
+            crud="create"
           >
           </CardItem>
         </div>
