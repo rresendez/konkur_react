@@ -1,55 +1,45 @@
 import React from 'react'
-import CardItem from '../../components/CardItem'
 
-const mock = {
-  colors: [
-    {
-      id: 1,
-      name: 'new category',
-      color: 'rgba(193,193,193,1)'
-    },
-    {
-      id: 2,
-      name: 'demand',
-      color: 'rgba(244,115,33,1)'
-    },
-    {
-      id: 3,
-      name: 'fulfillment',
-      color: 'rgba(255,194,32,1)'
-    },
-    {
-      id: 4,
-      name: 'inventory',
-      color: 'rgba(118,192,67,1)'
-    }
-  ]
-}
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 
 class MockChange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.colors = mock.colors.reverse()
-    this.state.crud = 'create || update'
+    this.switch = false
   }
 
-  handleColors = (colors) => {
-    this.setState({
-      colors
-    })
-  }
   render () {
     return (
       <div>
         <div>
-          <CardItem
-            colors={this.state.colors}
-            handleColors={this.handleColors}
-            crud="create"
-          >
-          </CardItem>
+          <button onClick={() => { this.setState({ switch: !this.state.switch }) }} >
+            Open
+          </button>
         </div>
+        <Dialog
+          disableBackdropClick
+          disableEscapeKeyDown
+          maxWidth={false}
+          fullScreen
+          open={this.state.switch}
+
+          aria-labelledby="confirmation-dialog-title"
+        >
+          <DialogTitle id="confirmation-dialog-title">Save this card</DialogTitle>
+          <DialogContent>
+            Do you want to save this card?
+          </DialogContent>
+          <DialogActions>
+            <button onClick={() => { this.setState({ switch: !this.state.switch }) }} >
+              Close
+            </button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
