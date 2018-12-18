@@ -54,6 +54,9 @@ const TitleContainer = styled.div`
 const FileContainer = styled.div`
   padding-bottom: 1rem;
 `
+const LabelContainer = styled.div`
+  text-align:center;
+`
 
 class SimpleDialog extends React.Component {
   constructor (props) {
@@ -91,10 +94,10 @@ class SimpleDialog extends React.Component {
                       {isDragAccept ? 'Drop' : 'Drag'} files here... or click
                     </TitleContainer>
                   </Container>
-                  <h4>Accepted files {this.props.name}</h4>
-                  <ul>
-                    <li> {this.props.name} </li>
-                  </ul>
+                  <h4>Accepted files </h4>
+                  <LabelContainer>
+                    <h5>{this.props.name}</h5>
+                  </LabelContainer>
                 </div>
               )
             }}
