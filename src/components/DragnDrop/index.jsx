@@ -108,7 +108,10 @@ class SimpleDialog extends React.Component {
 SimpleDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
-  selectedValue: PropTypes.string
+  selectedValue: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  buffer: PropTypes.array.isRequired,
+  handleBuffer: PropTypes.func.isRequired
 }
 
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog)
