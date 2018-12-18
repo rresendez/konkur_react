@@ -65,7 +65,9 @@ class SimpleDialog extends React.Component {
   }
 
   onDrop = (accepted) => {
-    this.props.handleUpload(accepted[0])
+    if (accepted.length > 0) {
+      this.props.handleUpload(accepted[0])
+    }
   }
 
   render () {
