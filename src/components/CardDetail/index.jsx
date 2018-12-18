@@ -36,6 +36,31 @@ function Transition (props) {
   return (<Slide direction="up" {...props} />)
 }
 
+const mock = {
+  colors: [
+    {
+      id: 1,
+      name: 'new category',
+      color: 'rgba(193,193,193,1)'
+    },
+    {
+      id: 2,
+      name: 'demand',
+      color: 'rgba(244,115,33,1)'
+    },
+    {
+      id: 3,
+      name: 'fulfillment',
+      color: 'rgba(255,194,32,1)'
+    },
+    {
+      id: 4,
+      name: 'inventory',
+      color: 'rgba(118,192,67,1)'
+    }
+  ]
+}
+
 const SelectedModified = withStyles({
   root: {
     maxWidth: '17rem',
@@ -86,6 +111,8 @@ export default class CardDetail extends React.Component {
     super(props)
     this.state = {}
     this.state.name = ['Carlos Abbott', 'April Tucker']
+    this.state.colors = mock.colors.reverse()
+    this.state.crud = 'create || update'
   }
 
   render () {
@@ -176,7 +203,11 @@ export default class CardDetail extends React.Component {
           </div>
         </div>
         <div className={styles.wrapperCardItem}>
-          <CardItem />
+          <CardItem
+            colors={this.state.colors}
+            handleColors={this.handleColors}
+            crud="create"
+          />
         </div>
         <div className={styles.wrapperEditor}>
           <TextEditor
@@ -196,7 +227,7 @@ export default class CardDetail extends React.Component {
         </div>
         <Dialog
           fullScreen
-          open={this.props.dialogSwitch}
+          open={false}
           // onClose={this.handleClose}
           TransitionComponent={Transition}
         >
