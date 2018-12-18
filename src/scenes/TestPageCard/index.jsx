@@ -36,7 +36,7 @@ class MockChange extends React.Component {
 
   handleColors = (colors) => {
     this.setState({
-      colors
+      colors: colors
     })
   }
   render () {
