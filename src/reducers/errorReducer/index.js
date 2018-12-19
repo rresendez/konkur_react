@@ -6,8 +6,8 @@ import * as eRActions from './actions'
 
 const initialState = fromJS({
   error: {
-    error: true,
-    message: 'dsadasds',
+    error: false,
+    message: '',
     codeError: '',
     statusCode: 0
   }

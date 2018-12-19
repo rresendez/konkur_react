@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import * as eRActions from '../../reducers/errorReducer/actions'
+
 import CardDetail from '../../components/CardDetail'
 
 const names = [
@@ -86,8 +88,6 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeSelectedValues = (event, child) => {
-    console.log('handleOnChangeSelectedValues')
-    console.log(event.target.value)
     this.setState({
       selectedVisibleTo: event.target.value
     })
@@ -149,6 +149,16 @@ class CardDetailContainer extends React.Component {
     }))
   }
 
+  handleSaveAttachment = () => {
+    this.setState({
+      howToSwitch: false
+    })
+    this.props.sagaSetError({
+      error: true,
+      message: 'saved attachment :)'
+    })
+  }
+
   render () {
     return (
       <CardDetail
@@ -179,6 +189,7 @@ class CardDetailContainer extends React.Component {
         handleOnCloseDropzone={this.handleOnCloseDropzone}
         handleUploadDropzone={this.handleUploadDropzone}
         handleCleanAttachment={this.handleCleanAttachment}
+        handleSaveAttachment={this.handleSaveAttachment}
       />
     )
   }
@@ -191,6 +202,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
+    ...eRActions
   }, dispatch)
 }
 

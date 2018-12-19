@@ -8,10 +8,10 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 
 function * genSetError (action) {
   yield put(eRActions.setError({
-    error: true,
-    message: 'message test error',
-    codeError: 'A34234',
-    statusError: 404
+    error: action.payload.error,
+    message: action.payload.message,
+    codeError: action.payload.codeError,
+    statusError: action.payload.statusError
   }))
 }
 

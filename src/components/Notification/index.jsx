@@ -15,7 +15,6 @@ class Notification extends React.Component {
           horizontal: 'left'
         }}
         open={this.props.open}
-        autoHideDuration={6000}
         onClose={this.props.handleOnCloseSnackbar}
         ContentProps={{
           'aria-describedby': 'message-id'
