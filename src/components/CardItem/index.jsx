@@ -310,7 +310,10 @@ CardItem.propTypes = {
   title: PropTypes.string,
   raised: PropTypes.bool,
   itemCount: PropTypes.string,
-  date: PropTypes.string
+  date: PropTypes.string,
+  colors: PropTypes.array.isRequired,
+  handleColors: PropTypes.func.isRequired,
+  crud: PropTypes.string.isRequired
 }
 
 CardItem.defaultProps = {

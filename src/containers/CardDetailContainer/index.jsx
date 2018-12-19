@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import * as eRActions from '../../reducers/errorReducer/actions'
+
 import CardDetail from '../../components/CardDetail'
 
 const names = [
@@ -19,7 +21,42 @@ class CardDetailContainer extends React.Component {
     this.state = {}
     this.state.dialogSwitch = false
     this.state.dialogSaveSwitch = false
+    this.state.howToSwitch = false
     this.state.selectedVisibleTo = []
+    this.state.file = {
+      buffer: null,
+      name: ''
+    }
+    this.state.previousFile = {
+      buffer: null,
+      name: ''
+    }
+    this.state.columns = [
+      {
+        name: 'item_nbr',
+        alias: 'item_nbr'
+      },
+      {
+        name: 'dept_nbr',
+        alias: ''
+      },
+      {
+        name: 'cat_nbr',
+        alias: ''
+      }
+    ]
+    this.state.rows = [
+      {
+        item_nbr: 'adasd',
+        cat_nbr: 'dsad'
+      },
+      {
+        item_nbr: 'adasd'
+      },
+      {
+        item_nbr: 'adasd'
+      }
+    ]
   }
 
   handleRefEditor = (refComponent) => {
@@ -51,8 +88,6 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeSelectedValues = (event, child) => {
-    console.log('handleOnChangeSelectedValues')
-    console.log(event.target.value)
     this.setState({
       selectedVisibleTo: event.target.value
     })
@@ -74,15 +109,70 @@ class CardDetailContainer extends React.Component {
     console.log(this.refEditor.editor.getValue())
   }
 
+  handleOnChangeTableArrangement = (columns) => {
+    this.setState({
+      columns: columns
+    })
+  }
+
+  handleHowtoOpen = () => {
+    this.setState({
+      howToSwitch: true
+    })
+  }
+
+  handleOnCloseDropzone = () => {
+    this.setState({
+      howToSwitch: false
+    })
+  }
+
+  handleUploadDropzone = (file) => {
+    this.setState((previousState) => ({
+      file: {
+        buffer: file,
+        name: file.name
+      },
+      previousFile: {
+        buffer: previousState.file.buffer,
+        name: previousState.file.name
+      }
+    }))
+  }
+
+  handleCleanAttachment = () => {
+    this.setState((previousState) => ({
+      file: {
+        buffer: previousState.previousFile.buffer,
+        name: previousState.previousFile.name
+      }
+    }))
+  }
+
+  handleSaveAttachment = () => {
+    this.setState({
+      howToSwitch: false
+    })
+    this.props.sagaSetError({
+      error: true,
+      message: 'saved attachment :)'
+    })
+  }
+
   render () {
     return (
       <CardDetail
         visibleToData={names}
         visibleToSelected={this.state.selectedVisibleTo}
+        columns={this.state.columns}
+        rows={this.state.rows}
 
         editorDefaultValue="/* Write your query right here :) */"
         dialogSwitch={this.state.dialogSwitch}
         dialogSaveSwitch={this.state.dialogSaveSwitch}
+        crud={this.props.crud}
+        howToSwitch={this.state.howToSwitch}
+        attachedName={this.state.file.name}
 
         handleRefEditor={this.handleRefEditor}
 
@@ -94,6 +184,12 @@ class CardDetailContainer extends React.Component {
         handleOnCancelSaveCard={this.handleOnCancelSaveCard}
         handleOnConfirmSaveCard={this.handleOnConfirmSaveCard}
         handleOnChangeSelectedValues={this.handleOnChangeSelectedValues}
+        handleOnChangeTableArrangement={this.handleOnChangeTableArrangement}
+        handleHowtoOpen={this.handleHowtoOpen}
+        handleOnCloseDropzone={this.handleOnCloseDropzone}
+        handleUploadDropzone={this.handleUploadDropzone}
+        handleCleanAttachment={this.handleCleanAttachment}
+        handleSaveAttachment={this.handleSaveAttachment}
       />
     )
   }
@@ -106,6 +202,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
+    ...eRActions
   }, dispatch)
 }
 

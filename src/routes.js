@@ -17,10 +17,20 @@ const AsyncTestPage = Loadable({
   loading: Loader
 })
 
+const AsyncCardUpdatePage = Loadable({
+  loader: () => import('./scenes/CardUpdatePage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
     component: AsyncCardCreatePage,
+    exact: true
+  },
+  {
+    path: '/card/:id',
+    component: AsyncCardUpdatePage,
     exact: true
   },
   {
