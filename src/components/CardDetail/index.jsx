@@ -212,7 +212,7 @@ export default class CardDetail extends React.Component {
                 aria-label="attach"
                 onClick={this.props.handleHowtoOpen}
               >
-                <Icon size="2" color="white">attachment</Icon>
+                <Icon size="2" color="white">attach_file</Icon>
               </Fab>
             </div>)
           }

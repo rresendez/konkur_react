@@ -1,48 +1,65 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Dialog from '@material-ui/core/Dialog'
-import blue from '@material-ui/core/colors/blue'
 import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
 
-const styles = {
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600]
-  }
-}
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Dialog from '@material-ui/core/Dialog'
+import { Fab } from '@material-ui/core'
+
+import Icon from '../Icon'
+
 const getColor = (props) => {
   if (props.isDragReject) {
     return '#c66'
   }
   if (props.isDragActive) {
-    return '#6c6'
+    return '#c6f68d'
   }
-  return '#ddd'
+  return 'rgba(255,255,255,1)'
+}
+
+const getBorderColor = (props) => {
+  if (props.isDragReject) {
+    return 'red'
+  }
+  if (props.isDragActive) {
+    return '#09af00'
+  }
+  return 'rgba(1,1,1,1)'
 }
 
 const Container = styled.div`
-  width: 20rem
-  height: 20rem
-  min-width: 10rem
-  min-height: 10rem
-  border-width: 2px
-  border-radius: 5px
-  margin: 1rem
-  border-color: #000
-  border-style: dashed
-  background-color: ${props => getColor(props)}
+  width: 100%;
+  height: 15rem;
+  border-width: 0.125rem;
+  border-radius: 0.3125rem;
+  border-color: ${props => getBorderColor(props)};
+  border-style: dashed;
+  box-sizing: border-box;
+  background-color: ${props => getColor(props)};
+  cursor: pointer;
+  margin-bottom: 1rem;
   `
 const DialogContainer = styled.div`
   text-align: center;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 `
 const TitleContainer = styled.div`
-  padding-top: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
-const FileContainer = styled.div`
-  padding-bottom: 1rem;
+const SaveButtonWrapper = styled.div`
+  width: 100%;
+  margin 1rem 0;
+  text-align: center;
 `
 const LabelContainer = styled.div`
   text-align:center;
@@ -83,18 +100,23 @@ class SimpleDialog extends React.Component {
                   >
                     <input {...getInputProps()} />
                     <TitleContainer>
-                      {isDragAccept ? 'Drop' : 'Drag'} files here... or click
+                      <Icon size="4" color="black">backup</Icon>
                     </TitleContainer>
                   </Container>
-                  <h4>Accepted files </h4>
+                  <div>Accepted file</div>
                   <LabelContainer>
-                    <h5>{this.props.name}</h5>
+                    <div>{this.props.name}</div>
                   </LabelContainer>
                 </div>
               )
             }}
           </Dropzone>
         </DialogContainer >
+        <SaveButtonWrapper>
+          <Fab onClick={this.props.handleSaveAttachment} color="primary">
+            <Icon size="2" color="white">save</Icon>
+          </Fab>
+        </SaveButtonWrapper>
       </Dialog>
     )
   }
@@ -109,6 +131,4 @@ SimpleDialog.propTypes = {
   handleBuffer: PropTypes.func.isRequired
 }
 
-const SimpleDialogWrapped = withStyles(styles)(SimpleDialog)
-
-export default SimpleDialogWrapped
+export default SimpleDialog
