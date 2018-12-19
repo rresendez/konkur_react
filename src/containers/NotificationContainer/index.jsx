@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux'
 
 import * as eRActions from '../../reducers/errorReducer/actions'
 
-import ErrorNotification from '../../components/ErrorNotification'
+import Notification from '../../components/Notification'
 
-class ErrorNotificationContainer extends React.Component {
+class NotificationContainer extends React.Component {
   handleOnCloseButton = () => {
     this.props.sagaCleanError({ handler: this.handleCleanError })
   }
@@ -23,7 +23,7 @@ class ErrorNotificationContainer extends React.Component {
 
   render () {
     return (
-      <ErrorNotification
+      <Notification
         open={this.props.error.error}
         message={this.props.error.message}
         handleOnCloseSnackbar={this.handleOnCloseSnackbar}
@@ -45,4 +45,4 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ErrorNotificationContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationContainer)

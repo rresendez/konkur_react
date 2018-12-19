@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { BrowserRouter, Route } from 'react-router-dom'
-import ErrorNotificationContainer from '../containers/ErrorNotificationContainer'
+import NotificationContainer from '../containers/NotificationContainer'
 
 import routes from '../routes'
 import styles from './styles.module.css'
@@ -15,7 +15,7 @@ class App extends Component {
           {routes.map((route) => (
             <Route key={route.path} {...route} />
           ))}
-          <ErrorNotificationContainer />
+          <NotificationContainer />
         </div>
       </BrowserRouter>
     )

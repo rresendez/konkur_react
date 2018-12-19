@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 import Icon from '../Icon'
 
-class ErrorNotification extends React.Component {
+class Notification extends React.Component {
   render () {
     return (
       <Snackbar
@@ -36,4 +36,4 @@ class ErrorNotification extends React.Component {
   }
 }
 
-export default ErrorNotification
+export default Notification
