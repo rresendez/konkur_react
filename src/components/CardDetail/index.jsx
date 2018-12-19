@@ -16,16 +16,13 @@ import Slide from '@material-ui/core/Slide'
 import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
-
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Fab from '@material-ui/core/Fab'
 
 import CardItem from '../CardItem'
 import TextEditor from '../TextEditor'
 import Icon from '../Icon'
+import TableResultArrange from '../TableResultArrange'
+import DragnDrop from '../DragnDrop'
 
 import styles from './styles.module.css'
 
@@ -206,8 +203,19 @@ export default class CardDetail extends React.Component {
           <CardItem
             colors={this.state.colors}
             handleColors={this.handleColors}
-            crud="create"
+            crud={this.props.crud}
           />
+          {
+            this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>
+              <Fab
+                color="secondary"
+                aria-label="attach"
+                onClick={this.props.handleHowtoOpen}
+              >
+                <Icon size="2" color="white">attachment</Icon>
+              </Fab>
+            </div>)
+          }
         </div>
         <div className={styles.wrapperEditor}>
           <TextEditor
@@ -216,19 +224,18 @@ export default class CardDetail extends React.Component {
           />
         </div>
         <div className={styles.fabWrapper}>
-          <Button
-            variant="fab"
+          <Fab
             color="secondary"
             aria-label="Add"
             onClick={this.props.handleSendQuery}
           >
             <Icon size="2" color="white">send</Icon>
-          </Button>
+          </Fab>
         </div>
         <Dialog
           fullScreen
-          open={false}
-          // onClose={this.handleClose}
+          open={this.props.dialogSwitch}
+          onClose={this.handleClose}
           TransitionComponent={Transition}
         >
           <AppBar
@@ -253,32 +260,11 @@ export default class CardDetail extends React.Component {
             </Toolbar>
           </AppBar>
           <div className={styles.tableWrapper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>DEPT</TableCell>
-                  <TableCell>item_nbr</TableCell>
-                  <TableCell>CID</TableCell>
-                  <TableCell>ITEM1_DESC</TableCell>
-                  <TableCell>location</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map(row => {
-                  return (
-                    <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      <TableCell>{row.calories}</TableCell>
-                      <TableCell>{row.fat}</TableCell>
-                      <TableCell>{row.carbs}</TableCell>
-                      <TableCell>{row.protein}</TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+            <TableResultArrange
+              columns={this.props.columns}
+              rows={this.props.rows}
+              handleOnChange={this.props.handleOnChangeTableArrangement}
+            />
           </div>
           <Dialog
             disableBackdropClick
@@ -301,6 +287,12 @@ export default class CardDetail extends React.Component {
             </DialogActions>
           </Dialog>
         </Dialog>
+        <DragnDrop
+          open={this.props.howToSwitch}
+          handleOnClose={this.props.handleOnCloseDropzone}
+          handleUpload={this.props.handleUploadDropzone}
+          name={this.props.attachedName}
+        />
       </div>
     )
   }

@@ -19,7 +19,38 @@ class CardDetailContainer extends React.Component {
     this.state = {}
     this.state.dialogSwitch = false
     this.state.dialogSaveSwitch = false
+    this.state.howToSwitch = false
     this.state.selectedVisibleTo = []
+    this.state.file = {
+      buffer: null,
+      name: ''
+    }
+    this.state.columns = [
+      {
+        name: 'item_nbr',
+        alias: 'item_nbr'
+      },
+      {
+        name: 'dept_nbr',
+        alias: ''
+      },
+      {
+        name: 'cat_nbr',
+        alias: ''
+      }
+    ]
+    this.state.rows = [
+      {
+        item_nbr: 'adasd',
+        cat_nbr: 'dsad'
+      },
+      {
+        item_nbr: 'adasd'
+      },
+      {
+        item_nbr: 'adasd'
+      }
+    ]
   }
 
   handleRefEditor = (refComponent) => {
@@ -74,15 +105,47 @@ class CardDetailContainer extends React.Component {
     console.log(this.refEditor.editor.getValue())
   }
 
+  handleOnChangeTableArrangement = (columns) => {
+    this.setState({
+      columns: columns
+    })
+  }
+
+  handleHowtoOpen = () => {
+    this.setState({
+      howToSwitch: true
+    })
+  }
+
+  handleOnCloseDropzone = () => {
+    this.setState({
+      howToSwitch: false
+    })
+  }
+
+  handleUploadDropzone = (file) => {
+    this.setState({
+      file: {
+        buffer: file,
+        name: file.name
+      }
+    })
+  }
+
   render () {
     return (
       <CardDetail
         visibleToData={names}
         visibleToSelected={this.state.selectedVisibleTo}
+        columns={this.state.columns}
+        rows={this.state.rows}
 
         editorDefaultValue="/* Write your query right here :) */"
         dialogSwitch={this.state.dialogSwitch}
         dialogSaveSwitch={this.state.dialogSaveSwitch}
+        crud={this.props.crud}
+        howToSwitch={this.state.howToSwitch}
+        attachedName={this.state.file.name}
 
         handleRefEditor={this.handleRefEditor}
 
@@ -94,6 +157,10 @@ class CardDetailContainer extends React.Component {
         handleOnCancelSaveCard={this.handleOnCancelSaveCard}
         handleOnConfirmSaveCard={this.handleOnConfirmSaveCard}
         handleOnChangeSelectedValues={this.handleOnChangeSelectedValues}
+        handleOnChangeTableArrangement={this.handleOnChangeTableArrangement}
+        handleHowtoOpen={this.handleHowtoOpen}
+        handleOnCloseDropzone={this.handleOnCloseDropzone}
+        handleUploadDropzone={this.handleUploadDropzone}
       />
     )
   }
