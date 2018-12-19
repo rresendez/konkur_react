@@ -25,6 +25,10 @@ class CardDetailContainer extends React.Component {
       buffer: null,
       name: ''
     }
+    this.state.previousFile = {
+      buffer: null,
+      name: ''
+    }
     this.state.columns = [
       {
         name: 'item_nbr',
@@ -124,12 +128,25 @@ class CardDetailContainer extends React.Component {
   }
 
   handleUploadDropzone = (file) => {
-    this.setState({
+    this.setState((previousState) => ({
       file: {
         buffer: file,
         name: file.name
+      },
+      previousFile: {
+        buffer: previousState.file.buffer,
+        name: previousState.file.name
       }
-    })
+    }))
+  }
+
+  handleCleanAttachment = () => {
+    this.setState((previousState) => ({
+      file: {
+        buffer: previousState.previousFile.buffer,
+        name: previousState.previousFile.name
+      }
+    }))
   }
 
   render () {
@@ -161,6 +178,7 @@ class CardDetailContainer extends React.Component {
         handleHowtoOpen={this.handleHowtoOpen}
         handleOnCloseDropzone={this.handleOnCloseDropzone}
         handleUploadDropzone={this.handleUploadDropzone}
+        handleCleanAttachment={this.handleCleanAttachment}
       />
     )
   }

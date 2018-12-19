@@ -59,9 +59,12 @@ const TitleContainer = styled.div`
 const SaveButtonWrapper = styled.div`
   width: 100%;
   margin 1rem 0;
-  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `
 const LabelContainer = styled.div`
+  margin-top: .5rem;
   text-align:center;
 `
 
@@ -112,11 +115,18 @@ class SimpleDialog extends React.Component {
             }}
           </Dropzone>
         </DialogContainer >
-        <SaveButtonWrapper>
-          <Fab onClick={this.props.handleSaveAttachment} color="primary">
-            <Icon size="2" color="white">save</Icon>
-          </Fab>
-        </SaveButtonWrapper>
+        {
+          this.props.name !== '' && (
+            <SaveButtonWrapper>
+              <Fab onClick={this.props.handleCleanAttachment} color="secondary">
+                <Icon size="2" color="white">close</Icon>
+              </Fab>
+              <Fab onClick={this.props.handleSaveAttachment} color="primary">
+                <Icon size="2" color="white">save</Icon>
+              </Fab>
+            </SaveButtonWrapper>
+          )
+        }
       </Dialog>
     )
   }
