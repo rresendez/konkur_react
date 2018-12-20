@@ -2,13 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from 'styled-components'
+
 import * as serviceWorker from './serviceWorker'
 
 import './global-styles/normalize.css'
 import './global-styles/custom-styles.css'
 import './assets/iconfont/material-icons.css'
 
-import { materialTheme } from './global-styles/theme-contexts'
+import { materialTheme, customTheme } from './global-styles/theme-contexts'
 
 import App from './app'
 import store from './app/config'
@@ -17,7 +19,9 @@ function getApp () {
   return (
     <Provider store={store}>
       <MuiThemeProvider theme={materialTheme}>
-        <App />
+        <ThemeProvider theme={customTheme}>
+          <App />
+        </ThemeProvider>
       </MuiThemeProvider>
     </Provider>
   )

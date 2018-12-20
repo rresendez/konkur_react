@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
+import { rgbaRegex } from '../../util/regex'
+
+import { setColor } from '../../global-styles/util'
+
 const Icon = styled.i`
   align-items: center;
-  color: ${props => props.color};
+  color: ${props => setColor(props.theme, props.color, props.auto)};
   direction: ltr;
   display: flex;
   font-family: 'Material Icons';

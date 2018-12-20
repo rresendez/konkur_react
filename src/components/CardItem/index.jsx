@@ -22,15 +22,9 @@ const StyledCard = styled.div`
   width: 100%;
   height: 100%;
 `
-const ConstructionHeader = styled.div`
-  color: red;
-  width: 100%;
-  text-align: center;
-  margin-top: 1em;
-`
 
 const Title = styled.div`
-  color: ${props => props.titleColor};
+  color: ${props => props.theme.typography.getColor(props.color)};
   font-weight: bold;
   letter-spacing: .5rem;
   text-transform: uppercase;
@@ -71,14 +65,14 @@ const TextFieldWrapper = styled.div`
   }
 `
 const ItemLabel = styled.div`
-  color: rgba(59,59,59,1);
+  color: ${props => props.theme.typography.colorDarkGray};
   margin-top: 1rem;
   width: 100%;
   text-align: center;
 `
 
 const TimeLabel = styled.div`
-  color: rgba(161,161,161,1);
+  color: ${props => props.theme.typography.colorLightGray};
   margin-top: 1rem;
   text-align: center;
   width: 100%;
@@ -182,13 +176,31 @@ class CardItem extends React.Component {
             <IconButton
               aria-label="Delete"
             >
-              <Icon color="black" size="1.5">delete</Icon>
+              <Icon
+                auto
+                color={(this.state.newColor === null
+                  ? this.props.colors[this.state.index].color
+                  : this.state.newColor
+                )}
+                size="1.5"
+              >
+                delete
+              </Icon>
             </IconButton>
             <IconButton
               aria-label="Save"
               onClick={this.handleOnClickEditableButton}
             >
-              <Icon color="black" size="1.5">check</Icon>
+              <Icon
+                auto
+                color={(this.state.newColor === null
+                  ? this.props.colors[this.state.index].color
+                  : this.state.newColor
+                )}
+                size="1.5"
+              >
+                check
+              </Icon>
             </IconButton>
           </div>
         )
@@ -198,7 +210,13 @@ class CardItem extends React.Component {
             aria-label="Save"
             onClick={this.handleOnClickEditableButton}
           >
-            <Icon color="black" size="1.5">check</Icon>
+            <Icon
+              auto
+              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              size="1.5"
+            >
+              check
+            </Icon>
           </IconButton>
         )
       }
@@ -209,14 +227,26 @@ class CardItem extends React.Component {
           <IconButton
             aria-label="Delete"
           >
-            <Icon color="black" size="1.5">delete</Icon>
+            <Icon
+              auto
+              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              size="1.5"
+            >
+              delete
+            </Icon>
           </IconButton>
 
           <IconButton
             aria-label="Edit"
             onClick={this.handleOnClickEditableButton}
           >
-            <Icon color="black" size="1.5">edit</Icon>
+            <Icon
+              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              size="1.5"
+              auto
+            >
+              edit
+            </Icon>
           </IconButton>
         </div>
       )
@@ -227,7 +257,13 @@ class CardItem extends React.Component {
             aria-label="Edit"
             onClick={this.handleOnClickEditableButton}
           >
-            <Icon color="black" size="1.5">edit</Icon>
+            <Icon
+              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              auto
+              size="1.5"
+            >
+              edit
+            </Icon>
           </IconButton>
         </div >
 
@@ -248,7 +284,8 @@ class CardItem extends React.Component {
                 disabled={this.state.leftDisable}
               >
                 <Icon
-                  color="white"
+                  color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+                  auto
                   size="2"
                 >
                   keyboard_arrow_left
@@ -260,14 +297,15 @@ class CardItem extends React.Component {
                 disabled={this.state.rightDisable}
               >
                 <Icon
-                  color="white"
+                  color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+                  auto
                   size="2"
                 >
                   keyboard_arrow_right
                 </Icon>
               </Button>
             </CardButtonWrapper>
-            <Title titleColor={this.props.titleColor}>
+            <Title color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}>
               {this.state.editable
                 ? this.renderInput(this.props.colors[this.state.index].name)
                 : this.props.colors[this.state.index].name}
