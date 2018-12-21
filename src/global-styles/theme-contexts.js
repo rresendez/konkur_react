@@ -44,5 +44,8 @@ export const customTheme = {
   spacing: {
     defaultPadding: '1rem',
     defaultMargin: '1rem'
+  },
+  util: {
+    remCalc: (value) => `${(value / 16)}rem`
   }
 }
