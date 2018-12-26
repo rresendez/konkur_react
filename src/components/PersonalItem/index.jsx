@@ -40,7 +40,9 @@ class Personal extends React.Component {
 
   render () {
     return (
-      <div>
+      <div
+        draggable="true"
+      >
 
         <CardItemContainer>
           <StyledCard personal={this.props.personal}>
