@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as eRActions from '../../reducers/errorReducer/actions'
+import * as cRActions from '../../reducers/cardBuilderReducer/actions'
 
 import CardDetail from '../../components/CardDetail'
 
@@ -57,6 +58,10 @@ class CardDetailContainer extends React.Component {
         item_nbr: 'adasd'
       }
     ]
+  }
+
+  componentWillMount () {
+    this.props.sagaInitCardBuilder()
   }
 
   handleRefEditor = (refComponent) => {
@@ -202,7 +207,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    ...eRActions
+    ...eRActions,
+    ...cRActions
   }, dispatch)
 }
 
