@@ -5,21 +5,30 @@ import { withTheme, withStyles } from '@material-ui/core/styles'
 
 const CardItemContainer = withStyles({
   root: {
-    height: '100%',
-    color: 'rgba(255,255,255,1);',
-    background: 'rgba(46,117,182,1)'
+    height: '7.83rem',
+    width: '18.06rem'
   }
 })(Card)
 
+const backgroundPicker = (props) => {
+  debugger
+  if (props.personal.new) {
+    return props.theme.color.warning
+  } else {
+    return props.theme.color.primary
+  }
+}
+
+const H3Fixer = styled.div`
+  margin-top:0;
+  padding-top: 1rem;
+`
 const StyledCard = styled.div`
-  box-sizing: border-box;
+   color: ${props => props.theme.typography.getColor(props.theme.color.primary)};
+   background-color: ${props => backgroundPicker(props)};
   width: 100%;
   height: 100%;
-  padding: 1rem;
-  margin: 1rem;
   text-align: center; 
-  height: 7.83rem;
-  width: 18.06rem;
   cursor: pointer;
 `
 
@@ -32,17 +41,20 @@ class Personal extends React.Component {
   render () {
     return (
       <div>
-        <StyledCard>
-          <CardItemContainer>
-            <h3>
-              {this.props.personal.name}
-            </h3>
+
+        <CardItemContainer>
+          <StyledCard personal={this.props.personal}>
+            <H3Fixer>
+              <h3>
+                {this.props.personal.name}
+              </h3>
+            </H3Fixer>
             <h4>
               {this.props.personal.title}
             </h4>
             {console.log(this.props.personal.subordinates)}
-          </CardItemContainer>
-        </StyledCard>
+          </StyledCard>
+        </CardItemContainer>
       </div>
     )
   }

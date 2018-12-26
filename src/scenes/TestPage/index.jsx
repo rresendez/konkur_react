@@ -8,6 +8,7 @@ const mock = {
       id: 0,
       name: 'Jeffrey Costa',
       title: 'Sr. Dir , Replenishment',
+      new: false,
       subordinates: [0, 1, 2, 3]
 
     },
@@ -15,6 +16,7 @@ const mock = {
       id: 1,
       name: 'Shaun Guardad',
       title: 'Sr, Dir , Replenishment',
+      new: true,
       subordinates: [0, 3]
     }
 
