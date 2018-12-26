@@ -1,37 +1,51 @@
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
+import Personal from '../../components/PersonalItem'
 
-import DragnDrop from '../../components/DragnDrop'
+const mock = {
+  personal: [
+    {
+      id: 0,
+      name: 'Jeffrey Costa',
+      title: 'Sr. Dir , Replenishment',
+      subordinates: [0, 1, 2, 3]
+
+    },
+    {
+      id: 1,
+      name: 'Shaun Guardad',
+      title: 'Sr, Dir , Replenishment',
+      subordinates: [0, 3]
+    }
+
+  ]
+}
 
 class MockChange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.name = 'empty'
-    this.state.buffer = []
+    this.state.personal = mock.personal
   }
 
-  handleBuffer = (file) => {
-    this.setState({
-      buffer: file,
-      name: file.name
+  renderItems = () => {
+    const card = this.state.personal.map((person, i) => {
+      return (
+        <Personal
+          key={i}
+          personal={person}
+        >
+
+        </Personal>
+      )
     })
+    return card
   }
 
   render () {
     return (
       <div>
-        <DragnDrop
-          name={this.state.name}
-          handleUpload={this.handleBuffer}
-          open
-        >
-        </DragnDrop>
+        {this.renderItems()}
       </div>
     )
   }
