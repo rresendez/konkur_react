@@ -21,7 +21,7 @@ const backgroundPicker = (props) => {
 
 const H3Fixer = styled.div`
   margin-top:0;
-  padding-top: 1rem;
+  padding-top: .5rem;
 `
 const StyledCard = styled.div`
    color: ${props => props.theme.typography.getColor(props.theme.color.primary)};
