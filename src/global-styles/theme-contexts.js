@@ -1,20 +1,51 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
+import { colorParams, fontParams } from './theme-params'
+
+import getFontColor from './util'
+
 export const materialTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
-    fontFamily: '"Arial", "Helvetica", sans-serif'
+    fontFamily: fontParams.fontFamily
   },
   palette: {
     common: {
-      black: 'rgba(1,1,1,1)',
-      white: 'rgba(254,254,254,1)'
+      black: fontParams.fontColorBlack,
+      white: fontParams.fontColorWhite
     },
     primary: {
-      main: 'rgba(26,117,207,1)'
+      main: colorParams.colorPrimary
     },
     secondary: {
-      main: 'rgba(253,187,48,1)'
+      main: colorParams.colorSecondary
     }
   }
 })
+
+export const customTheme = {
+  typography: {
+    fontFamily: fontParams.fontFamily,
+    colorBlack: fontParams.fontColorBlack,
+    colorWhite: fontParams.fontColorWhite,
+    colorLightGray: fontParams.fontColorLightGray,
+    colorDarkGray: fontParams.fontColorDarkGray,
+    sizeDefault: fontParams.fontDefaultSize,
+    getColor: (color) => getFontColor(color, fontParams.fontColorWhite, fontParams.fontColorBlack)
+  },
+  color: {
+    primary: colorParams.colorPrimary,
+    secondary: colorParams.colorSecondary,
+    warning: colorParams.colorWarning,
+    error: colorParams.colorError,
+    enabled: colorParams.colorEnabled,
+    forbidden: colorParams.colorForbbiden
+  },
+  spacing: {
+    defaultPadding: '1rem',
+    defaultMargin: '1rem'
+  },
+  util: {
+    remCalc: (value) => `${(value / 16)}rem`
+  }
+}
