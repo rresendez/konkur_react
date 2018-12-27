@@ -11,6 +11,7 @@ const BaseStyled = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background-color: rgba(222,235,247,1)
 `
 const StyledPersonal = styled.div`
   margin-bottom: 1rem;
@@ -31,10 +32,25 @@ class Hierarchy extends React.Component {
     this.state.personal = this.props.mock.personal
   }
 
+  renderArrow = (i) => {
+    if (i !== this.state.personal.length - 1) {
+      return (
+        <StyledArrow>
+          <Icon>
+            arrow_downward
+          </Icon>
+        </StyledArrow>
+      )
+    }
+    return null
+  }
+
   renderItems = () => {
     const card = this.state.personal.map((person, i) => {
       return (
-        <div>
+        <div
+          key={i}
+        >
           <BaseStyled>
             <StyledPersonal>
               <Personal
@@ -44,11 +60,7 @@ class Hierarchy extends React.Component {
 
               </Personal>
             </StyledPersonal>
-            <StyledArrow>
-              <Icon>
-                arrow_downward
-              </Icon>
-            </StyledArrow>
+            {this.renderArrow(i)}
           </BaseStyled>
         </div>
       )

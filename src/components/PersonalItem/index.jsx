@@ -2,11 +2,12 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import styled from 'styled-components'
 import { withTheme, withStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 
 const CardItemContainer = withStyles({
   root: {
-    height: '7.83rem',
-    width: '18.06rem'
+    height: '7rem',
+    width: '17rem'
   }
 })(Card)
 
@@ -37,10 +38,19 @@ class Personal extends React.Component {
     this.state = {}
   }
 
+  dragstartHandler = (event) => {
+    console.log(event.currentTarget.getAttribute('data-card'))
+    event.dataTransfer.setData(
+      'application/json', (event.currentTarget.getAttribute('data-card'))
+    )
+  }
+
   render () {
     return (
       <div
         draggable="true"
+        data-card={JSON.stringify(this.props.personal)}
+        onDragStart={this.dragstartHandler}
       >
 
         <CardItemContainer>
@@ -53,12 +63,17 @@ class Personal extends React.Component {
             <h4>
               {this.props.personal.title}
             </h4>
-            {console.log(this.props.personal.subordinates)}
           </StyledCard>
         </CardItemContainer>
       </div>
     )
   }
 }
-
+Personal.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  new: PropTypes.bool.isRequired,
+  subordinates: PropTypes.array
+}
 export default Personal
