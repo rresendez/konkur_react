@@ -11,7 +11,6 @@ const CardItemContainer = withStyles({
 })(Card)
 
 const backgroundPicker = (props) => {
-  debugger
   if (props.personal.new) {
     return props.theme.color.warning
   } else {

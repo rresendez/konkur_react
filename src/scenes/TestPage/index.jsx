@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Personal from '../../components/PersonalItem'
+import Hierarchy from '../../components/Hierarchy'
 
 const mock = {
   personal: [
@@ -16,6 +16,13 @@ const mock = {
       id: 1,
       name: 'Shaun Guardad',
       title: 'Sr, Dir , Replenishment',
+      new: false,
+      subordinates: [0, 3]
+    },
+    {
+      id: 2,
+      name: 'Max',
+      title: 'Directora de la tiendita ',
       new: true,
       subordinates: [0, 3]
     }
@@ -27,27 +34,16 @@ class MockChange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = mock.personal
-  }
-
-  renderItems = () => {
-    const card = this.state.personal.map((person, i) => {
-      return (
-        <Personal
-          key={i}
-          personal={person}
-        >
-
-        </Personal>
-      )
-    })
-    return card
+    this.state.mock = mock
   }
 
   render () {
     return (
       <div>
-        {this.renderItems()}
+        <Hierarchy
+          mock={this.state.mock}
+        >
+        </Hierarchy>
       </div>
     )
   }
