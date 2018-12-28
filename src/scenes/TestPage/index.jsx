@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Hierarchy from '../../components/Hierarchy'
+import PersonalHierarchy from '../../components/PersonalHierarchy'
 
 const mock = {
   personal: [
@@ -22,6 +22,20 @@ const mock = {
     {
       id: 2,
       name: 'Max',
+      title: 'Directora de la tiendita ',
+      new: true,
+      subordinates: [0, 3]
+    },
+    {
+      id: 3,
+      name: 'Max Landis',
+      title: 'Directora de la tiendita ',
+      new: true,
+      subordinates: [0, 3]
+    },
+    {
+      id: 4,
+      name: 'Max Power',
       title: 'Directora de la tiendita ',
       new: true,
       subordinates: [0, 3]
@@ -49,11 +63,11 @@ class MockChange extends React.Component {
   render () {
     return (
       <div>
-        <Hierarchy
+        <PersonalHierarchy
           mock={this.state.mock}
           handleSelectedPersonal={this.handleSelectedPersonal}
         >
-        </Hierarchy>
+        </PersonalHierarchy>
         {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
       </div>
     )
