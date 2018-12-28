@@ -32,6 +32,18 @@ class Hierarchy extends React.Component {
     this.state.personal = this.props.mock.personal
   }
 
+  dragHandler = (event) => {
+    event.preventDefault()
+    console.log('draggin')
+  }
+
+  dropHandler = (event) => {
+    event.preventDefault()
+    let data = JSON.parse(event.dataTransfer.getData('application/json'))
+    console.log(data)
+    this.props.handleSelectedPersonal(data)
+  }
+
   renderArrow = (i) => {
     if (i !== this.state.personal.length - 1) {
       return (
@@ -70,7 +82,11 @@ class Hierarchy extends React.Component {
 
   render () {
     return (
-      <div>
+      <div
+        id='target'
+        onDrop={(event) => { this.dropHandler(event) }}
+        onDragOver={(event) => { this.dragHandler(event) }}
+      >
         {this.renderItems()}
       </div>
     )

@@ -35,6 +35,15 @@ class MockChange extends React.Component {
     super(props)
     this.state = {}
     this.state.mock = mock
+    this.state.selectedPersonal = {}
+  }
+
+  handleSelectedPersonal = (personal) => {
+    console.log('this is the state on parent')
+    console.log(personal)
+    this.setState({
+      selectedPersonal: personal
+    })
   }
 
   render () {
@@ -42,8 +51,10 @@ class MockChange extends React.Component {
       <div>
         <Hierarchy
           mock={this.state.mock}
+          handleSelectedPersonal={this.handleSelectedPersonal}
         >
         </Hierarchy>
+        {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
       </div>
     )
   }
