@@ -45,7 +45,7 @@ const mock = {
 }
 
 class MockChange extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {}
     this.state.mock = mock
@@ -60,7 +60,7 @@ class MockChange extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div>
         <PersonalHierarchy
