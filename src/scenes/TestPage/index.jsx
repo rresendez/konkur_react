@@ -1,46 +1,24 @@
 import React from 'react'
 
-import PersonalHierarchy from '../../components/PersonalHierarchy'
+import LineItem from '../../components/LineItem'
 
 const mock = {
-  personal: [
+  line: [
     {
       id: 0,
-      name: 'Jeffrey Costa',
-      title: 'Sr. Dir , Replenishment',
-      new: false,
-      subordinates: [0, 1, 2, 3]
-
+      department: 'D1',
+      name: 'something'
     },
     {
       id: 1,
-      name: 'Shaun Guardad',
-      title: 'Sr, Dir , Replenishment',
-      new: false,
-      subordinates: [0, 3]
+      department: 'D2',
+      name: 'else'
     },
     {
       id: 2,
-      name: 'Max',
-      title: 'Directora de la tiendita ',
-      new: true,
-      subordinates: [0, 3]
-    },
-    {
-      id: 3,
-      name: 'Max Landis',
-      title: 'Directora de la tiendita ',
-      new: true,
-      subordinates: [0, 3]
-    },
-    {
-      id: 4,
-      name: 'Max Power',
-      title: 'Directora de la tiendita ',
-      new: true,
-      subordinates: [0, 3]
+      department: 'D3',
+      name: 'something else'
     }
-
   ]
 }
 
@@ -49,26 +27,15 @@ class MockChange extends React.Component {
     super(props)
     this.state = {}
     this.state.mock = mock
-    this.state.selectedPersonal = {}
-  }
-
-  handleSelectedPersonal = (personal) => {
-    console.log('this is the state on parent')
-    console.log(personal)
-    this.setState({
-      selectedPersonal: personal
-    })
   }
 
   render () {
     return (
       <div>
-        <PersonalHierarchy
-          mock={this.state.mock}
-          handleSelectedPersonal={this.handleSelectedPersonal}
+        <LineItem
+          line={this.state.mock.line[0]}
         >
-        </PersonalHierarchy>
-        {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
+        </LineItem>
       </div>
     )
   }
