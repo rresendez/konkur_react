@@ -4,6 +4,7 @@ import PersonalHierarchy from '../../components/PersonalHierarchy'
 
 const mock = {
   personal: [
+    [
     {
       id: 0,
       name: 'Jeffrey Costa',
@@ -40,8 +41,47 @@ const mock = {
       new: true,
       subordinates: [0, 3]
     }
+  ,
+    {
+      id: 5,
+      name: 'Manuel Costa',
+      title: 'Sr. Dir , Replenishment',
+      new: false,
+      subordinates: [0, 1, 2, 3]
 
-  ]
+    }
+  ], [
+    {
+      id: 6,
+      name: 'Arturo Guardad',
+      title: 'Sr, Dir , Replenishment',
+      new: false,
+      subordinates: [0, 3]
+    },
+    {
+      id: 7,
+      name: 'Max',
+      title: 'Directora de la tiendita ',
+      new: true,
+      subordinates: [0, 3]
+    },
+    {
+      id:9 ,
+      name: 'Max Pandis',
+      title: 'Directora de la tiendita ',
+      new: true,
+      subordinates: [0, 3]
+    },
+    {
+      id: 10,
+      name: 'Max Menu',
+      title: 'Directora de la tiendita ',
+      new: true,
+      subordinates: [0, 3]
+    }
+
+  ],
+]
 }
 
 class MockChange extends React.Component {
