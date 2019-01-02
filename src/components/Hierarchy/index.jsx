@@ -15,6 +15,7 @@ const BaseStyled = styled.div`
 `
 const StyledPersonal = styled.div`
   margin-bottom: 1rem;
+  margin-top: 1rem;
 `
 
 const StyledArrow = styled.div`
@@ -29,7 +30,7 @@ class Hierarchy extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = this.props.mock.personal
+    this.state.personal = this.props.mock
   }
 
   dragHandler = (event) => {

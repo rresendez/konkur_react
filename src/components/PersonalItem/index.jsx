@@ -30,6 +30,7 @@ const StyledCard = styled.div`
   height: 100%;
   text-align: center; 
   cursor: pointer;
+  margin-bottom:auto;
 `
 
 class Personal extends React.Component {

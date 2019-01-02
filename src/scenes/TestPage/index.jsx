@@ -1,24 +1,85 @@
 import React from 'react'
 
-import LineItem from '../../components/LineItem'
+import ManagmentUI from '../../components/ManagmentUI'
 
 const mock = {
-  line: [
-    {
-      id: 0,
-      department: 'D1',
-      name: 'something'
-    },
-    {
-      id: 1,
-      department: 'D2',
-      name: 'else'
-    },
-    {
-      id: 2,
-      department: 'D3',
-      name: 'something else'
-    }
+  personal: [
+    [
+      {
+        id: 0,
+        name: 'Jeffrey Costa',
+        title: 'Sr. Dir , Replenishment',
+        new: false,
+        subordinates: [0, 1, 2, 3]
+
+      },
+      {
+        id: 1,
+        name: 'Shaun Guardad',
+        title: 'Sr, Dir , Replenishment',
+        new: false,
+        subordinates: [0, 3]
+      },
+      {
+        id: 2,
+        name: 'Max',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 3,
+        name: 'Max Landis',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 4,
+        name: 'Max Power',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 5,
+        name: 'Manuel Costa',
+        title: 'Sr. Dir , Replenishment',
+        new: false,
+        subordinates: [0, 1, 2, 3]
+
+      }
+    ], [
+      {
+        id: 6,
+        name: 'Arturo Guardad',
+        title: 'Sr, Dir , Replenishment',
+        new: false,
+        subordinates: [0, 3]
+      },
+      {
+        id: 7,
+        name: 'Max',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 9,
+        name: 'Max Pandis',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 10,
+        name: 'Max Menu',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      }
+
+    ]
   ]
 }
 
@@ -26,16 +87,26 @@ class MockChange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.mock = mock
+    this.state.selectedPersonal = {}
+    this.state.personal = mock.personal
+  }
+
+  handleSelectedPersonal = (personal) => {
+    console.log('this is the state on parent')
+    console.log(personal)
+    this.setState({
+      selectedPersonal: personal
+    })
   }
 
   render () {
     return (
       <div>
-        <LineItem
-          line={this.state.mock.line[0]}
+        <ManagmentUI
+          handleSelectedPersonal={this.handleSelectedPersonal}
+          personal={this.state.personal}
         >
-        </LineItem>
+        </ManagmentUI>
       </div>
     )
   }

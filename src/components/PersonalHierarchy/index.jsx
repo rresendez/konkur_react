@@ -18,23 +18,15 @@ const StyledHorizontal = styled.div`
   background-color: rgba(222,235,247,1);
   display: flex;
   flex-direction: row;
-  align-items: center;
   flex-wrap: wrap;
-`
-
-const StyledArrow = styled.div`
-  display: block;
-  text-align: center;
-  font-size: 5rem;
-  margin-bottom: 1rem;
-  color: rgba(189,215,238,1)
+  height: 18rem;
 `
 
 class PersonalHierarchy extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = this.props.mock.personal
+    this.state.personal = this.props.mock
   }
 
   dragHandler = (event) => {
