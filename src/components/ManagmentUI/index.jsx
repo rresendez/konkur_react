@@ -44,6 +44,22 @@ const PWrapper2 = styled.div`
   width: 100%;
    height: 0;
 `
+const PWrapper3 = styled.div`
+  grid-column: 2;
+  grid-colum-end:6;
+  grid-row: 4;
+  grid-row-end: 4;
+  width: 100%;
+   height: 0;
+`
+const PWrapper4 = styled.div`
+  grid-column: 2;
+  grid-colum-end:6;
+  grid-row: 5;
+  grid-row-end: 5;
+  width: 100%;
+   height: 0;
+`
 
 class ManagmentUI extends React.Component {
   constructor (props) {
@@ -51,14 +67,6 @@ class ManagmentUI extends React.Component {
     this.state = {}
     this.state.mock = this.props.personal
     this.state.selectedPersonal = {}
-  }
-
-  handleSelectedPersonal = (personal) => {
-    console.log('this is the state on parent')
-    console.log(personal)
-    this.setState({
-      selectedPersonal: personal
-    })
   }
 
   render () {
@@ -79,19 +87,31 @@ class ManagmentUI extends React.Component {
           <PWrapper>
             <PersonalHierarchy
               mock={this.state.mock[0]}
-              handleSelectedPersonal={this.handleSelectedPersonal}
+              handleSelectedPersonal={this.props.handleSelectedPersonal}
             >
             </PersonalHierarchy>
-            {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
           </PWrapper>
           <PWrapper2>
             <PersonalHierarchy
               mock={this.state.mock[1]}
-              handleSelectedPersonal={this.handleSelectedPersonal}
+              handleSelectedPersonal={this.props.handleSelectedPersonal}
             >
             </PersonalHierarchy>
-            {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
           </PWrapper2>
+          <PWrapper3>
+            <PersonalHierarchy
+              mock={this.state.mock[2]}
+              handleSelectedPersonal={this.props.handleSelectedPersonal}
+            >
+            </PersonalHierarchy>
+          </PWrapper3>
+          <PWrapper4>
+            <PersonalHierarchy
+              mock={this.state.mock[3]}
+              handleSelectedPersonal={this.props.handleSelectedPersonal}
+            >
+            </PersonalHierarchy>
+          </PWrapper4>
         </MainWrapper>
       </div>
     )
