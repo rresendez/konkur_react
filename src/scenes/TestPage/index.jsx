@@ -24,21 +24,21 @@ const mock = {
         id: 2,
         name: 'Max',
         title: 'Directora de la tiendita ',
-        new: true,
+        new: false,
         subordinates: [0, 3]
       },
       {
         id: 3,
         name: 'Max Landis',
         title: 'Directora de la tiendita ',
-        new: true,
+        new: false,
         subordinates: [0, 3]
       },
       {
         id: 4,
         name: 'Max Power',
         title: 'Directora de la tiendita ',
-        new: true,
+        new: false,
         subordinates: [0, 3]
       },
       {
@@ -61,25 +61,57 @@ const mock = {
         id: 7,
         name: 'Max',
         title: 'Directora de la tiendita ',
-        new: true,
+        new: false,
         subordinates: [0, 3]
       },
       {
         id: 9,
         name: 'Max Pandis',
         title: 'Directora de la tiendita ',
-        new: true,
+        new: false,
         subordinates: [0, 3]
       },
       {
         id: 10,
         name: 'Max Menu',
         title: 'Directora de la tiendita ',
+        new: false,
+        subordinates: [0, 3]
+      }
+
+    ],
+    [
+      {
+        id: 11,
+        name: 'Juan  Perez',
+        title: 'Sr, Dir , Replenishment',
+        new: false,
+        subordinates: [0, 3]
+      },
+      {
+        id: 12,
+        name: 'Jesus Camacho',
+        title: 'Directora de la tiendita ',
+        new: false,
+        subordinates: [0, 3]
+      },
+      {
+        id: 13,
+        name: 'Ana Arenas',
+        title: 'Directora de la tiendita ',
+        new: true,
+        subordinates: [0, 3]
+      },
+      {
+        id: 14,
+        name: 'Adrea Cancer',
+        title: 'Directora de la tiendita ',
         new: true,
         subordinates: [0, 3]
       }
 
-    ]
+    ],
+    []
   ]
 }
 
@@ -107,6 +139,7 @@ class MockChange extends React.Component {
           personal={this.state.personal}
         >
         </ManagmentUI>
+        {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}
       </div>
     )
   }
