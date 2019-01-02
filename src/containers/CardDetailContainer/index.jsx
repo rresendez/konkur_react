@@ -7,14 +7,7 @@ import * as cRActions from '../../reducers/cardBuilderReducer/actions'
 
 import CardDetail from '../../components/CardDetail'
 
-const names = [
-  'Analyst, Replenishment',
-  'Mgr, Replenishment Str Spprt',
-  'Mgr, Direct Imp - Integration',
-  'Mgr Replen, Soflines Develop.',
-  'Sr Mgr, Replenishment',
-  'Mgr, Replenishment'
-]
+import { cardBuilderCatalogsSelector, cardBuilderSelectedSelector } from './selectors'
 
 class CardDetailContainer extends React.Component {
   constructor (props) {
@@ -23,7 +16,6 @@ class CardDetailContainer extends React.Component {
     this.state.dialogSwitch = false
     this.state.dialogSaveSwitch = false
     this.state.howToSwitch = false
-    this.state.selectedVisibleTo = []
     this.state.file = {
       buffer: null,
       name: ''
@@ -93,9 +85,8 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeSelectedValues = (event, child) => {
-    this.setState({
-      selectedVisibleTo: event.target.value
-    })
+    debugger
+    this.props.changeSelectedJobs()
   }
 
   handleBackCardColor = (event) => {
@@ -164,11 +155,66 @@ class CardDetailContainer extends React.Component {
     })
   }
 
+  handleOnChangeSchedule = (event, child) => {
+    const selectedScheduleIndex = this.props.scheduleCatalog.findIndex(
+      (schedule) => schedule.id === child.props['data-item-id']
+    )
+    if (selectedScheduleIndex !== -1) {
+      this.props.changeSelectedSchedule(selectedScheduleIndex)
+    }
+  }
+
+  handleOnChangePriority = (event, child) => {
+    const selectedPriorityIndex = this.props.priorityCatalog.findIndex(
+      (priority) => priority.id === child.props['data-item-id']
+    )
+    if (selectedPriorityIndex !== -1) {
+      this.props.changeSelectedPriority(selectedPriorityIndex)
+    }
+  }
+
+  handleOnChangeJobs = (event, child) => {
+    const selection = event.target.value[event.target.value.length - 1]
+    const isInSelectedArray = this.props.selectedJobs.findIndex((job) => job.name === selection)
+    const selectionIndex = this.props.jobCatalog.findIndex((job) => job.name === selection)
+    if (isInSelectedArray !== -1) {
+      const firstPart = this.props.selectedJobs.slice(0, isInSelectedArray)
+      const lastPart = this.props.selectedJobs.slice(isInSelectedArray + 1, this.props.selectedJobs.length)
+      const prePayload = [...firstPart, ...lastPart]
+      const payload = prePayload.map((item) => item.idx)
+      this.props.changeSelectedJobs(payload)
+    } else {
+      let payload = []
+      if (this.props.selectedJobs[0].name === '---') {
+        payload = payload.concat([selectionIndex])
+      } else {
+        payload = this.props.selectedJobs.map((item) => item.idx).concat([selectionIndex])
+      }
+      this.props.changeSelectedJobs(payload)
+    }
+  }
+
   render () {
     return (
       <CardDetail
-        visibleToData={names}
-        visibleToSelected={this.state.selectedVisibleTo}
+        isCallinProgress={this.props.isCallinProgress}
+
+        schedules={this.props.scheduleCatalog}
+        selectedSchedule={this.props.selectedSchedule}
+        handleOnChangeSchedule={this.handleOnChangeSchedule}
+
+        priorities={this.props.priorityCatalog}
+        selectedPriority={this.props.selectedPriority}
+        handleOnChangePriority={this.handleOnChangePriority}
+
+        jobs={this.props.jobCatalog}
+        selectedJobs={this.props.selectedJobs}
+        handleOnChangeJobs={this.handleOnChangeJobs}
+
+        cardComponents={this.props.cardComponentCatalog}
+        selectedCardComponent={this.props.selectedCardComponent}
+        handleOnChangeCardComponent={() => {}}
+
         columns={this.state.columns}
         rows={this.state.rows}
 
@@ -202,6 +248,8 @@ class CardDetailContainer extends React.Component {
 
 function mapStateToProps (state) {
   return {
+    ...cardBuilderCatalogsSelector(state),
+    ...cardBuilderSelectedSelector(state)
   }
 }
 
