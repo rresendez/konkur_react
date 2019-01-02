@@ -19,7 +19,7 @@ const StyledHorizontal = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 18rem;
+  min-height: 18rem;
 `
 
 class PersonalHierarchy extends React.Component {

@@ -13,7 +13,7 @@ const CardItemContainer = withStyles({
 
 const backgroundPicker = (props) => {
   if (props.personal.new) {
-    return props.theme.color.warning
+    return 'rgba(191,144,0,1)'
   } else {
     return props.theme.color.primary
   }
