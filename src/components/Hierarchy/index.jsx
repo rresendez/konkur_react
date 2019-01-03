@@ -14,15 +14,20 @@ const BaseStyled = styled.div`
   background-color: rgba(222,235,247,1)
 `
 const StyledPersonal = styled.div`
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  &:first-child {
+    margin-top: 1rem;
+  }
+  &:last-child {
+    margin-bottom: 1rem;
+  }
+
 `
 
 const StyledArrow = styled.div`
   display: block;
   text-align: center;
   font-size: 5rem;
-  margin-bottom: 1rem;
+  margin-bottom: -20px;
   color: rgba(189,215,238,1)
 `
 

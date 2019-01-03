@@ -9,6 +9,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+import Icon from '../Icon'
 
 const styles = theme => ({
   root: {
@@ -89,6 +90,26 @@ function SearchAppBar (props) {
               }}
             />
           </div>
+          <IconButton>
+            <Icon>
+              group
+            </Icon>
+          </IconButton>
+          <IconButton>
+            <Icon>
+              info
+            </Icon>
+          </IconButton>
+          <IconButton>
+            <Icon>
+              local_hospital
+            </Icon>
+          </IconButton>
+          <IconButton>
+            <Icon>
+              dehaze
+            </Icon>
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

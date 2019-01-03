@@ -4,6 +4,7 @@ import PersonalHierarchy from '../PersonalHierarchy'
 import Hierarchy from '../Hierarchy'
 import Tabs from '../Tabs'
 import SearchField from '../SearchField'
+import NavBar from '../NavBar'
 
 import styled from 'styled-components'
 
@@ -12,11 +13,11 @@ const MainWrapper = styled.div`
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto 18rem 18rem 18rem 18rem auto
+  grid-template-rows: auto 18rem 18rem 18rem auto
   align-items: strech;
   justify-items: stretch;
   margin-left: 1rem;
-  margin-right: 1rem;
+  margin-right: 1rem; 
 `
 const UserWrapper = styled.div`
   grid-column: 1;
@@ -27,6 +28,7 @@ const UserWrapper = styled.div`
   text-align: center;
   letter-spacing: .2rem;
   margin-top: auto; 
+  margin-bottom: -.5rem;
   font-family:${props => props.theme.typography.fontFamily};
   `
 
@@ -35,6 +37,7 @@ const TabWrapper = styled.div`
   grid-row: 1;
   grid-row-end: 1;
   padding-top: 1rem;
+  margin-top: auto;
   `
 
 const SearchWrapper = styled.div`
@@ -86,22 +89,18 @@ class ManagmentUI extends React.Component {
     this.state = {}
     this.state.mock = this.props.personal
     this.state.selectedPersonal = {}
+    this.state.navName = 'user manager'
   }
 
   render () {
     return (
       <div>
+        <NavBar
+          title={this.state.navName}
+        >
+
+        </NavBar>
         <MainWrapper>
-          <UserWrapper>
-            <h2>USER MANAGEMENT</h2>
-          </UserWrapper>
-          <TabWrapper>
-            <Tabs></Tabs>
-          </TabWrapper>
-          <SearchWrapper>
-            <SearchField>
-            </SearchField>
-          </SearchWrapper>
           <HWrapper>
             <Hierarchy
               mock={this.state.mock[0]}
