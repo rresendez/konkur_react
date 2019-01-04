@@ -10,10 +10,10 @@ import styled from 'styled-components'
 
 const MainWrapper = styled.div`
   display: grid;
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: auto 18rem 18rem 18rem auto
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
   align-items: strech;
   justify-items: stretch;
   margin-left: 1rem;
@@ -103,7 +103,7 @@ class ManagmentUI extends React.Component {
         <MainWrapper>
           <HWrapper>
             <Hierarchy
-              mock={this.state.mock[0]}
+              heirarchy={this.props.heirarchy}
               handleSelectedPersonal={this.props.handleSelectedPersonal}
             >
 

@@ -121,13 +121,30 @@ class MockChange extends React.Component {
     this.state = {}
     this.state.selectedPersonal = {}
     this.state.personal = mock.personal
+    this.state.heirarchy = [
+      {
+        name: 'Drop box here',
+        first: true
+      }
+    ]
   }
 
   handleSelectedPersonal = (personal) => {
     console.log('this is the state on parent')
     console.log(personal)
+    console.log('array is updated')
+    let newArray = []
+    if (this.state.heirarchy[0].first) {
+      debugger
+      newArray = [personal]
+    } else {
+      newArray = [ ...this.state.heirarchy, personal ]
+    }
+
     this.setState({
-      selectedPersonal: personal
+      selectedPersonal: personal,
+      heirarchy: newArray
+
     })
   }
 
@@ -137,6 +154,7 @@ class MockChange extends React.Component {
         <ManagmentUI
           handleSelectedPersonal={this.handleSelectedPersonal}
           personal={this.state.personal}
+          heirarchy={this.state.heirarchy}
         >
         </ManagmentUI>
         {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}

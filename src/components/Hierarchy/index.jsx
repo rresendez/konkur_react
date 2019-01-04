@@ -35,7 +35,6 @@ class Hierarchy extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = this.props.mock
   }
 
   dragHandler = (event) => {
@@ -51,7 +50,8 @@ class Hierarchy extends React.Component {
   }
 
   renderArrow = (i) => {
-    if (i !== this.state.personal.length - 1) {
+    if (i !== this.props.heirarchy
+      .length - 1) {
       return (
         <StyledArrow>
           <Icon>
@@ -64,7 +64,7 @@ class Hierarchy extends React.Component {
   }
 
   renderItems = () => {
-    const card = this.state.personal.map((person, i) => {
+    const card = this.props.heirarchy.map((person, i) => {
       return (
         <div
           key={i}
