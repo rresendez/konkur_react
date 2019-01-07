@@ -2,6 +2,7 @@ import React from 'react'
 
 import Personal from '../PersonalItem'
 import Icon from '../Icon'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
@@ -98,5 +99,8 @@ class Hierarchy extends React.Component {
     )
   }
 }
-
+Hierarchy.propTypes = {
+  hierarchy: PropTypes.array.isRequired,
+  handleSelectedPersonal: PropTypes.func.isRequired
+}
 export default Hierarchy

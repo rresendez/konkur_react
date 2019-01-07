@@ -2,9 +2,8 @@ import React from 'react'
 
 import PersonalHierarchy from '../PersonalHierarchy'
 import Hierarchy from '../Hierarchy'
-import Tabs from '../Tabs'
-import SearchField from '../SearchField'
 import NavBar from '../NavBar'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
@@ -19,33 +18,6 @@ const MainWrapper = styled.div`
   margin-left: 1rem;
   margin-right: 1rem; 
 `
-const UserWrapper = styled.div`
-  grid-column: 1;
-  grid-column-end:2;
-  grid-row: 1;
-  grid-row-end: 1;
-  color: rgba(0,112,192,1);
-  text-align: center;
-  letter-spacing: .2rem;
-  margin-top: auto; 
-  margin-bottom: -.5rem;
-  font-family:${props => props.theme.typography.fontFamily};
-  `
-
-const TabWrapper = styled.div`
-  grid-column: 3;
-  grid-row: 1;
-  grid-row-end: 1;
-  padding-top: 1rem;
-  margin-top: auto;
-  `
-
-const SearchWrapper = styled.div`
-  grid-column: 6;
-  grid-row: 1;
-  grid-row-end: 1;
-  padding-top: 1rem;
-  `
 
 const HWrapper = styled.div`
   width: 20rem;
@@ -56,8 +28,8 @@ const HWrapper = styled.div`
 `
 const PWrapper = styled.div`
   grid-column: 2/7;
-  grid-row: 2;
-  grid-row-end: 2;
+  grid-row: ${props => props.idx + 2};
+  grid-row-end: ${props => props.idx + 2};
   width: 100%;
   height: 0;
 `
@@ -87,11 +59,26 @@ class ManagmentUI extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.mock = this.props.personal
-    this.state.selectedPersonal = {}
     this.state.navName = 'user manager'
   }
-
+  renderRight = () => {
+    const rightSide = this.props.personal.map((person, idx) => {
+      if (idx <= this.props.heirarchy.length) {
+        return (
+          <PWrapper
+            idx={idx}
+          >
+            <PersonalHierarchy
+              mock={person}
+              handleSelectedPersonal={this.props.handleSelectedPersonal}
+            >
+            </PersonalHierarchy>
+          </PWrapper>
+        )
+      }
+    })
+    return rightSide
+  }
   render () {
     return (
       <div>
@@ -103,44 +90,28 @@ class ManagmentUI extends React.Component {
         <MainWrapper>
           <HWrapper>
             <Hierarchy
-              heirarchy={this.props.heirarchy}
+              heirarchy={this.props.heirarchy.length === 0 ? [{
+                name: 'Drop name here' }] : this.props.heirarchy}
               handleSelectedPersonal={this.props.handleSelectedPersonal}
             >
 
             </Hierarchy>
           </HWrapper>
-          <PWrapper>
-            <PersonalHierarchy
-              mock={this.state.mock[0]}
-              handleSelectedPersonal={this.props.handleSelectedPersonal}
-            >
-            </PersonalHierarchy>
+          <PWrapper
+            heirarchy={this.props.heirarchy}
+          >
           </PWrapper>
-          <PWrapper2>
-            <PersonalHierarchy
-              mock={this.state.mock[1]}
-              handleSelectedPersonal={this.props.handleSelectedPersonal}
-            >
-            </PersonalHierarchy>
-          </PWrapper2>
-          <PWrapper3>
-            <PersonalHierarchy
-              mock={this.state.mock[2]}
-              handleSelectedPersonal={this.props.handleSelectedPersonal}
-            >
-            </PersonalHierarchy>
-          </PWrapper3>
-          <PWrapper4>
-            <PersonalHierarchy
-              mock={this.state.mock[3]}
-              handleSelectedPersonal={this.props.handleSelectedPersonal}
-            >
-            </PersonalHierarchy>
-          </PWrapper4>
+          {this.renderRight()}
         </MainWrapper>
       </div>
     )
   }
+}
+
+ManagmentUI.propTypes = {
+  hierarchy: PropTypes.array.isRequired,
+  personal: PropTypes.array.isRequired,
+  handleSelectedPersonal: PropTypes.func.isRequired
 }
 
 export default ManagmentUI
