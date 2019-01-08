@@ -3,6 +3,7 @@ const colorParams = {
   fontBlack: 'rgba(1,1,1,1)',
   fontWhite: 'rgba(254,254,254,1)',
   colorPrimary: 'rgba(26,117,207,1)',
+  colorPrimaryDark: 'rgba(26,117,207,.52)',
   colorSecondary: 'rgba(253,187,48,1)',
   colorWarning: 'rgba(255,235,59,1)',
   colorError: 'rgba(176,0,32,1)',

@@ -2,6 +2,7 @@ import React from 'react'
 
 import Personal from '../PersonalItem'
 import Icon from '../Icon'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
@@ -19,14 +20,13 @@ const StyledHorizontal = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 18rem;
+  min-height: 18rem;
 `
 
 class PersonalHierarchy extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = this.props.mock
   }
 
   dragHandler = (event) => {
@@ -42,7 +42,7 @@ class PersonalHierarchy extends React.Component {
   }
 
   renderItems = () => {
-    const card = this.state.personal.map((person, i) => {
+    const card = this.props.mock.map((person, i) => {
       return (
         <div
           key={i}
@@ -78,4 +78,8 @@ class PersonalHierarchy extends React.Component {
   }
 }
 
+PersonalHierarchy.propTypes = {
+  hierarchy: PropTypes.array.isRequired,
+  handleSelectedPersonal: PropTypes.func.isRequired
+}
 export default PersonalHierarchy

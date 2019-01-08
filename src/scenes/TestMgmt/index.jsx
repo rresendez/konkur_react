@@ -10,66 +10,73 @@ const mock = {
         name: 'Jeffrey Costa',
         title: 'Sr. Dir , Replenishment',
         new: false,
-        heirarchyLevel: 2
+        subordinates: [0, 1, 2, 3]
+
       },
       {
         id: 1,
         name: 'Shaun Guardad',
         title: 'Sr, Dir , Replenishment',
         new: false,
-        heirarchyLevel: 2
+        subordinates: [0, 3]
       },
       {
         id: 2,
         name: 'Max',
         title: 'Directora de la tiendita ',
         new: false,
-        heirarchyLevel: 3
+        subordinates: [0, 3]
       },
       {
         id: 3,
         name: 'Max Landis',
         title: 'Directora de la tiendita ',
         new: false,
-        heirarchyLevel: 4
+        subordinates: [0, 3]
       },
       {
         id: 4,
         name: 'Max Power',
         title: 'Directora de la tiendita ',
         new: false,
-        heirarchyLevel: 5
+        subordinates: [0, 3]
       },
       {
         id: 5,
         name: 'Manuel Costa',
         title: 'Sr. Dir , Replenishment',
-        heirarchyLevel: 5
+        new: false,
+        subordinates: [0, 1, 2, 3]
+
       }
     ], [
       {
         id: 6,
         name: 'Arturo Guardad',
         title: 'Sr, Dir , Replenishment',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       },
       {
         id: 7,
         name: 'Max',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       },
       {
         id: 9,
         name: 'Max Pandis',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       },
       {
         id: 10,
         name: 'Max Menu',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       }
 
     ],
@@ -78,25 +85,29 @@ const mock = {
         id: 11,
         name: 'Juan  Perez',
         title: 'Sr, Dir , Replenishment',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       },
       {
         id: 12,
         name: 'Jesus Camacho',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        subordinates: [0, 3]
       },
       {
         id: 13,
         name: 'Ana Arenas',
         title: 'Directora de la tiendita ',
-        new: true
+        new: true,
+        subordinates: [0, 3]
       },
       {
         id: 14,
         name: 'Adrea Cancer',
         title: 'Directora de la tiendita ',
-        new: true
+        new: true,
+        subordinates: [0, 3]
       }
 
     ],
@@ -110,38 +121,13 @@ class MockChange extends React.Component {
     this.state = {}
     this.state.selectedPersonal = {}
     this.state.personal = mock.personal
-    this.state.heirarchy = []
   }
 
   handleSelectedPersonal = (personal) => {
     console.log('this is the state on parent')
     console.log(personal)
-    console.log('array is updated')
-    console.log('current h level ' + this.state.selectedPersonal.heirarchyLevel)
-    console.log('passed h level ' + personal.heirarchyLevel)
-    let newArray = []
-    if (!this.state.selectedPersonal.heirarchyLevel) {
-      newArray = [personal]
-    } else {
-      if (this.state.selectedPersonal.heirarchyLevel < personal.heirarchyLevel) {
-        newArray = [ ...this.state.heirarchy, personal ]
-      } else if (this.state.selectedPersonal.heirarchyLevel === personal.heirarchyLevel) {
-        this.state.heirarchy.pop()
-        newArray = [...this.state.heirarchy, personal]
-      } else if (this.state.selectedPersonal.heirarchyLevel > personal.heirarchyLevel) {
-        newArray = [personal]
-      } else {
-        newArray = [{
-          name: 'No Heirarchy level defined',
-          first: false
-        }]
-      }
-    }
-
     this.setState({
-      selectedPersonal: personal,
-      heirarchy: newArray
-
+      selectedPersonal: personal
     })
   }
 
@@ -151,7 +137,6 @@ class MockChange extends React.Component {
         <ManagmentUI
           handleSelectedPersonal={this.handleSelectedPersonal}
           personal={this.state.personal}
-          heirarchy={this.state.heirarchy}
         >
         </ManagmentUI>
         {console.log('current selected personal' + JSON.stringify(this.state.selectedPersonal))}

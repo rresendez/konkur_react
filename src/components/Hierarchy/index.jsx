@@ -2,6 +2,7 @@ import React from 'react'
 
 import Personal from '../PersonalItem'
 import Icon from '../Icon'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
@@ -14,15 +15,20 @@ const BaseStyled = styled.div`
   background-color: rgba(222,235,247,1)
 `
 const StyledPersonal = styled.div`
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  &:first-child {
+    margin-top: 1rem;
+  }
+  &:last-child {
+    margin-bottom: 1rem;
+  }
+
 `
 
 const StyledArrow = styled.div`
   display: block;
   text-align: center;
   font-size: 5rem;
-  margin-bottom: 1rem;
+  margin-bottom: -20px;
   color: rgba(189,215,238,1)
 `
 
@@ -30,7 +36,6 @@ class Hierarchy extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.personal = this.props.mock
   }
 
   dragHandler = (event) => {
@@ -46,7 +51,8 @@ class Hierarchy extends React.Component {
   }
 
   renderArrow = (i) => {
-    if (i !== this.state.personal.length - 1) {
+    if (i !== this.props.heirarchy
+      .length - 1) {
       return (
         <StyledArrow>
           <Icon>
@@ -59,7 +65,7 @@ class Hierarchy extends React.Component {
   }
 
   renderItems = () => {
-    const card = this.state.personal.map((person, i) => {
+    const card = this.props.heirarchy.map((person, i) => {
       return (
         <div
           key={i}
@@ -93,5 +99,8 @@ class Hierarchy extends React.Component {
     )
   }
 }
-
+Hierarchy.propTypes = {
+  hierarchy: PropTypes.array.isRequired,
+  handleSelectedPersonal: PropTypes.func.isRequired
+}
 export default Hierarchy

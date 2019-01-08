@@ -13,7 +13,7 @@ const CardItemContainer = withStyles({
 
 const backgroundPicker = (props) => {
   if (props.personal.new) {
-    return props.theme.color.warning
+    return 'rgba(191,144,0,1)'
   } else {
     return props.theme.color.primary
   }
@@ -22,6 +22,14 @@ const backgroundPicker = (props) => {
 const H3Fixer = styled.div`
   margin-top:0;
   padding-top: .5rem;
+  a{
+      text-decoration: none;
+      color: white;
+    &:hover{
+      color: ${props => props.theme.color.warning};
+      text-decoration: underline;
+    }
+  }
 `
 const StyledCard = styled.div`
    color: ${props => props.theme.typography.getColor(props.theme.color.primary)};
@@ -31,6 +39,9 @@ const StyledCard = styled.div`
   text-align: center; 
   cursor: pointer;
   margin-bottom:auto;
+  &:hover{
+   background-color: rgba(20,100,190,1);
+  }
 `
 
 class Personal extends React.Component {
@@ -57,9 +68,11 @@ class Personal extends React.Component {
         <CardItemContainer>
           <StyledCard personal={this.props.personal}>
             <H3Fixer>
-              <h3>
-                {this.props.personal.name}
-              </h3>
+              <a href="">
+                <h3>
+                  {this.props.personal.name}
+                </h3>
+              </a>
             </H3Fixer>
             <h4>
               {this.props.personal.title}
