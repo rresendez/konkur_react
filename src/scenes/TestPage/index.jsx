@@ -44,6 +44,7 @@ const mock = {
         id: 5,
         name: 'Manuel Costa',
         title: 'Sr. Dir , Replenishment',
+        new: true,
         heirarchyLevel: 5
       }
     ], [
@@ -51,25 +52,29 @@ const mock = {
         id: 6,
         name: 'Arturo Guardad',
         title: 'Sr, Dir , Replenishment',
-        new: false
+        new: false,
+        heirarchyLevel: 2
       },
       {
         id: 7,
         name: 'Max',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        heirarchyLevel: 3
       },
       {
         id: 9,
         name: 'Max Pandis',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        heirarchyLevel: 4
       },
       {
         id: 10,
         name: 'Max Menu',
         title: 'Directora de la tiendita ',
-        new: false
+        new: false,
+        heirarchyLevel: 5
       }
 
     ],
@@ -78,11 +83,12 @@ const mock = {
         id: 11,
         name: 'Juan  Perez',
         title: 'Sr, Dir , Replenishment',
-        new: false
+        new: false,
+        heirarchyLevel: 3
       },
       {
         id: 12,
-        name: 'Jesus Camacho',
+        name: 'Jesus Cruz',
         title: 'Directora de la tiendita ',
         new: false
       },
@@ -90,13 +96,15 @@ const mock = {
         id: 13,
         name: 'Ana Arenas',
         title: 'Directora de la tiendita ',
-        new: true
+        new: true,
+        heirarchyLevel: 2
       },
       {
         id: 14,
         name: 'Adrea Cancer',
         title: 'Directora de la tiendita ',
-        new: true
+        new: true,
+        heirarchyLevel: 3
       }
 
     ],
