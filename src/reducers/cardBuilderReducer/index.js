@@ -25,7 +25,8 @@ const initialState = fromJS({
 
     cardLastCardComponentModified: {},
     cardFirstTimeChangedColor: false,
-    cardComponentColorCouldNotBeSaved: false
+    cardComponentColorCouldNotBeSaved: false,
+    cardComponentEditable: false
   },
   isCallInProgress: false,
   error: false,
@@ -100,6 +101,10 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardComponents', indexOfCurrentCardComponent, 'name'], fromJS(action.payload.cardLastCardComponentModified.name))
       .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
       .setIn(['api', 'cardFirstTimeChangedColor'], fromJS(action.payload.cardFirstTimeChangedColor))
+  }
+
+  if (action.type === actions.CHANGE_CARD_EDITABLE) {
+    return state.setIn(['api', 'cardComponentEditable'], !state.getIn(['api', 'cardComponentEditable']))
   }
 
   return state

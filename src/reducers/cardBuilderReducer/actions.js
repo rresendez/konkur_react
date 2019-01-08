@@ -15,6 +15,7 @@ export const CHANGE_CARD_COMPONENT_COLOR = 'cardBuilderReducer/CHANGE_CARD_COMPO
 export const CHANGE_CARD_COMPONENT_COULD_NOT_BE_SAVED = 'cardBuilderReducer/CHANGE_CARD_COMPONENT_COULD_NOT_BE_SAVED'
 export const CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED'
 export const CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED'
+export const CHANGE_CARD_EDITABLE = 'cardBuilderReducer/CHANGE_CARD_EDITABLE'
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -92,5 +93,10 @@ export const cleanCardLastCardComponentModifed = (payload) => ({
 
 export const changeCardLastCardComponentModified = (payload) => ({
   type: CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED,
+  payload
+})
+
+export const changeCardEditable = (payload) => ({
+  type: CHANGE_CARD_EDITABLE,
   payload
 })

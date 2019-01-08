@@ -55,7 +55,8 @@ export const cardBuilderCardDetailSelector = createSelector(
       cardComponentColor: cardComponentColor,
       cardComponentColorCouldNotBeSaved: cardBuilderReducer.api.cardComponentColorCouldNotBeSaved,
       cardLastCardComponentModified: cardBuilderReducer.api.cardLastCardComponentModified,
-      cardFirstTimeChangedColor: cardBuilderReducer.api.cardFirstTimeChangedColor
+      cardFirstTimeChangedColor: cardBuilderReducer.api.cardFirstTimeChangedColor,
+      cardComponentEditable: cardBuilderReducer.api.cardComponentEditable
     }
   }
 )

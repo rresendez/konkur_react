@@ -200,6 +200,8 @@ export default class CardDetail extends React.Component {
             handleOnChangeCardComponentColor={this.props.handleOnChangeCardComponentColor}
             cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
             handleOnCloseEditable={this.props.handleOnCloseEditableCardItem}
+            editable={this.props.cardComponentEditable}
+            handleOnChangeEditable={this.props.handleOnChangeCardItemEditable}
           />
           {
             this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>

@@ -225,6 +225,10 @@ class CardDetailContainer extends React.Component {
     })
   }
 
+  handleOnChangeCardItemEditable = () => {
+    this.props.changeCardEditable()
+  }
+
   render () {
     return (
       <CardDetail
@@ -249,6 +253,8 @@ class CardDetailContainer extends React.Component {
         cardComponentColor={this.props.cardDetail.cardComponentColor}
         cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
         handleOnCloseEditableCardItem={this.handleOnCloseEditableCardItem}
+        cardComponentEditable={this.props.cardDetail.cardComponentEditable}
+        handleOnChangeCardItemEditable={this.handleOnChangeCardItemEditable}
 
         columns={this.state.columns}
         rows={this.state.rows}

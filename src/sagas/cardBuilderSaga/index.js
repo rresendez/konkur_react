@@ -82,11 +82,12 @@ function * genChangeCardComponent (action) {
 }
 
 function * genCancelCardComponentModification (action) {
-  debugger
-  yield put(cRActions.cleanCardLastCardComponentModifed({
-    cardLastCardComponentModified: action.payload.cardLastCardComponentModified,
-    cardFirstTimeChangedColor: false
-  }))
+  if (Object.keys(action.payload.cardLastCardComponentModified).length > 0) {
+    yield put(cRActions.cleanCardLastCardComponentModifed({
+      cardLastCardComponentModified: action.payload.cardLastCardComponentModified,
+      cardFirstTimeChangedColor: false
+    }))
+  }
 }
 
 function * defaultSaga () {

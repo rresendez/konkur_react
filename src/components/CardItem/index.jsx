@@ -94,19 +94,16 @@ class CardItem extends React.Component {
     this.state = {
       leftDisable: false,
       rightDisable: false,
-      editable: false,
       title: ''
     }
   }
 
   handleOnClickEditableButton = () => {
-    this.setState({ editable: !this.state.editable })
-    if (!this.state.editable) {
-      console.log('editable on')
+    this.props.handleOnChangeEditable()
+    if (!this.props.editable) {
       this.setState({ leftDisable: true })
       this.setState({ rightDisable: true })
     } else {
-      console.log('editable off')
       this.setState({ leftDisable: false })
       this.setState({ rightDisable: false })
     }
@@ -117,12 +114,12 @@ class CardItem extends React.Component {
     if (this.props.selectedCardComponent < this.props.colors.length - 1 && side > 0) {
       this.props.handleOnChangeCardComponent(this.props.selectedCardComponent + 1)
       if (this.props.selectedCardComponent === this.props.colors.length - 2) {
-        this.setState({ editable: true })
+        this.props.handleOnChangeEditable()
       }
     } else if (side < 0 && this.props.selectedCardComponent > 0) {
       this.props.handleOnChangeCardComponent(this.props.selectedCardComponent - 1)
       // this.setState({ newColor: null })
-      this.setState({ editable: false })
+      this.props.handleOnChangeEditable()
     }
   }
 
@@ -141,12 +138,12 @@ class CardItem extends React.Component {
 
   handleLastItem = (index, event) => {
     if (index === this.props.colors.length - 1) {
-      this.setState({ editable: true })
+      this.props.handleOnChangeEditable()
     }
   }
 
   handleOnCloseEditable = (event) => {
-    this.setState({ editable: false })
+    this.props.handleOnChangeEditable()
     this.props.handleOnCloseEditable(event)
   }
 
@@ -154,19 +151,9 @@ class CardItem extends React.Component {
     this.setState({ title: event.target.value })
   }
 
-  computeColor = () => {
-    /*
-    if (this.props.cardComponentColor === null) {
-      if (this.props.colors.length > 0) return this.props.colors[this.props.selectedCardComponent].color
-      return 'rgba(0,0,0,1)'
-    }
-    */
-    return this.props.cardComponentColor
-  }
-
   computeName = () => {
     if (this.props.colors.length > 0) {
-      return (this.state.editable)
+      return (this.props.editable)
         ? this.renderInput(this.props.colors[this.props.selectedCardComponent].name)
         : this.props.colors[this.props.selectedCardComponent].name
     }
@@ -174,17 +161,17 @@ class CardItem extends React.Component {
   }
 
   computeLeftButtonState = () => {
-    if (this.state.editable) return true
+    if (this.props.editable) return true
     if (this.props.selectedCardComponent === 0) return true
   }
 
   computeRightButtonState = () => {
-    if (this.state.editable) return true
+    if (this.props.editable) return true
     if (this.props.selectedCardComponent === (this.props.colors.length - 1)) return true
   }
 
   renderPicker = () => {
-    if (this.state.editable) {
+    if (this.props.editable) {
       return (
         <ColorPicker
           handleOnChange={this.handleOnChangeColor}
@@ -198,7 +185,7 @@ class CardItem extends React.Component {
       <div>
         <TextField
           value={this.state.title}
-          placeholder={label.toUpperCase()}
+          placeholder={(label) ? label.toUpperCase() : ''}
           onChange={this.handleOnChangeNewCardComponentTitle}
         />
       </div>
@@ -206,7 +193,7 @@ class CardItem extends React.Component {
   }
 
   renderButton = (crud) => {
-    if (this.state.editable) {
+    if (this.props.editable) {
       if (this.props.selectedCardComponent !== this.props.colors.length - 1) {
         return (
           <div>
@@ -215,7 +202,7 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={this.computeColor()}
+                color={this.props.cardComponentColor}
                 size="1.5"
               >
                 delete
@@ -227,7 +214,7 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={this.computeColor()}
+                color={this.props.cardComponentColor}
                 size="1.5"
               >
                 close
@@ -240,7 +227,7 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={this.computeColor()}
+                color={this.props.cardComponentColor}
                 size="1.5"
               >
                 check
@@ -257,7 +244,7 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={this.computeColor()}
+                color={this.props.cardComponentColor}
                 size="1.5"
               >
                 close
@@ -270,7 +257,7 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={this.computeColor()}
+                color={this.props.cardComponentColor}
                 size="1.5"
               >
               check
@@ -288,7 +275,7 @@ class CardItem extends React.Component {
           >
             <Icon
               auto
-              color={this.computeColor()}
+              color={this.props.cardComponentColor}
               size="1.5"
             >
               delete
@@ -300,7 +287,7 @@ class CardItem extends React.Component {
             onClick={this.handleOnClickEditableButton}
           >
             <Icon
-              color={this.computeColor()}
+              color={this.props.cardComponentColor}
               size="1.5"
               auto
             >
@@ -317,7 +304,7 @@ class CardItem extends React.Component {
             onClick={this.handleOnClickEditableButton}
           >
             <Icon
-              color={this.computeColor()}
+              color={this.props.cardComponentColor}
               auto
               size="1.5"
             >
@@ -339,7 +326,7 @@ class CardItem extends React.Component {
       <StyledCard>
         <CardItemContainer raised={this.props.raised}>
           <TitleWrapper
-            cardColor={this.computeColor()}
+            cardColor={this.props.cardComponentColor}
           >
             {this.renderPicker()}
             <CardButtonWrapper>
@@ -349,7 +336,7 @@ class CardItem extends React.Component {
                 disabled={this.computeLeftButtonState()}
               >
                 <Icon
-                  color={this.computeColor()}
+                  color={this.props.cardComponentColor}
                   auto
                   size="2"
                 >
@@ -362,7 +349,7 @@ class CardItem extends React.Component {
                 disabled={this.computeRightButtonState()}
               >
                 <Icon
-                  color={this.computeColor()}
+                  color={this.props.cardComponentColor}
                   auto
                   size="2"
                 >
@@ -370,7 +357,7 @@ class CardItem extends React.Component {
                 </Icon>
               </Button>
             </CardButtonWrapper>
-            <Title color={this.computeColor()}>
+            <Title color={this.props.cardComponentColor}>
               {this.computeName()}
             </Title>
             <SaveButton>
