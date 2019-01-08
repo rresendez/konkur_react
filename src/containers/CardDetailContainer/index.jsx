@@ -7,7 +7,10 @@ import * as cRActions from '../../reducers/cardBuilderReducer/actions'
 
 import CardDetail from '../../components/CardDetail'
 
-import { cardBuilderCatalogsSelector, cardBuilderSelectedSelector } from './selectors'
+import {
+  cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
+  cardBuilderCardDetailSelector
+} from './selectors'
 
 class CardDetailContainer extends React.Component {
   constructor (props) {
@@ -84,11 +87,6 @@ class CardDetailContainer extends React.Component {
     this.props.history.push(`/`)
   }
 
-  handleOnChangeSelectedValues = (event, child) => {
-    debugger
-    this.props.changeSelectedJobs()
-  }
-
   handleBackCardColor = (event) => {
     console.log('handleBackCardColor')
   }
@@ -103,6 +101,9 @@ class CardDetailContainer extends React.Component {
     }))
     console.log('handleSendQuery')
     console.log(this.refEditor.editor.getValue())
+    const cardComponentCatalog = this.props.cardComponentCatalog
+    const selectedCardComponent = this.props.card
+    debugger
   }
 
   handleOnChangeTableArrangement = (columns) => {
@@ -194,6 +195,36 @@ class CardDetailContainer extends React.Component {
     }
   }
 
+  handleOnChangeCardSubComponent = (event) => {
+    this.props.changeCardSubComponent(event.target.value)
+  }
+
+  handleOnChangeCardTitle = (event) => {
+    this.props.changeCardTitle(event.target.value)
+  }
+
+  handleOnChangeCardDataLevel = (event) => {
+    this.props.changeCardDataLevel(event.target.value)
+  }
+
+  handleOnChangeCardComponent = (idx) => {
+    this.props.changeSelectedCardComponent(idx)
+  }
+
+  handleOnChangeCardComponentColor = (color) => {
+    this.props.sagaChangeCardComponentColor({
+      ...color,
+      cardComponentCatalog: this.props.cardComponentCatalog,
+      cardFirstTimeChangedColor: this.props.cardDetail.cardFirstTimeChangedColor
+    })
+  }
+
+  handleOnCloseEditableCardItem = (event) => {
+    this.props.sagaCancelCardComponentModification({
+      cardLastCardComponentModified: this.props.cardDetail.cardLastCardComponentModified
+    })
+  }
+
   render () {
     return (
       <CardDetail
@@ -213,10 +244,23 @@ class CardDetailContainer extends React.Component {
 
         cardComponents={this.props.cardComponentCatalog}
         selectedCardComponent={this.props.selectedCardComponent}
-        handleOnChangeCardComponent={() => {}}
+        handleOnChangeCardComponent={this.handleOnChangeCardComponent}
+        handleOnChangeCardComponentColor={this.handleOnChangeCardComponentColor}
+        cardComponentColor={this.props.cardDetail.cardComponentColor}
+        cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
+        handleOnCloseEditableCardItem={this.handleOnCloseEditableCardItem}
 
         columns={this.state.columns}
         rows={this.state.rows}
+
+        cardSubComponent={this.props.cardDetail.cardSubComponent}
+        handleOnChangeCardSubComponent={this.handleOnChangeCardSubComponent}
+
+        cardTitle={this.props.cardDetail.cardTitle}
+        handleOnChangeCardTitle={this.handleOnChangeCardTitle}
+
+        cardDataLevel={this.props.cardDetail.cardDataLevel}
+        handleOnChangeCardDataLevel={this.handleOnChangeCardDataLevel}
 
         editorDefaultValue="/* Write your query right here :) */"
         dialogSwitch={this.state.dialogSwitch}
@@ -234,7 +278,6 @@ class CardDetailContainer extends React.Component {
         handleSendQuery={this.handleSendQuery}
         handleOnCancelSaveCard={this.handleOnCancelSaveCard}
         handleOnConfirmSaveCard={this.handleOnConfirmSaveCard}
-        handleOnChangeSelectedValues={this.handleOnChangeSelectedValues}
         handleOnChangeTableArrangement={this.handleOnChangeTableArrangement}
         handleHowtoOpen={this.handleHowtoOpen}
         handleOnCloseDropzone={this.handleOnCloseDropzone}
@@ -249,7 +292,8 @@ class CardDetailContainer extends React.Component {
 function mapStateToProps (state) {
   return {
     ...cardBuilderCatalogsSelector(state),
-    ...cardBuilderSelectedSelector(state)
+    ...cardBuilderSelectedSelector(state),
+    cardDetail: cardBuilderCardDetailSelector(state)
   }
 }
 

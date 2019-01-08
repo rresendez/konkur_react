@@ -19,8 +19,8 @@ const CardItemContainer = withStyles({
 
 const StyledCard = styled.div`
   box-sizing: border-box;
-  width: 100%;
   height: 100%;
+  width: 100%;
 `
 
 const Title = styled.div`
@@ -38,9 +38,15 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: .5rem;
+  padding: ${props => {
+    if (props.editable) {
+      return '.5rem'
+    }
+    return '0'
+  }};
   text-align: center;
   width: 100%;
+  transition: background .5s ease;
 `
 
 const CardButtonWrapper = styled.div`
@@ -86,15 +92,13 @@ class CardItem extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      index: 0,
-      newColor: null,
-      leftDisable: true,
+      leftDisable: false,
       rightDisable: false,
       editable: false,
-      newTitle: '',
-      newArray: {}
+      title: ''
     }
   }
+
   handleOnClickEditableButton = () => {
     this.setState({ editable: !this.state.editable })
     if (!this.state.editable) {
@@ -110,30 +114,23 @@ class CardItem extends React.Component {
 
   handleOnClick = (event) => {
     const side = parseInt(event.currentTarget.getAttribute('data-next'))
-    this.setState({ rightDisable: false })
-    this.setState({ leftDisable: false })
-    if (this.state.index < this.props.colors.length - 1 && side > 0) {
-      this.setState({ index: this.state.index + side })
-      if (this.state.index === this.props.colors.length - 2) {
-        this.setState({ rightDisable: true })
-        this.setState({ leftDisable: true })
+    if (this.props.selectedCardComponent < this.props.colors.length - 1 && side > 0) {
+      this.props.handleOnChangeCardComponent(this.props.selectedCardComponent + 1)
+      if (this.props.selectedCardComponent === this.props.colors.length - 2) {
         this.setState({ editable: true })
       }
-    } else if (side < 0 && this.state.index > 0) {
-      this.setState({ index: this.state.index + side })
-      if (this.state.index === 1) {
-        this.setState({ leftDisable: true })
-      }
-      this.setState({ newColor: null })
+    } else if (side < 0 && this.props.selectedCardComponent > 0) {
+      this.props.handleOnChangeCardComponent(this.props.selectedCardComponent - 1)
+      // this.setState({ newColor: null })
       this.setState({ editable: false })
-    } else {
-      console.log('out')
     }
   }
 
   handleOnChangeColor = (color, event) => {
-    this.setState({
-      newColor: color
+    const cardComponent = this.props.colors[this.props.selectedCardComponent]
+    this.props.handleOnChangeCardComponentColor({
+      newColor: color,
+      currentCardComponent: cardComponent
     })
   }
 
@@ -146,6 +143,44 @@ class CardItem extends React.Component {
     if (index === this.props.colors.length - 1) {
       this.setState({ editable: true })
     }
+  }
+
+  handleOnCloseEditable = (event) => {
+    this.setState({ editable: false })
+    this.props.handleOnCloseEditable(event)
+  }
+
+  handleOnChangeNewCardComponentTitle = (event) => {
+    this.setState({ title: event.target.value })
+  }
+
+  computeColor = () => {
+    /*
+    if (this.props.cardComponentColor === null) {
+      if (this.props.colors.length > 0) return this.props.colors[this.props.selectedCardComponent].color
+      return 'rgba(0,0,0,1)'
+    }
+    */
+    return this.props.cardComponentColor
+  }
+
+  computeName = () => {
+    if (this.props.colors.length > 0) {
+      return (this.state.editable)
+        ? this.renderInput(this.props.colors[this.props.selectedCardComponent].name)
+        : this.props.colors[this.props.selectedCardComponent].name
+    }
+    return ''
+  }
+
+  computeLeftButtonState = () => {
+    if (this.state.editable) return true
+    if (this.props.selectedCardComponent === 0) return true
+  }
+
+  computeRightButtonState = () => {
+    if (this.state.editable) return true
+    if (this.props.selectedCardComponent === (this.props.colors.length - 1)) return true
   }
 
   renderPicker = () => {
@@ -162,15 +197,17 @@ class CardItem extends React.Component {
     return (
       <div>
         <TextField
+          value={this.state.title}
           placeholder={label.toUpperCase()}
-          onChange={(event) => { this.handleChangeInput(event) }}
+          onChange={this.handleOnChangeNewCardComponentTitle}
         />
       </div>
     )
   }
+
   renderButton = (crud) => {
     if (this.state.editable) {
-      if (this.state.index !== this.props.colors.length - 1) {
+      if (this.props.selectedCardComponent !== this.props.colors.length - 1) {
         return (
           <div>
             <IconButton
@@ -178,25 +215,32 @@ class CardItem extends React.Component {
             >
               <Icon
                 auto
-                color={(this.state.newColor === null
-                  ? this.props.colors[this.state.index].color
-                  : this.state.newColor
-                )}
+                color={this.computeColor()}
                 size="1.5"
               >
                 delete
               </Icon>
             </IconButton>
             <IconButton
-              aria-label="Save"
-              onClick={this.handleOnClickEditableButton}
+              aria-label="Close"
+              onClick={this.handleOnCloseEditable}
             >
               <Icon
                 auto
-                color={(this.state.newColor === null
-                  ? this.props.colors[this.state.index].color
-                  : this.state.newColor
-                )}
+                color={this.computeColor()}
+                size="1.5"
+              >
+                close
+              </Icon>
+            </IconButton>
+            <IconButton
+              aria-label="Save"
+              onClick={this.handleOnClickEditableButton}
+              disabled={this.props.cardComponentColorCouldNotBeSaved}
+            >
+              <Icon
+                auto
+                color={this.computeColor()}
                 size="1.5"
               >
                 check
@@ -206,21 +250,36 @@ class CardItem extends React.Component {
         )
       } else {
         return (
-          <IconButton
-            aria-label="Save"
-            onClick={this.handleOnClickEditableButton}
-          >
-            <Icon
-              auto
-              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
-              size="1.5"
+          <div>
+            <IconButton
+              aria-label="Close"
+              onClick={this.handleOnCloseEditable}
             >
+              <Icon
+                auto
+                color={this.computeColor()}
+                size="1.5"
+              >
+                close
+              </Icon>
+            </IconButton>
+            <IconButton
+              aria-label="Save"
+              onClick={this.handleOnClickEditableButton}
+              disabled={this.props.cardComponentColorCouldNotBeSaved}
+            >
+              <Icon
+                auto
+                color={this.computeColor()}
+                size="1.5"
+              >
               check
-            </Icon>
-          </IconButton>
+              </Icon>
+            </IconButton>
+          </div>
         )
       }
-    } else if (this.state.index !== this.props.colors.length - 1 &&
+    } else if (this.props.selectedCardComponent !== this.props.colors.length - 1 &&
       crud === 'update') {
       return (
         <div>
@@ -229,7 +288,7 @@ class CardItem extends React.Component {
           >
             <Icon
               auto
-              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              color={this.computeColor()}
               size="1.5"
             >
               delete
@@ -241,7 +300,7 @@ class CardItem extends React.Component {
             onClick={this.handleOnClickEditableButton}
           >
             <Icon
-              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              color={this.computeColor()}
               size="1.5"
               auto
             >
@@ -258,7 +317,7 @@ class CardItem extends React.Component {
             onClick={this.handleOnClickEditableButton}
           >
             <Icon
-              color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+              color={this.computeColor()}
               auto
               size="1.5"
             >
@@ -272,19 +331,25 @@ class CardItem extends React.Component {
   }
 
   render () {
+    if (this.props.colors.length === 0) {
+      return null
+    }
+
     return (
       <StyledCard>
         <CardItemContainer raised={this.props.raised}>
-          <TitleWrapper cardColor={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}>
+          <TitleWrapper
+            cardColor={this.computeColor()}
+          >
             {this.renderPicker()}
             <CardButtonWrapper>
               <Button
                 onClick={this.handleOnClick}
                 data-next="-1"
-                disabled={this.state.leftDisable}
+                disabled={this.computeLeftButtonState()}
               >
                 <Icon
-                  color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+                  color={this.computeColor()}
                   auto
                   size="2"
                 >
@@ -294,10 +359,10 @@ class CardItem extends React.Component {
               <Button
                 onClick={this.handleOnClick}
                 data-next="1"
-                disabled={this.state.rightDisable}
+                disabled={this.computeRightButtonState()}
               >
                 <Icon
-                  color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}
+                  color={this.computeColor()}
                   auto
                   size="2"
                 >
@@ -305,10 +370,8 @@ class CardItem extends React.Component {
                 </Icon>
               </Button>
             </CardButtonWrapper>
-            <Title color={this.state.newColor === null ? this.props.colors[this.state.index].color : this.state.newColor}>
-              {this.state.editable
-                ? this.renderInput(this.props.colors[this.state.index].name)
-                : this.props.colors[this.state.index].name}
+            <Title color={this.computeColor()}>
+              {this.computeName()}
             </Title>
             <SaveButton>
               {this.renderButton(this.props.crud)}
@@ -317,20 +380,26 @@ class CardItem extends React.Component {
           <CardContent>
             <TextFieldWrapper>
               <TextField
-                label="Sub category"
+                label="Sub component"
                 fullWidth
+                onChange={this.props.handleOnChangeCardSubComponent}
+                value={this.props.cardSubComponent}
               />
             </TextFieldWrapper>
             <TextFieldWrapper>
               <TextField
                 label="Card title"
                 fullWidth
+                onChange={this.props.handleOnChangeCardTitle}
+                value={this.props.cardTitle}
               />
             </TextFieldWrapper>
             <TextFieldWrapper>
               <TextField
                 label="Data level"
                 fullWidth
+                onChange={this.props.handleOnChangeCardDataLevel}
+                value={this.props.cardDataLevel}
               />
             </TextFieldWrapper>
             {this.props.itemCount ? (<ItemLabel>{this.props.itemCount}</ItemLabel>) : null}
@@ -351,7 +420,9 @@ CardItem.propTypes = {
   date: PropTypes.string,
   colors: PropTypes.array.isRequired,
   handleColors: PropTypes.func.isRequired,
-  crud: PropTypes.string.isRequired
+  crud: PropTypes.string.isRequired,
+  cardSubComponent: PropTypes.string.isRequired,
+  cardTitle: PropTypes.string.isRequired
 }
 
 CardItem.defaultProps = {

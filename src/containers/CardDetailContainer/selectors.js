@@ -33,7 +33,29 @@ export const cardBuilderSelectedSelector = createSelector(
       selectedSchedule: cardBuilderReducer.api.schedules[cardBuilderReducer.api.selectedSchedule] || { name: ' ' },
       selectedPriority: cardBuilderReducer.api.priorities[cardBuilderReducer.api.selectedPriority] || { name: ' ' },
       selectedJobs: selectedJobs.length > 0 ? selectedJobs : [{ name: '---' }],
-      selectedCardComponent: cardBuilderReducer.api.cardComponents[cardBuilderReducer.api.selectedCardComponent] || { name: ' ' }
+      selectedCardComponent: cardBuilderReducer.api.selectedCardComponent
+    }
+  }
+)
+
+export const cardBuilderCardDetailSelector = createSelector(
+  cardBuilderReducerSelector,
+  cardBuilderCatalogsSelector,
+  (cardBuilderReducer, cardBuilderCatalogsSelector) => {
+    let cardComponentColor
+    if (cardBuilderCatalogsSelector.cardComponentCatalog.length === 0) {
+      cardComponentColor = null
+    } else {
+      cardComponentColor = cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].color
+    }
+    return {
+      cardSubComponent: cardBuilderReducer.api.cardSubComponent,
+      cardTitle: cardBuilderReducer.api.cardTitle,
+      cardDataLevel: cardBuilderReducer.api.cardDataLevel,
+      cardComponentColor: cardComponentColor,
+      cardComponentColorCouldNotBeSaved: cardBuilderReducer.api.cardComponentColorCouldNotBeSaved,
+      cardLastCardComponentModified: cardBuilderReducer.api.cardLastCardComponentModified,
+      cardFirstTimeChangedColor: cardBuilderReducer.api.cardFirstTimeChangedColor
     }
   }
 )

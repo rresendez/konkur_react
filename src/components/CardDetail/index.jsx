@@ -80,14 +80,6 @@ const MenuProps = {
 }
 
 export default class CardDetail extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-    this.state.name = ['Carlos Abbott', 'April Tucker']
-    this.state.colors = mock.colors.reverse()
-    this.state.crud = 'create || update'
-  }
-
   renderSelectValue = (value) => value
 
   renderMultiSelectValue = (selected) => {
@@ -188,11 +180,26 @@ export default class CardDetail extends React.Component {
           </div>
         </div>
         <div className={styles.wrapperCardItem}>
-          {/*
-            <CardItem
-            colors={this.state.colors}
-            handleColors={this.handleColors}
+          <CardItem
             crud={this.props.crud}
+
+            cardSubComponent={this.props.cardSubComponent}
+            handleOnChangeCardSubComponent={this.props.handleOnChangeCardSubComponent}
+
+            cardTitle={this.props.cardTitle}
+            handleOnChangeCardTitle={this.props.handleOnChangeCardTitle}
+
+            cardDataLevel={this.props.cardDataLevel}
+            handleOnChangeCardDataLevel={this.props.handleOnChangeCardDataLevel}
+
+            colors={this.props.cardComponents}
+            handleColors={this.handleColors}
+            selectedCardComponent={this.props.selectedCardComponent}
+            cardComponentColor={this.props.cardComponentColor}
+            handleOnChangeCardComponent={this.props.handleOnChangeCardComponent}
+            handleOnChangeCardComponentColor={this.props.handleOnChangeCardComponentColor}
+            cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
+            handleOnCloseEditable={this.props.handleOnCloseEditableCardItem}
           />
           {
             this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>
@@ -205,7 +212,6 @@ export default class CardDetail extends React.Component {
               </Fab>
             </div>)
           }
-          */}
         </div>
         <div className={styles.wrapperEditor}>
           <TextEditor
