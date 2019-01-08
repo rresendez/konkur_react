@@ -17,6 +17,7 @@ const MainWrapper = styled.div`
   justify-items: stretch;
   margin-left: 1rem;
   margin-right: 1rem; 
+  zoom: 90%;
 `
 
 const HWrapper = styled.div`
@@ -32,27 +33,6 @@ const PWrapper = styled.div`
   grid-row-end: ${props => props.idx + 2};
   width: 100%;
   height: 0;
-`
-const PWrapper2 = styled.div`
-  grid-column: 2/7;
-  grid-row: 3;
-  grid-row-end: 3;
-  width: 100%;
-   height: 0;
-`
-const PWrapper3 = styled.div`
-  grid-column: 2/7;
-  grid-row: 4;
-  grid-row-end: 4;
-  width: 100%;
-   height: 0;
-`
-const PWrapper4 = styled.div`
-  grid-column: 2/7; 
-  grid-row: 5;
-  grid-row-end: 5;
-  width: 100%;
-   height: 0;
 `
 
 class ManagmentUI extends React.Component {
