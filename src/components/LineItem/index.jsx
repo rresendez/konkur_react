@@ -10,7 +10,7 @@ import Icon from '../Icon'
 const CardItemContainer = withStyles({
   root: {
     height: '2.5rem',
-    width: '20rem'
+    width: '25rem'
   }
 })(Card)
 
@@ -55,6 +55,7 @@ class LineItem extends React.Component {
       <div
         draggable="true"
         onDragStart={this.dragstartHandler}
+        data-card={JSON.stringify(this.props.line)}
       >
         <CardItemContainer>
           <StyledCard>
@@ -79,7 +80,7 @@ class LineItem extends React.Component {
 }
 
 LineItem.propTypes = {
-  id: PropTypes.number,
+  department: PropTypes.number,
   name: PropTypes.string
 }
 export default LineItem

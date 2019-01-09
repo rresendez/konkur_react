@@ -77,6 +77,9 @@ class Personal extends React.Component {
             <h4>
               {this.props.personal.title}
             </h4>
+            <h5>
+              {this.props.personal.heirarchyLevel}
+            </h5>
           </StyledCard>
         </CardItemContainer>
       </div>
