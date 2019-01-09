@@ -229,6 +229,16 @@ class CardDetailContainer extends React.Component {
     this.props.changeCardEditable()
   }
 
+  handleOnSaveCardComponent = (newCardComponent) => {
+    const payload = {
+      currentCardComponentSelectedIdx: this.props.selectedCardComponent,
+      currentCardComponentSelected: this.props.cardComponentCatalog[this.props.selectedCardComponent],
+      cardLastCardComponentModified: this.props.cardDetail.cardLastCardComponentModified,
+      newCardComponent
+    }
+    this.props.sagaCreateCardComponent(payload)
+  }
+
   render () {
     return (
       <CardDetail
@@ -251,10 +261,11 @@ class CardDetailContainer extends React.Component {
         handleOnChangeCardComponent={this.handleOnChangeCardComponent}
         handleOnChangeCardComponentColor={this.handleOnChangeCardComponentColor}
         cardComponentColor={this.props.cardDetail.cardComponentColor}
-        cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
+        cardComponentColorCouldNotBeSaved={this.props.cardDetail.cardComponentColorCouldNotBeSaved}
         handleOnCloseEditableCardItem={this.handleOnCloseEditableCardItem}
         cardComponentEditable={this.props.cardDetail.cardComponentEditable}
         handleOnChangeCardItemEditable={this.handleOnChangeCardItemEditable}
+        handleOnSaveCardComponent={this.handleOnSaveCardComponent}
 
         columns={this.state.columns}
         rows={this.state.rows}
@@ -290,6 +301,8 @@ class CardDetailContainer extends React.Component {
         handleUploadDropzone={this.handleUploadDropzone}
         handleCleanAttachment={this.handleCleanAttachment}
         handleSaveAttachment={this.handleSaveAttachment}
+        cardStatus={this.props.cardDetail.cardStatus}
+        cardLoading={this.props.cardDetail.cardLoading}
       />
     )
   }

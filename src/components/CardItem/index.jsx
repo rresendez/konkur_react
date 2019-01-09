@@ -1,15 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import IconButton from '@material-ui/core/IconButton'
-import { withTheme, withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
+import { customTheme } from '../../global-styles/theme-contexts'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 import Icon from '../Icon'
 
 import ColorPicker from '../ColorPicker'
+
+const TextFieldWhite = withStyles({
+  input: {
+    color: customTheme.typography.colorWhite
+  }
+
+})((props) => {
+  return (
+    <TextField InputProps={{ classes: { root: props.classes.input } }} {...props} />
+  )
+})
+
+const TextFieldBlack = withStyles({
+  input: {
+    color: customTheme.typography.colorBlack
+  }
+})(TextField)
 
 const CardItemContainer = withStyles({
   root: {
@@ -88,6 +107,10 @@ const SaveButton = styled.div`
   margin-left: auto;
 `
 
+const LinearProgressWrapper = styled.div`
+  flex-grow: 1;
+`
+
 class CardItem extends React.Component {
   constructor (props) {
     super(props)
@@ -99,7 +122,11 @@ class CardItem extends React.Component {
   }
 
   handleOnClickEditableButton = () => {
-    this.props.handleOnChangeEditable()
+    this.props.handleOnSaveCardComponent({
+      name: this.state.title,
+      color: this.props.cardComponentColor
+    })
+    // this.props.handleOnChangeEditable()
     if (!this.props.editable) {
       this.setState({ leftDisable: true })
       this.setState({ rightDisable: true })
@@ -118,8 +145,6 @@ class CardItem extends React.Component {
       }
     } else if (side < 0 && this.props.selectedCardComponent > 0) {
       this.props.handleOnChangeCardComponent(this.props.selectedCardComponent - 1)
-      // this.setState({ newColor: null })
-      this.props.handleOnChangeEditable()
     }
   }
 
@@ -170,25 +195,46 @@ class CardItem extends React.Component {
     if (this.props.selectedCardComponent === (this.props.colors.length - 1)) return true
   }
 
+  computeSaveButtonState = () => {
+    if (this.props.cardComponentColorCouldNotBeSaved) return true
+    if (this.props.loading) return true
+    return false
+  }
+
   renderPicker = () => {
     if (this.props.editable) {
       return (
         <ColorPicker
           handleOnChange={this.handleOnChangeColor}
+          disabled={this.props.loading}
         />
       )
     }
   }
 
   renderInput = (label) => {
-    return (
-      <div>
-        <TextField
+    const colorToPaint = this.props.theme.typography.getColor(this.props.cardComponentColor)
+
+    if (colorToPaint === customTheme.typography.colorBlack) {
+      return (
+        <TextFieldBlack
           value={this.state.title}
           placeholder={(label) ? label.toUpperCase() : ''}
           onChange={this.handleOnChangeNewCardComponentTitle}
+          cardComponentColor={this.props.cardComponentColor}
+          disabled={this.props.loading}
         />
-      </div>
+      )
+    }
+
+    return (
+      <TextFieldWhite
+        value={this.state.title}
+        placeholder={(label) ? label.toUpperCase() : ''}
+        onChange={this.handleOnChangeNewCardComponentTitle}
+        cardComponentColor={this.props.cardComponentColor}
+        disabled={this.props.loading}
+      />
     )
   }
 
@@ -223,12 +269,17 @@ class CardItem extends React.Component {
             <IconButton
               aria-label="Save"
               onClick={this.handleOnClickEditableButton}
-              disabled={this.props.cardComponentColorCouldNotBeSaved}
+              disabled={
+                this.computeSaveButtonState()
+              }
             >
               <Icon
                 auto
                 color={this.props.cardComponentColor}
                 size="1.5"
+                disabled={
+                  this.computeSaveButtonState()
+                }
               >
                 check
               </Icon>
@@ -241,11 +292,13 @@ class CardItem extends React.Component {
             <IconButton
               aria-label="Close"
               onClick={this.handleOnCloseEditable}
+              disabled={this.props.loading}
             >
               <Icon
                 auto
                 color={this.props.cardComponentColor}
                 size="1.5"
+                disabled={this.props.loading}
               >
                 close
               </Icon>
@@ -253,12 +306,13 @@ class CardItem extends React.Component {
             <IconButton
               aria-label="Save"
               onClick={this.handleOnClickEditableButton}
-              disabled={this.props.cardComponentColorCouldNotBeSaved}
+              disabled={this.computeSaveButtonState()}
             >
               <Icon
                 auto
                 color={this.props.cardComponentColor}
                 size="1.5"
+                disabled={this.computeSaveButtonState()}
               >
               check
               </Icon>
@@ -317,11 +371,49 @@ class CardItem extends React.Component {
     }
   }
 
-  render () {
-    if (this.props.colors.length === 0) {
-      return null
-    }
+  renderEmptyStatus = () => {
+    return (
+      <StyledCard>
+        <CardItemContainer raised={this.props.raised}>
+          <TitleWrapper
+            cardColor={this.props.cardComponentColor}
+          >
 
+          </TitleWrapper>
+          <CardContent>
+            <TextFieldWrapper>
+              <TextField
+                label="..."
+                fullWidth
+                disabled
+                value={this.props.cardSubComponent}
+              />
+            </TextFieldWrapper>
+            <TextFieldWrapper>
+              <TextField
+                label="..."
+                fullWidth
+                disabled
+                value={this.props.cardTitle}
+              />
+            </TextFieldWrapper>
+            <TextFieldWrapper>
+              <TextField
+                label="..."
+                fullWidth
+                disabled
+                value={this.props.cardDataLevel}
+              />
+            </TextFieldWrapper>
+            {this.props.itemCount ? (<ItemLabel>...</ItemLabel>) : null}
+            {this.props.date ? (<TimeLabel>...</TimeLabel>) : null}
+          </CardContent>
+        </CardItemContainer>
+      </StyledCard>
+    )
+  }
+
+  renderReadyStatus = () => {
     return (
       <StyledCard>
         <CardItemContainer raised={this.props.raised}>
@@ -339,6 +431,7 @@ class CardItem extends React.Component {
                   color={this.props.cardComponentColor}
                   auto
                   size="2"
+                  disabled={this.computeLeftButtonState()}
                 >
                   keyboard_arrow_left
                 </Icon>
@@ -352,6 +445,7 @@ class CardItem extends React.Component {
                   color={this.props.cardComponentColor}
                   auto
                   size="2"
+                  disabled={this.computeRightButtonState()}
                 >
                   keyboard_arrow_right
                 </Icon>
@@ -364,6 +458,13 @@ class CardItem extends React.Component {
               {this.renderButton(this.props.crud)}
             </SaveButton>
           </TitleWrapper>
+          {
+            this.props.loading && (
+              <LinearProgressWrapper>
+                <LinearProgress />
+              </LinearProgressWrapper>
+            )
+          }
           <CardContent>
             <TextFieldWrapper>
               <TextField
@@ -396,6 +497,16 @@ class CardItem extends React.Component {
       </StyledCard>
     )
   }
+
+  render () {
+    if (this.props.status === 'empty') {
+      return this.renderEmptyStatus()
+    }
+
+    if (this.props.status === 'ready') {
+      return this.renderReadyStatus()
+    }
+  }
 }
 
 CardItem.propTypes = {
@@ -413,6 +524,7 @@ CardItem.propTypes = {
 }
 
 CardItem.defaultProps = {
+  status: 'empty',
   cardColor: '#ffc220',
   titleColor: '#fff',
   title: 'fulfillment', // 'fulfillment',
@@ -421,4 +533,4 @@ CardItem.defaultProps = {
   date: 'last updatedtime comes here ...' // 'Wednesday, July 25, 2018'
 }
 
-export default withTheme()(CardItem)
+export default withTheme(CardItem)

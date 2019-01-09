@@ -39,3 +39,19 @@ export async function getCardComponents () {
     throw (data)
   }
 }
+
+export async function createCardComponent (payload) {
+  try {
+    const response = await _axios.post('/card-components', payload)
+    return response
+  } catch (error) {
+    debugger
+    console.log(error)
+    console.dir(error)
+    console.log(error.response)
+    debugger
+    const data = error.response.data
+    debugger
+    throw (data)
+  }
+}

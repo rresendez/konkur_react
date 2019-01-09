@@ -4,9 +4,16 @@ import { rgbaRegex } from '../../util/regex'
 
 import { setColor } from '../../global-styles/util'
 
+function computeColor (props) {
+  if (props.disabled) {
+    return props.theme.typography.colorLighGray
+  }
+  return setColor(props.theme, props.color, props.auto)
+}
+
 const Icon = styled.i`
   align-items: center;
-  color: ${props => setColor(props.theme, props.color, props.auto)};
+  color: ${(props) => computeColor(props)};
   direction: ltr;
   display: flex;
   font-family: 'Material Icons';
@@ -32,5 +39,7 @@ const Icon = styled.i`
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+
+  transition: color .5s ease;
 `
 export default Icon

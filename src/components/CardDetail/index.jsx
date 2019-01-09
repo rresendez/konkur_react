@@ -182,6 +182,8 @@ export default class CardDetail extends React.Component {
         <div className={styles.wrapperCardItem}>
           <CardItem
             crud={this.props.crud}
+            status={this.props.cardStatus}
+            loading={this.props.cardLoading}
 
             cardSubComponent={this.props.cardSubComponent}
             handleOnChangeCardSubComponent={this.props.handleOnChangeCardSubComponent}
@@ -202,6 +204,7 @@ export default class CardDetail extends React.Component {
             handleOnCloseEditable={this.props.handleOnCloseEditableCardItem}
             editable={this.props.cardComponentEditable}
             handleOnChangeEditable={this.props.handleOnChangeCardItemEditable}
+            handleOnSaveCardComponent={this.props.handleOnSaveCardComponent}
           />
           {
             this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>

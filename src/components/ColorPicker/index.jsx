@@ -10,6 +10,19 @@ const StyledPaper = styled.div`
 const StyledModified = styled.div`
  margin-bottom: 1rem;
  width: 100%;
+ position: relative;
+ overflow: hidden;
+`
+const StyledDisabled = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(250,250,250,.8);
+  z-index: 10;
 `
 const ModifiedPaper = withStyles({
   root: {
@@ -33,6 +46,11 @@ class ColorPicker extends React.Component {
   render () {
     return (
       <StyledModified>
+        {
+          this.props.disabled && (
+            <StyledDisabled />
+          )
+        }
         <ModifiedPaper>
           <StyledPaper>
             <SliderPicker

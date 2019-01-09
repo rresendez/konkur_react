@@ -25,8 +25,10 @@ const initialState = fromJS({
 
     cardLastCardComponentModified: {},
     cardFirstTimeChangedColor: false,
-    cardComponentColorCouldNotBeSaved: false,
-    cardComponentEditable: false
+    cardComponentColorCouldNotBeSaved: true,
+    cardComponentEditable: false,
+    cardStatus: 'empty',
+    cardLoading: false
   },
   isCallInProgress: false,
   error: false,
@@ -45,6 +47,7 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'priorities'], fromJS(action.payload.api.priorities))
       .setIn(['api', 'cardComponents'], fromJS(action.payload.api.cardComponents))
       .setIn(['isCallInProgress'], fromJS(action.payload.isCallInProgress))
+      .setIn(['api', 'cardStatus'], fromJS(action.payload.cardStatus))
   }
 
   if (action.type === actions.CHANGE_SELECTED_SCHEDULE) {
@@ -105,6 +108,10 @@ export default function initReducer (state = initialState, action) {
 
   if (action.type === actions.CHANGE_CARD_EDITABLE) {
     return state.setIn(['api', 'cardComponentEditable'], !state.getIn(['api', 'cardComponentEditable']))
+  }
+
+  if (action.type === actions.CHANGE_CARD_LOADING) {
+    return state.setIn(['api', 'cardLoading'], fromJS(action.payload))
   }
 
   return state

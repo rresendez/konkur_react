@@ -9,7 +9,9 @@ import { getPervicedColorValue } from '../../global-styles/util'
 import * as cRActions from '../../reducers/cardBuilderReducer/actions'
 import * as eRActions from '../../reducers/errorReducer/actions'
 
-import { getSchedules, getJobs, getPriorities, getCardComponents } from './calls'
+import {
+  getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent
+} from './calls'
 
 function * genInitialFetch () {
   try {
@@ -34,7 +36,8 @@ function * genInitialFetch () {
         priorities,
         cardComponents
       },
-      isCallInProgress: false
+      isCallInProgress: false,
+      cardStatus: 'ready'
     }
 
     yield put(cRActions.saveCatalogs(reducerPayload))
@@ -57,10 +60,16 @@ function * genChangeCardComponent (action) {
   }))
 
   const currentPercivedColor = getPervicedColorValue(action.payload.newColor) // action.payload.newColor
-
+  const percivedColors = action.payload.cardComponentCatalog.map((element) => getPervicedColorValue(element.color))
   let shouldNotBeSave = false
 
-  const percivedColors = action.payload.cardComponentCatalog.map((element) => getPervicedColorValue(element.color))
+  action.payload.cardComponentCatalog.forEach((cardComponent) => {
+    if (!shouldNotBeSave) {
+      if (cardComponent.color === action.payload.newColor) {
+        shouldNotBeSave = true
+      }
+    }
+  })
 
   percivedColors.forEach(percivedColor => {
     if (!shouldNotBeSave) {
@@ -77,7 +86,7 @@ function * genChangeCardComponent (action) {
       message: 'this color value is too close to another one, pick another'
     }))
   } else {
-
+    yield put(cRActions.changeCardComponentColorCouldNotBeSaved(false))
   }
 }
 
@@ -90,11 +99,33 @@ function * genCancelCardComponentModification (action) {
   }
 }
 
+function * genCreateCardComponent (action) {
+  try {
+    console.log(action)
+    yield put(cRActions.changeCardLoading(true))
+    debugger
+
+    const cardComponentCreatePayload = {
+      name: action.payload.newCardComponent.name,
+      color: action.payload.newCardComponent.color
+    }
+
+    const response = yield createCardComponent(cardComponentCreatePayload)
+  } catch (error) {
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.message
+    }))
+    yield put(cRActions.changeCardLoading(false))
+  }
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
     takeLatest(cRActions.SAGA_CHANGE_CARD_COMPONENT_COLOR, genChangeCardComponent),
-    takeLatest(cRActions.SAGA_CANCEL_CARD_COMPONENT_MODIFICATION, genCancelCardComponentModification)
+    takeLatest(cRActions.SAGA_CANCEL_CARD_COMPONENT_MODIFICATION, genCancelCardComponentModification),
+    takeLatest(cRActions.SAGA_CREATE_CARD_COMPONENT, genCreateCardComponent)
   ])
 }
 

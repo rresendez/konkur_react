@@ -1,6 +1,7 @@
 export const SAGA_INIT_CARDBUILDER = 'cardBuilderReducer/SAGA_INIT_CARDBUILDER'
 export const SAGA_CHANGE_CARD_COMPONENT_COLOR = 'cardBuilderReducer/SAGA_CHANGE_CARD_COMPONENT_COLOR'
 export const SAGA_CANCEL_CARD_COMPONENT_MODIFICATION = 'cardBuilderReducer/SAGA_CANCEL_CARD_COMPONENT_MODIFICATION'
+export const SAGA_CREATE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_CREATE_CARD_COMPONENT'
 
 export const SAVE_CATALOGS = 'cardBuilderReducer/SAVE_CATALOGS'
 export const CHANGE_IS_CALL_IN_PROGRESS = 'cardBuilderReducer/CHANGE_IS_CALL_IN_PROGRESS'
@@ -16,6 +17,7 @@ export const CHANGE_CARD_COMPONENT_COULD_NOT_BE_SAVED = 'cardBuilderReducer/CHAN
 export const CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED'
 export const CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED'
 export const CHANGE_CARD_EDITABLE = 'cardBuilderReducer/CHANGE_CARD_EDITABLE'
+export const CHANGE_CARD_LOADING = 'cardBuilderReducer/CHANGE_CARD_LOADING'
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -28,6 +30,16 @@ export const sagaChangeCardComponentColor = (payload) => ({
 
 export const sagaCancelCardComponentModification = (payload) => ({
   type: SAGA_CANCEL_CARD_COMPONENT_MODIFICATION,
+  payload
+})
+
+export const sagaCreateCardComponent = (payload) => ({
+  type: SAGA_CREATE_CARD_COMPONENT,
+  payload
+})
+
+export const changeCardLoading = (payload) => ({
+  type: CHANGE_CARD_LOADING,
   payload
 })
 
