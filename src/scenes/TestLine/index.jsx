@@ -54,7 +54,7 @@ if (mock.lines.length > 0) {
 }
 let next = 'categories'
 let pleaseDrop = 'Drag and drop a ' + title.slice(0, title.length - 1) +
-' to view ' + next + ' assigned'
+  ' to view ' + next + ' assigned'
 
 class MockChange extends React.Component {
   constructor (props) {
@@ -62,7 +62,7 @@ class MockChange extends React.Component {
     this.state = {}
     this.state.status = 'ready'
     this.state.disabled = false
-    this.state.loading = false
+    this.state.loading = true
   }
   handleSelectedLine = (line) => {
     console.log('this is the state on parent')
