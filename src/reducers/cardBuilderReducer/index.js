@@ -27,6 +27,7 @@ const initialState = fromJS({
     cardFirstTimeChangedColor: false,
     cardComponentColorCouldNotBeSaved: true,
     cardComponentEditable: false,
+    cardComponentTitle: '',
     cardStatus: 'empty',
     cardLoading: false
   },
@@ -107,11 +108,36 @@ export default function initReducer (state = initialState, action) {
   }
 
   if (action.type === actions.CHANGE_CARD_EDITABLE) {
-    return state.setIn(['api', 'cardComponentEditable'], !state.getIn(['api', 'cardComponentEditable']))
+    return state.setIn(['api', 'cardComponentEditable'], action.payload)
   }
 
   if (action.type === actions.CHANGE_CARD_LOADING) {
     return state.setIn(['api', 'cardLoading'], fromJS(action.payload))
+  }
+
+  if (action.type === actions.SAVE_NEW_CARD_COMPONENT) {
+    return state
+      .setIn(
+        ['api', 'cardComponents'],
+        state.getIn(['api', 'cardComponents']).unshift(fromJS(action.payload.newCardComponent))
+      )
+
+      .setIn(
+        ['api', 'cardComponents', state.getIn(['api', 'cardComponents']).size],
+        state.getIn(['api', 'cardLastCardComponentModified'])
+      )
+
+      .setIn(['api', 'selectedCardComponent'], 0)
+      .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
+      .setIn(['api', 'cardLoading'], false)
+      .setIn(['api', 'cardComponentEditable'], false)
+      .setIn(['api', 'cardFirstTimeChangedColor'], false)
+      .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
+      .setIn(['api', 'cardComponentTitle'], '')
+  }
+
+  if (action.type === actions.CHANGE_CARD_COMPONENT_NEW_TITLE) {
+    return state.setIn(['api', 'cardComponentTitle'], action.payload)
   }
 
   return state

@@ -58,7 +58,8 @@ export const cardBuilderCardDetailSelector = createSelector(
       cardFirstTimeChangedColor: cardBuilderReducer.api.cardFirstTimeChangedColor,
       cardComponentEditable: cardBuilderReducer.api.cardComponentEditable,
       cardLoading: cardBuilderReducer.api.cardLoading,
-      cardStatus: cardBuilderReducer.api.cardStatus
+      cardStatus: cardBuilderReducer.api.cardStatus,
+      cardComponentTitle: cardBuilderReducer.api.cardComponentTitle
     }
   }
 )

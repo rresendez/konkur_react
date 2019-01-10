@@ -101,9 +101,7 @@ function * genCancelCardComponentModification (action) {
 
 function * genCreateCardComponent (action) {
   try {
-    console.log(action)
     yield put(cRActions.changeCardLoading(true))
-    debugger
 
     const cardComponentCreatePayload = {
       name: action.payload.newCardComponent.name,
@@ -111,6 +109,10 @@ function * genCreateCardComponent (action) {
     }
 
     const response = yield createCardComponent(cardComponentCreatePayload)
+    const reducerPayload = {
+      newCardComponent: response.data
+    }
+    yield put(cRActions.saveNewCardComponent(reducerPayload))
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,

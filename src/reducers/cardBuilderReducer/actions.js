@@ -18,6 +18,8 @@ export const CHANGE_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CHAN
 export const CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED = 'cardBuilderReducer/CLEAN_CARD_LAST_CARD_COMPONENT_MODIFIED'
 export const CHANGE_CARD_EDITABLE = 'cardBuilderReducer/CHANGE_CARD_EDITABLE'
 export const CHANGE_CARD_LOADING = 'cardBuilderReducer/CHANGE_CARD_LOADING'
+export const SAVE_NEW_CARD_COMPONENT = 'cardBuilderReducer/SAVE_NEW_CARD_COMPONENT'
+export const CHANGE_CARD_COMPONENT_NEW_TITLE = 'cardBuilderReducer/CHANGE_CARD_COMPONENT_NEW_TITLE'
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -35,6 +37,16 @@ export const sagaCancelCardComponentModification = (payload) => ({
 
 export const sagaCreateCardComponent = (payload) => ({
   type: SAGA_CREATE_CARD_COMPONENT,
+  payload
+})
+
+export const changeCardComponentNewTitle = (payload) => ({
+  type: CHANGE_CARD_COMPONENT_NEW_TITLE,
+  payload
+})
+
+export const saveNewCardComponent = (payload) => ({
+  type: SAVE_NEW_CARD_COMPONENT,
   payload
 })
 

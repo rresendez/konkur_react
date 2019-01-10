@@ -121,30 +121,25 @@ class CardItem extends React.Component {
     }
   }
 
-  handleOnClickEditableButton = () => {
-    this.props.handleOnSaveCardComponent({
-      name: this.state.title,
-      color: this.props.cardComponentColor
-    })
-    // this.props.handleOnChangeEditable()
-    if (!this.props.editable) {
-      this.setState({ leftDisable: true })
-      this.setState({ rightDisable: true })
-    } else {
-      this.setState({ leftDisable: false })
-      this.setState({ rightDisable: false })
-    }
+  handleOnClickOpenEditable = (event) => {
+    this.props.handleOnChangeEditable(true)
   }
 
-  handleOnClick = (event) => {
-    const side = parseInt(event.currentTarget.getAttribute('data-next'))
-    if (this.props.selectedCardComponent < this.props.colors.length - 1 && side > 0) {
-      this.props.handleOnChangeCardComponent(this.props.selectedCardComponent + 1)
-      if (this.props.selectedCardComponent === this.props.colors.length - 2) {
-        this.props.handleOnChangeEditable()
-      }
-    } else if (side < 0 && this.props.selectedCardComponent > 0) {
-      this.props.handleOnChangeCardComponent(this.props.selectedCardComponent - 1)
+  handleOnClickEditableButton = () => {
+    this.props.handleOnSaveCardComponent({
+      name: this.props.cardComponentTitle,
+      color: this.props.cardComponentColor
+    })
+  }
+
+  handleOnClickLeftNavigationCardComponent = (event) => {
+    this.props.handleOnChangeCardComponent(this.props.selectedCardComponent - 1)
+  }
+
+  handleOnCLickRightNavigationCarComponent = (event) => {
+    this.props.handleOnChangeCardComponent(this.props.selectedCardComponent + 1)
+    if (this.props.selectedCardComponent === this.props.colors.length - 2) {
+      this.props.handleOnChangeEditable(true)
     }
   }
 
@@ -161,19 +156,13 @@ class CardItem extends React.Component {
     console.log(this.state.newTitle)
   }
 
-  handleLastItem = (index, event) => {
-    if (index === this.props.colors.length - 1) {
-      this.props.handleOnChangeEditable()
-    }
-  }
-
   handleOnCloseEditable = (event) => {
-    this.props.handleOnChangeEditable()
+    this.props.handleOnChangeEditable(false)
     this.props.handleOnCloseEditable(event)
   }
 
   handleOnChangeNewCardComponentTitle = (event) => {
-    this.setState({ title: event.target.value })
+    this.props.handleOnChangedCardComponentTitle(event.target.value, event)
   }
 
   computeName = () => {
@@ -218,7 +207,7 @@ class CardItem extends React.Component {
     if (colorToPaint === customTheme.typography.colorBlack) {
       return (
         <TextFieldBlack
-          value={this.state.title}
+          value={this.props.cardComponentTitle}
           placeholder={(label) ? label.toUpperCase() : ''}
           onChange={this.handleOnChangeNewCardComponentTitle}
           cardComponentColor={this.props.cardComponentColor}
@@ -229,7 +218,7 @@ class CardItem extends React.Component {
 
     return (
       <TextFieldWhite
-        value={this.state.title}
+        value={this.props.cardComponentTitle}
         placeholder={(label) ? label.toUpperCase() : ''}
         onChange={this.handleOnChangeNewCardComponentTitle}
         cardComponentColor={this.props.cardComponentColor}
@@ -355,7 +344,7 @@ class CardItem extends React.Component {
         <div>
           <IconButton
             aria-label="Edit"
-            onClick={this.handleOnClickEditableButton}
+            onClick={this.handleOnClickOpenEditable}
           >
             <Icon
               color={this.props.cardComponentColor}
@@ -423,7 +412,7 @@ class CardItem extends React.Component {
             {this.renderPicker()}
             <CardButtonWrapper>
               <Button
-                onClick={this.handleOnClick}
+                onClick={this.handleOnClickLeftNavigationCardComponent}
                 data-next="-1"
                 disabled={this.computeLeftButtonState()}
               >
@@ -437,7 +426,7 @@ class CardItem extends React.Component {
                 </Icon>
               </Button>
               <Button
-                onClick={this.handleOnClick}
+                onClick={this.handleOnCLickRightNavigationCarComponent}
                 data-next="1"
                 disabled={this.computeRightButtonState()}
               >

@@ -225,8 +225,8 @@ class CardDetailContainer extends React.Component {
     })
   }
 
-  handleOnChangeCardItemEditable = () => {
-    this.props.changeCardEditable()
+  handleOnChangeCardItemEditable = (status) => {
+    this.props.changeCardEditable(status)
   }
 
   handleOnSaveCardComponent = (newCardComponent) => {
@@ -237,6 +237,10 @@ class CardDetailContainer extends React.Component {
       newCardComponent
     }
     this.props.sagaCreateCardComponent(payload)
+  }
+
+  handleOnChangedCardComponentTitle = (title) => {
+    this.props.changeCardComponentNewTitle(title)
   }
 
   render () {
@@ -266,6 +270,8 @@ class CardDetailContainer extends React.Component {
         cardComponentEditable={this.props.cardDetail.cardComponentEditable}
         handleOnChangeCardItemEditable={this.handleOnChangeCardItemEditable}
         handleOnSaveCardComponent={this.handleOnSaveCardComponent}
+        cardComponentTitle={this.props.cardDetail.cardComponentTitle}
+        handleOnChangedCardComponentTitle={this.handleOnChangedCardComponentTitle}
 
         columns={this.state.columns}
         rows={this.state.rows}
