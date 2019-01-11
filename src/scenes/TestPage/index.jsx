@@ -2,6 +2,23 @@ import React from 'react'
 
 import SelectionProduct from '../../components/SelectionProduct'
 
+const mock = {
+  selects: [
+    {
+      name: 'Department'
+    },
+    {
+      name: 'Categroy'
+    },
+    {
+      name: 'Subcategory'
+    },
+    {
+      name: 'Fine-Line'
+    }
+
+  ]
+}
 class MockChange extends React.Component {
   constructor (props) {
     super(props)
@@ -17,6 +34,7 @@ class MockChange extends React.Component {
       <div>
         <SelectionProduct
           togleValue={this.state.togleValue}
+          selects={mock.selects}
         ></SelectionProduct>
       </div>
     )
