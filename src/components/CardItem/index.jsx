@@ -185,6 +185,7 @@ class CardItem extends React.Component {
   }
 
   computeSaveButtonState = () => {
+    if (this.props.cardComponentTitle === '') return true
     if (this.props.cardComponentColorCouldNotBeSaved) return true
     if (this.props.loading) return true
     return false
@@ -239,7 +240,6 @@ class CardItem extends React.Component {
           <div>
             <IconButton
               aria-label="Delete"
-              disabled={this.props.cardComponentCouldNotBeDeleted}
               onClick={this.props.handleOnDeleteCardComponent}
               disabled={this.computeDeleteButtonState()}
             >

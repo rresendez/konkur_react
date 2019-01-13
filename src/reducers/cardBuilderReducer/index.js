@@ -108,7 +108,9 @@ export default function initReducer (state = initialState, action) {
   }
 
   if (action.type === actions.CHANGE_CARD_EDITABLE) {
-    return state.setIn(['api', 'cardComponentEditable'], action.payload)
+    return state
+      .setIn(['api', 'cardComponentEditable'], action.payload)
+      .setIn(['api', 'cardComponentTitle'], '')
   }
 
   if (action.type === actions.CHANGE_CARD_LOADING) {
