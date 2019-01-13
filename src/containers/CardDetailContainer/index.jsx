@@ -243,6 +243,16 @@ class CardDetailContainer extends React.Component {
     this.props.changeCardComponentNewTitle(title)
   }
 
+  handleOnDeleteCardComponent = () => {
+    const selectedCardComponent = this.props.selectedCardComponent
+    const cardComponentCatalog = this.props.cardComponentCatalog
+    const cardComponentToDelete = cardComponentCatalog[selectedCardComponent]
+    const payload = {
+      cardComponentToDelete
+    }
+    this.props.sagaDeleteCardComponent(payload)
+  }
+
   render () {
     return (
       <CardDetail
@@ -272,6 +282,7 @@ class CardDetailContainer extends React.Component {
         handleOnSaveCardComponent={this.handleOnSaveCardComponent}
         cardComponentTitle={this.props.cardDetail.cardComponentTitle}
         handleOnChangedCardComponentTitle={this.handleOnChangedCardComponentTitle}
+        cardComponentCouldNotBeDeleted={this.props.cardDetail.cardComponentCouldNotBeDeleted}
 
         columns={this.state.columns}
         rows={this.state.rows}
@@ -309,6 +320,7 @@ class CardDetailContainer extends React.Component {
         handleSaveAttachment={this.handleSaveAttachment}
         cardStatus={this.props.cardDetail.cardStatus}
         cardLoading={this.props.cardDetail.cardLoading}
+        handleOnDeleteCardComponent={this.handleOnDeleteCardComponent}
       />
     )
   }

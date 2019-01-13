@@ -140,5 +140,21 @@ export default function initReducer (state = initialState, action) {
     return state.setIn(['api', 'cardComponentTitle'], action.payload)
   }
 
+  if (action.type === actions.DELETE_CARD_COMPONENT) {
+    const indexToDelete = state.getIn(['api', 'cardComponents']).findIndex(
+      (cardComponent) => (cardComponent.getIn(['id']) === action.payload.id)
+    )
+
+    return state
+      .deleteIn(['api', 'cardComponents', indexToDelete])
+      .setIn(['api', 'selectedCardComponent'], 0)
+      .setIn(['api', 'cardLoading'], false)
+      .setIn(['api', 'cardComponentEditable'], false)
+      .setIn(['api', 'cardFirstTimeChangedColor'], false)
+      .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
+      .setIn(['api', 'cardComponentTitle'], '')
+      .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
+  }
+
   return state
 }

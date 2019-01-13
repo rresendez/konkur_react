@@ -10,7 +10,8 @@ import * as cRActions from '../../reducers/cardBuilderReducer/actions'
 import * as eRActions from '../../reducers/errorReducer/actions'
 
 import {
-  getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent
+  getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
+  deleteCardComponent, updateCardComponent
 } from './calls'
 
 function * genInitialFetch () {
@@ -122,12 +123,28 @@ function * genCreateCardComponent (action) {
   }
 }
 
+function * genDeleteCardComponent (action) {
+  try {
+    yield put(cRActions.changeCardLoading(true))
+    console.log(action)
+    const response = yield deleteCardComponent(action.payload.cardComponentToDelete.id)
+    yield put(cRActions.deleteCardComponent(action.payload.cardComponentToDelete))
+  } catch (error) {
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.message
+    }))
+    yield put(cRActions.changeCardLoading(false))
+  }
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
     takeLatest(cRActions.SAGA_CHANGE_CARD_COMPONENT_COLOR, genChangeCardComponent),
     takeLatest(cRActions.SAGA_CANCEL_CARD_COMPONENT_MODIFICATION, genCancelCardComponentModification),
-    takeLatest(cRActions.SAGA_CREATE_CARD_COMPONENT, genCreateCardComponent)
+    takeLatest(cRActions.SAGA_CREATE_CARD_COMPONENT, genCreateCardComponent),
+    takeLatest(cRActions.SAGA_DELETE_CARD_COMPONENT, genDeleteCardComponent)
   ])
 }
 

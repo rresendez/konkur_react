@@ -48,6 +48,12 @@ export const cardBuilderCardDetailSelector = createSelector(
     } else {
       cardComponentColor = cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].color
     }
+    let cardComponentCouldNotBeDeleted = true
+    if (cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent]) {
+      if (cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].children === 0) {
+        cardComponentCouldNotBeDeleted = false
+      }
+    }
     return {
       cardSubComponent: cardBuilderReducer.api.cardSubComponent,
       cardTitle: cardBuilderReducer.api.cardTitle,
@@ -59,7 +65,8 @@ export const cardBuilderCardDetailSelector = createSelector(
       cardComponentEditable: cardBuilderReducer.api.cardComponentEditable,
       cardLoading: cardBuilderReducer.api.cardLoading,
       cardStatus: cardBuilderReducer.api.cardStatus,
-      cardComponentTitle: cardBuilderReducer.api.cardComponentTitle
+      cardComponentTitle: cardBuilderReducer.api.cardComponentTitle,
+      cardComponentCouldNotBeDeleted: cardComponentCouldNotBeDeleted
     }
   }
 )

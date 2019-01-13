@@ -45,13 +45,25 @@ export async function createCardComponent (payload) {
     const response = await _axios.post('/card-components', payload)
     return response
   } catch (error) {
-    debugger
-    console.log(error)
-    console.dir(error)
-    console.log(error.response)
-    debugger
     const data = error.response.data
-    debugger
+    throw (data)
+  }
+}
+
+export async function deleteCardComponent (id) {
+  try {
+    const response = await _axios.delete(`/card-components/${id}`)
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
+
+export async function updateCardComponent (id, payload) {
+  try {
+    const response = await _axios.put(`/card-components/${id}`, payload)
+  } catch (error) {
+    const data = error.response.data
     throw (data)
   }
 }

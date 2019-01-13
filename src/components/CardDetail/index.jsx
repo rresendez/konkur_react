@@ -33,31 +33,6 @@ function Transition (props) {
   return (<Slide direction="up" {...props} />)
 }
 
-const mock = {
-  colors: [
-    {
-      id: 1,
-      name: 'new category',
-      color: 'rgba(193,193,193,1)'
-    },
-    {
-      id: 2,
-      name: 'demand',
-      color: 'rgba(244,115,33,1)'
-    },
-    {
-      id: 3,
-      name: 'fulfillment',
-      color: 'rgba(255,194,32,1)'
-    },
-    {
-      id: 4,
-      name: 'inventory',
-      color: 'rgba(118,192,67,1)'
-    }
-  ]
-}
-
 const SelectedModified = withStyles({
   root: {
     maxWidth: '17rem',
@@ -207,6 +182,8 @@ export default class CardDetail extends React.Component {
             handleOnSaveCardComponent={this.props.handleOnSaveCardComponent}
             cardComponentTitle={this.props.cardComponentTitle}
             handleOnChangedCardComponentTitle={this.props.handleOnChangedCardComponentTitle}
+            cardComponentCouldNotBeDeleted={this.props.cardComponentCouldNotBeDeleted}
+            handleOnDeleteCardComponent={this.props.handleOnDeleteCardComponent}
           />
           {
             this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>

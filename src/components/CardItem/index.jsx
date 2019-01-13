@@ -190,6 +190,11 @@ class CardItem extends React.Component {
     return false
   }
 
+  computeDeleteButtonState = () => {
+    if (this.props.cardComponentCouldNotBeDeleted) return true
+    if (this.props.loading) return true
+  }
+
   renderPicker = () => {
     if (this.props.editable) {
       return (
@@ -234,11 +239,15 @@ class CardItem extends React.Component {
           <div>
             <IconButton
               aria-label="Delete"
+              disabled={this.props.cardComponentCouldNotBeDeleted}
+              onClick={this.props.handleOnDeleteCardComponent}
+              disabled={this.computeDeleteButtonState()}
             >
               <Icon
                 auto
                 color={this.props.cardComponentColor}
                 size="1.5"
+                disabled={this.computeDeleteButtonState()}
               >
                 delete
               </Icon>
@@ -315,11 +324,13 @@ class CardItem extends React.Component {
         <div>
           <IconButton
             aria-label="Delete"
+            disabled={this.props.cardComponentCouldNotBeDeleted}
           >
             <Icon
               auto
               color={this.props.cardComponentColor}
               size="1.5"
+              disabled={this.props.cardComponentCouldNotBeDeleted}
             >
               delete
             </Icon>
