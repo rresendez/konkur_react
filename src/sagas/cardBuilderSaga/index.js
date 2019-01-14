@@ -138,13 +138,37 @@ function * genDeleteCardComponent (action) {
   }
 }
 
+function * genUpdateCardComponent (action) {
+  try {
+    yield put(cRActions.changeCardLoading(true))
+
+    const cardComponentUpdatePayload = {
+      name: action.payload.newCardComponent.name,
+      color: action.payload.newCardComponent.color
+    }
+
+    const response = yield updateCardComponent(action.payload.currentCardComponentSelected.id, cardComponentUpdatePayload)
+    const reducerPayload = {
+      updatedCardComponent: response.data
+    }
+    yield put(cRActions.saveUpdatedCardComponent(reducerPayload))
+  } catch (error) {
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.message
+    }))
+    yield put(cRActions.changeCardLoading(false))
+  }
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
     takeLatest(cRActions.SAGA_CHANGE_CARD_COMPONENT_COLOR, genChangeCardComponent),
     takeLatest(cRActions.SAGA_CANCEL_CARD_COMPONENT_MODIFICATION, genCancelCardComponentModification),
     takeLatest(cRActions.SAGA_CREATE_CARD_COMPONENT, genCreateCardComponent),
-    takeLatest(cRActions.SAGA_DELETE_CARD_COMPONENT, genDeleteCardComponent)
+    takeLatest(cRActions.SAGA_DELETE_CARD_COMPONENT, genDeleteCardComponent),
+    takeLatest(cRActions.SAGA_UPDATE_CARD_COMPONENT, genUpdateCardComponent)
   ])
 }
 

@@ -29,7 +29,8 @@ const initialState = fromJS({
     cardComponentEditable: false,
     cardComponentTitle: '',
     cardStatus: 'empty',
-    cardLoading: false
+    cardLoading: false,
+    isUpdate: false
   },
   isCallInProgress: false,
   error: false,
@@ -136,6 +137,7 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardFirstTimeChangedColor'], false)
       .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
       .setIn(['api', 'cardComponentTitle'], '')
+      .setIn(['api', 'isUpdate'], false)
   }
 
   if (action.type === actions.CHANGE_CARD_COMPONENT_NEW_TITLE) {
@@ -156,6 +158,30 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
       .setIn(['api', 'cardComponentTitle'], '')
       .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
+      .setIn(['api', 'isUpdate'], false)
+  }
+
+  if (action.type === actions.CHANGE_CARD_EDITABLE_UPDATE) {
+    return state
+      .setIn(['api', 'cardComponentEditable'], action.payload)
+      .setIn(['api', 'cardComponentTitle'], '')
+      .setIn(['api', 'cardComponentColorCouldNotBeSaved'], false)
+      .setIn(['api', 'isUpdate'], true)
+  }
+
+  if (action.type === actions.SAVE_UPDATED_CARD_COMPONENT) {
+    const indexToUpdate = state.getIn(['api', 'cardComponents']).findIndex(
+      (cardComponent) => (cardComponent.getIn(['id']) === action.payload.updatedCardComponent.id)
+    )
+    return state
+      .setIn(['api', 'cardComponents', indexToUpdate], fromJS(action.payload.updatedCardComponent))
+      .setIn(['api', 'cardLoading'], false)
+      .setIn(['api', 'cardComponentEditable'], false)
+      .setIn(['api', 'cardFirstTimeChangedColor'], false)
+      .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
+      .setIn(['api', 'cardComponentTitle'], '')
+      .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
+      .setIn(['api', 'isUpdate'], false)
   }
 
   return state

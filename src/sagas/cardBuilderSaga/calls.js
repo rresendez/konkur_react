@@ -53,6 +53,7 @@ export async function createCardComponent (payload) {
 export async function deleteCardComponent (id) {
   try {
     const response = await _axios.delete(`/card-components/${id}`)
+    return response
   } catch (error) {
     const data = error.response.data
     throw (data)
@@ -62,6 +63,7 @@ export async function deleteCardComponent (id) {
 export async function updateCardComponent (id, payload) {
   try {
     const response = await _axios.put(`/card-components/${id}`, payload)
+    return response
   } catch (error) {
     const data = error.response.data
     throw (data)

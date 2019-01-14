@@ -226,7 +226,11 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeCardItemEditable = (status) => {
-    this.props.changeCardEditable(status)
+    if (this.props.selectedCardComponent !== this.props.cardComponentCatalog.length - 1) {
+      this.props.changedCardEditableUpdate(status)
+    } else {
+      this.props.changeCardEditable(status)
+    }
   }
 
   handleOnSaveCardComponent = (newCardComponent) => {
@@ -236,7 +240,11 @@ class CardDetailContainer extends React.Component {
       cardLastCardComponentModified: this.props.cardDetail.cardLastCardComponentModified,
       newCardComponent
     }
-    this.props.sagaCreateCardComponent(payload)
+    if (this.props.cardDetail.isUpdate) {
+      this.props.sagaUpdateCardComponent(payload)
+    } else {
+      this.props.sagaCreateCardComponent(payload)
+    }
   }
 
   handleOnChangedCardComponentTitle = (title) => {

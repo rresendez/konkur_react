@@ -66,7 +66,8 @@ export const cardBuilderCardDetailSelector = createSelector(
       cardLoading: cardBuilderReducer.api.cardLoading,
       cardStatus: cardBuilderReducer.api.cardStatus,
       cardComponentTitle: cardBuilderReducer.api.cardComponentTitle,
-      cardComponentCouldNotBeDeleted: cardComponentCouldNotBeDeleted
+      cardComponentCouldNotBeDeleted: cardComponentCouldNotBeDeleted,
+      isUpdate: cardBuilderReducer.api.isUpdate
     }
   }
 )

@@ -255,11 +255,13 @@ class CardItem extends React.Component {
             <IconButton
               aria-label="Close"
               onClick={this.handleOnCloseEditable}
+              disabled={this.props.loading}
             >
               <Icon
                 auto
                 color={this.props.cardComponentColor}
                 size="1.5"
+                disabled={this.props.loading}
               >
                 close
               </Icon>
