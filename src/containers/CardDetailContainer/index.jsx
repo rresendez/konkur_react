@@ -103,7 +103,6 @@ class CardDetailContainer extends React.Component {
     console.log(this.refEditor.editor.getValue())
     const cardComponentCatalog = this.props.cardComponentCatalog
     const selectedCardComponent = this.props.card
-    debugger
   }
 
   handleOnChangeTableArrangement = (columns) => {
@@ -226,10 +225,13 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeCardItemEditable = (status) => {
-    if (this.props.selectedCardComponent !== this.props.cardComponentCatalog.length - 1) {
-      this.props.changedCardEditableUpdate(status)
+    const selectedCardComponent = this.props.selectedCardComponent
+    const cardComponentCatalog = this.props.cardComponentCatalog
+    if (this.props.selectedCardComponent === this.props.cardComponentCatalog.length - 2 ||
+        this.props.selectedCardComponent === this.props.cardComponentCatalog.length - 1) {
+      this.props.changeCardComponentEditableForNew(status)
     } else {
-      this.props.changeCardEditable(status)
+      this.props.changedCardEditableUpdate(status)
     }
   }
 

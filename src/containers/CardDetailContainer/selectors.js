@@ -50,7 +50,7 @@ export const cardBuilderCardDetailSelector = createSelector(
     }
     let cardComponentCouldNotBeDeleted = true
     if (cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent]) {
-      if (cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].children === 0) {
+      if (cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].children === 0 || cardBuilderCatalogsSelector.cardComponentCatalog[cardBuilderReducer.api.selectedCardComponent].children === null) {
         cardComponentCouldNotBeDeleted = false
       }
     }

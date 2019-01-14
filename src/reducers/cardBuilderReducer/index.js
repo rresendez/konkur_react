@@ -106,6 +106,7 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardComponents', indexOfCurrentCardComponent, 'name'], fromJS(action.payload.cardLastCardComponentModified.name))
       .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
       .setIn(['api', 'cardFirstTimeChangedColor'], fromJS(action.payload.cardFirstTimeChangedColor))
+      .setIn(['api', 'isUpdate'], action.payload.isUpdate)
   }
 
   if (action.type === actions.CHANGE_CARD_EDITABLE) {
@@ -181,6 +182,14 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardComponentColorCouldNotBeSaved'], true)
       .setIn(['api', 'cardComponentTitle'], '')
       .setIn(['api', 'cardLastCardComponentModified'], fromJS({}))
+      .setIn(['api', 'isUpdate'], false)
+  }
+
+  if (action.type === actions.CHANGE_CARD_COMPONENT_EDITABLE_FOR_NEW) {
+    return state
+      .setIn(['api', 'cardComponentEditable'], action.payload)
+      .setIn(['api', 'cardComponentTitle'], '')
+      .setIn(['api', 'cardComponentColorCouldNotBeSaved'], false)
       .setIn(['api', 'isUpdate'], false)
   }
 

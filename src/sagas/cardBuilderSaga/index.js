@@ -43,7 +43,6 @@ function * genInitialFetch () {
 
     yield put(cRActions.saveCatalogs(reducerPayload))
   } catch (error) {
-    debugger
   }
 }
 
@@ -95,7 +94,8 @@ function * genCancelCardComponentModification (action) {
   if (Object.keys(action.payload.cardLastCardComponentModified).length > 0) {
     yield put(cRActions.cleanCardLastCardComponentModifed({
       cardLastCardComponentModified: action.payload.cardLastCardComponentModified,
-      cardFirstTimeChangedColor: false
+      cardFirstTimeChangedColor: false,
+      isUpdate: false
     }))
   }
 }
