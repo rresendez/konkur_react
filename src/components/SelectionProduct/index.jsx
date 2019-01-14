@@ -83,6 +83,11 @@ const ButtonWrapper = styled.div`
   .MuiButtonBase-root-14{
     background-color: white;
     width: 10rem;
+    &:hover{
+      background-color: rgba(44,112,179,1);
+      color: white;
+      border: 1px solid white;  
+    }
   }
   `
 const BreadWrapper = styled.div`

@@ -92,12 +92,12 @@ html, body {
 }
 
 .breadcrumb a.active, .breadcrumb a:hover {
-  background: lightblue;
+  background: rgba(44,112,179,1);
   color: white;
 }
 
 .breadcrumb a.active:after, .breadcrumb a:hover:after {
-  background: lightblue;
+  background: rgba(44,112,179,1);
   color: white;
 }
 
