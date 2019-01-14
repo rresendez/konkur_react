@@ -10,7 +10,7 @@ import Icon from '../Icon'
 const CardItemContainer = withStyles({
   root: {
     height: '2.5rem',
-    width: '25rem'
+    width: '14rem'
   }
 })(Card)
 

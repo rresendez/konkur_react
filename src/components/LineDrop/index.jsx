@@ -13,10 +13,11 @@ const wYellowLight = 'rgba(255,192,0,0.75)'
 
 const BaseStyled = styled.div`
   display:grid;
-  grid-template-columns: 10% 80% 10%
+  grid-template-columns: auto auto auto;
   grid-template-row: 5% 90% 5%;
   grid-gap: 1rem;
   background-color: ${props => props.color || 'white'}
+  zoom: 90%;
   `
 const RefreshStyled = styled.div`
   grid-column: 3/3;
