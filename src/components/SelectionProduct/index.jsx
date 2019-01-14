@@ -38,7 +38,7 @@ const Back = styled.div`
 
 const MainWrapper = styled.div`
   display: grid;
-  grid-template-columns: 10% 25% 55% 10%;
+  grid-template-columns: 5% 25% 55% 15%;
   grid-templte-rows: repeat(3, 1fr);
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
@@ -54,6 +54,7 @@ const TwoWrapper = styled.div`
   grid-row: 1;
   grid-row-end: 1;
   margin-top: auto;
+  width: 320px;
   `
 const ThreeWrapper = styled.div`
   grid-column: 3/3;
@@ -122,7 +123,24 @@ class SelectionProduct extends React.Component {
             </SimpleSelect>
           </ThreeWrapper>
           <FourWrapper>
-            <h2>Four</h2>
+            <IconButton
+            >
+              <Icon
+                size="3"
+                color={wBlue}
+              >
+                vpn_key
+              </Icon>
+            </IconButton>
+            <IconButton
+            >
+              <Icon
+                size="3"
+                color={wBlue}
+              >
+            save
+              </Icon>
+            </IconButton>
           </FourWrapper>
         </MainWrapper>
       </div>
