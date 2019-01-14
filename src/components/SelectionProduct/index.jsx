@@ -5,9 +5,11 @@ import IconButton from '@material-ui/core/IconButton'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Button from '@material-ui/core/Button'
 
 import Icon from '../Icon'
 import SimpleSelect from '../Select'
+import Breadcrumbs from '../BreadCrumbs'
 
 const styles = theme => ({
   root: {
@@ -38,7 +40,7 @@ const Back = styled.div`
 
 const MainWrapper = styled.div`
   display: grid;
-  grid-template-columns: 5% 25% 55% 15%;
+  grid-template-columns: 5% 20% 60% 15%;
   grid-templte-rows: repeat(3, 1fr);
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
@@ -54,21 +56,46 @@ const TwoWrapper = styled.div`
   grid-row: 1;
   grid-row-end: 1;
   margin-top: auto;
-  width: 320px;
+  width: 20rem;
+  border-top: solid ${wBlue};
+  border-left: solid ${wBlue};
+  border-right: solid ${wBlue};
+  border-width: 1px;
   `
 const ThreeWrapper = styled.div`
   grid-column: 3/3;
-  border: solid black;
   grid-row: 2;
   grid-row-end: 2;
+  .SimpleSelect-root-74{
+    margin-top: 0.5rem;
+  }
   `
 const FourWrapper = styled.div`
   grid-column: 4/4;
-  border: solid black;
   grid-row: 1;
   grid-row-end: 3;
   `
-
+const ButtonWrapper = styled.div`
+  grid-column: 3/3;
+  grid-row: 3;
+  grid-row-end: 3;
+  margin: auto;
+  .MuiButtonBase-root-14{
+    background-color: white;
+    width: 10rem;
+  }
+  `
+const BreadWrapper = styled.div`
+  grid-column: 3/3;
+  grid-row: 1;
+  grid-row-end: 1;
+  margin: auto;
+  .breadcrumb{
+    margin-bottom: -4rem;
+    margin-top: 0.5rem;
+  }
+  }
+  `
 class SelectionProduct extends React.Component {
   constructor (props) {
     super(props)
@@ -142,6 +169,17 @@ class SelectionProduct extends React.Component {
               </Icon>
             </IconButton>
           </FourWrapper>
+          <ButtonWrapper>
+            <Button
+              variant="outlined"
+              color="primary"
+            >
+              ADD
+            </Button>
+          </ButtonWrapper>
+          <BreadWrapper>
+            <Breadcrumbs></Breadcrumbs>
+          </BreadWrapper>
         </MainWrapper>
       </div>
     )
