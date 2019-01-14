@@ -3,8 +3,8 @@ import axios from 'axios'
 export const _dev = process.env.NODE_ENV === 'development'
 
 let BASE_URL = _dev
-  ? 'http://localhost'
-  : window.location.origin
+  ? 'http://localhost:4444/v1/api'
+  : `${window.location.origin}/v1/api`
 
 if (!_dev) {
   if (!localStorage.getItem('token')) {
