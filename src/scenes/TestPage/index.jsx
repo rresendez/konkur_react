@@ -65,14 +65,17 @@ const mock = {
   ],
   lines2: []
 }
-let title = 'departments'
-let bottomText = ''
+let titles = ['deparments', 'categories', 'sub-categories', 'finelines']
+let next = ['categories', 'sub-categories', 'finelines', '']
+let bottomText = []
+let pleaseDrop = []
 if (mock.lines.length > 0) {
-  bottomText = mock.lines.length.toString() + '/50 ' + title + ' assigned'
+  titles.map((title, idx) => {
+    bottomText[idx] = mock.lines.length.toString() + '/50 ' + title + ' assigned'
+    pleaseDrop[idx] = 'Drag and drop a ' + title.slice(0, title.length - 1) +
+      ' to view ' + next[idx] + ' assigned'
+  })
 }
-let next = 'categories'
-let pleaseDrop = 'Drag and drop a ' + title.slice(0, title.length - 1) +
-  ' to view ' + next + ' assigned'
 
 const MainWrapper = styled.div`
   display: grid;
@@ -87,7 +90,7 @@ const HeaderWrapper = styled.div`
   grid-row-end: 1;
   padding-bottom: 1rem;
   background-color: rgba(222,235,247,1);
-  width: 100vw;
+  width: 98vw;
 `
 const LeftUp = styled.div`
   grid-column: 1/2;
@@ -95,20 +98,40 @@ const LeftUp = styled.div`
   grid-row-end: 2;
   padding-left: 1rem;
 `
+const LeftDown = styled.div`
+  grid-column: 1/2;
+  grid-row: 3;
+  grid-row-end: 3;
+  padding-left: 1rem;
+  margin-top: 1rem;
+`
 const RightUp = styled.div`
   grid-column: 2/2;
   grid-row: 2;
   grid-row-end: 2;
-  padding-right: 1rem;
+  
+`
+const RightDown = styled.div`
+  grid-column: 2/2;
+  grid-row: 3;
+  grid-row-end: 3;
+  margin-top: 1rem;
 `
 class MockChange extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {}
-    this.state.status = 'ready'
-    this.state.disabled = false
-    this.state.loading = false
-    this.state.togleValue = 0
+    this.state = {
+      status: ['ready', 'empty', 'empty', 'empty'],
+      disabled: [false, false, true, true],
+      loading: [false, false, false, true]
+    }
+  }
+  handleSelectedLine = (line) => {
+    console.log('this is the state on parent')
+    console.log(line)
+    this.setState({ status: ['ready', 'ready', 'empty', 'empty'],
+      disabled: [false, false, false, true] }
+    )
   }
 
   render () {
@@ -116,36 +139,62 @@ class MockChange extends React.Component {
       <MainWrapper>
         <HeaderWrapper>
           <SelectionProduct
-            togleValue={this.state.togleValue}
+            togleValue={0}
             selects={mock.selects}
           ></SelectionProduct>
         </HeaderWrapper>
         <LeftUp>
           <LineDrop
             lines={mock.lines}
-            title={title}
-            bottomText={bottomText}
-            status={this.state.status}
-            pleaseDrop={pleaseDrop}
-            disabled={this.state.disabled}
+            title={titles[0]}
+            bottomText={bottomText[0]}
+            status={this.state.status[0]}
+            pleaseDrop={pleaseDrop[0]}
+            disabled={this.state.disabled[0]}
             handleSelectedLine={this.handleSelectedLine}
-            loading={this.state.loading}
+            loading={this.state.loading[0]}
           >
           </LineDrop>
         </LeftUp>
         <RightUp>
           <LineDrop
             lines={mock.lines}
-            title={title}
-            bottomText={bottomText}
-            status={this.state.status}
-            pleaseDrop={pleaseDrop}
-            disabled={this.state.disabled}
+            title={titles[1]}
+            bottomText={bottomText[1]}
+            status={this.state.status[1]}
+            pleaseDrop={pleaseDrop[0]}
+            disabled={this.state.disabled[1]}
             handleSelectedLine={this.handleSelectedLine}
-            loading={this.state.loading}
+            loading={this.state.loading[1]}
           >
           </LineDrop>
         </RightUp>
+        <LeftDown>
+          <LineDrop
+            lines={mock.lines}
+            title={titles[2]}
+            bottomText={bottomText[2]}
+            status={this.state.status[2]}
+            pleaseDrop={pleaseDrop[1]}
+            disabled={this.state.disabled[2]}
+            handleSelectedLine={this.handleSelectedLine}
+            loading={this.state.loading[2]}
+          >
+          </LineDrop>
+        </LeftDown>
+        <RightDown>
+          <LineDrop
+            lines={mock.lines}
+            title={titles[3]}
+            bottomText={''}
+            status={this.state.status[3]}
+            pleaseDrop={pleaseDrop[2]}
+            disabled={this.state.disabled[3]}
+            handleSelectedLine={this.handleSelectedLine}
+            loading={this.state.loading[3]}
+          >
+          </LineDrop>
+        </RightDown>
       </MainWrapper>
     )
   }
