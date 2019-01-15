@@ -10,14 +10,14 @@ import Icon from '../Icon'
 const CardItemContainer = withStyles({
   root: {
     height: '2.5rem',
-    width: '14rem'
+    width: '15rem'
   }
 })(Card)
 
 const H3Fixer = styled.div`
   margin-top: auto;
   display: inline-block;
-  font-size: 1.17em;
+  font-size: 0.8em;
   font-weight: bold;
   padding: 0.6rem;
 `

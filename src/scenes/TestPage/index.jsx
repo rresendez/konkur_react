@@ -63,7 +63,32 @@ const mock = {
       name: 'Computers'
     }
   ],
-  lines2: []
+  lines2: [
+    {
+      department: 'D6 3623',
+      name: 'Batteries'
+    },
+    {
+      department: 'D6 3626',
+      name: 'Cameras & Camcoders'
+    },
+    {
+      department: 'D6 3626',
+      name: 'Photo Media'
+    },
+    {
+      department: 'D6 3626',
+      name: 'Camera Accessories'
+    },
+    {
+      department: 'D6 3626',
+      name: 'Photo Frames'
+    },
+    {
+      department: 'D6 3626',
+      name: 'Enviro Fees'
+    }
+  ]
 }
 let titles = ['deparments', 'categories', 'sub-categories', 'finelines']
 let next = ['categories', 'sub-categories', 'finelines', '']
@@ -158,7 +183,7 @@ class MockChange extends React.Component {
         </LeftUp>
         <RightUp>
           <LineDrop
-            lines={mock.lines}
+            lines={mock.lines2}
             title={titles[1]}
             bottomText={bottomText[1]}
             status={this.state.status[1]}

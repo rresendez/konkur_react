@@ -52,6 +52,7 @@ const ColumnStyled = styled.div`
   grid-row: 2;
   grid-row-end: 2;
   padding-top: 1rem;
+  height: 17.5rem;
   `
 const LoadingStyled = styled.div`
   grid-column: 2/2;
