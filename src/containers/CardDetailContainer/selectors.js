@@ -96,7 +96,7 @@ export const cardBuilderTableSelector = createSelector(
   cardBuilderReducerSelector,
   (cardBuilderReducerSelector) => {
     return {
-      columns: cardBuilderReducerSelector.api.cardSchema,
+      columns: cardBuilderReducerSelector.api.cardColumns,
       rows: cardBuilderReducerSelector.api.cardRows
     }
   }

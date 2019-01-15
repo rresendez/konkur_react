@@ -215,5 +215,10 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardTableSwitch'], true)
   }
 
+  if (action.type === actions.CHANGE_CARD_TABLE_SWITCH) {
+    return state
+      .setIn(['api', 'cardTableSwitch'], action.payload)
+  }
+
   return state
 }

@@ -29,6 +29,7 @@ export const SAVE_UPDATED_CARD_COMPONENT = 'cardBuilderReducer/SAVE_UPDATED_CARD
 export const CHANGE_CARD_COMPONENT_EDITABLE_FOR_NEW = 'cardBuilderReducer/CHANGE_CARD_COMPONENT_EDITABLE_FOR_NEW'
 export const CHANGE_GLOBAL_CARD_LOADING = 'cardBuilderReducer/CHANGE_GLOBAL_CARD_LOADING'
 export const SAVE_TABLE_SCHEMA = 'cardBuilderReducer/SAVE_TABLE_SCHEMA'
+export const CHANGE_CARD_TABLE_SWITCH = 'cardBuilderReducer/CHANGE_CARD_TABLE_SWITCH'
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -66,6 +67,11 @@ export const sagaValidateCard = (payload) => ({
 
 export const saveTableSchema = (payload) => ({
   type: SAVE_TABLE_SCHEMA,
+  payload
+})
+
+export const changeCardTableSwitch = (payload) => ({
+  type: CHANGE_CARD_TABLE_SWITCH,
   payload
 })
 

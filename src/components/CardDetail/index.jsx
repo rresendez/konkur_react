@@ -253,7 +253,7 @@ export default class CardDetail extends React.Component {
               <div className={styles.toolbarModalButtonsWrapper}>
                 <IconButton
                   aria-label="close"
-                  onClick={this.props.handleOnCloseResultModal}
+                  onClick={this.props.handleOnCloseCardTableSwitch}
                 >
                   <Icon color="white" size="1.5">close</Icon>
                 </IconButton>

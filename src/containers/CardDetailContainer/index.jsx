@@ -9,7 +9,8 @@ import CardDetail from '../../components/CardDetail'
 
 import {
   cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
-  cardBuilderCardDetailSelector, cardBuilderSwitchesSelector
+  cardBuilderCardDetailSelector, cardBuilderSwitchesSelector,
+  cardBuilderTableSelector
 } from './selectors'
 
 class CardDetailContainer extends React.Component {
@@ -25,32 +26,6 @@ class CardDetailContainer extends React.Component {
       buffer: null,
       name: ''
     }
-    this.state.columns = [
-      {
-        name: 'item_nbr',
-        alias: 'item_nbr'
-      },
-      {
-        name: 'dept_nbr',
-        alias: ''
-      },
-      {
-        name: 'cat_nbr',
-        alias: ''
-      }
-    ]
-    this.state.rows = [
-      {
-        item_nbr: 'adasd',
-        cat_nbr: 'dsad'
-      },
-      {
-        item_nbr: 'adasd'
-      },
-      {
-        item_nbr: 'adasd'
-      }
-    ]
   }
 
   componentWillMount () {
@@ -117,8 +92,9 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnChangeTableArrangement = (columns) => {
-    this.setState({
-      columns: columns
+    this.props.saveTableSchema({
+      cardColumns: columns,
+      cardRows: this.props.table.rows
     })
   }
 
@@ -274,6 +250,10 @@ class CardDetailContainer extends React.Component {
     this.props.sagaDeleteCardComponent(payload)
   }
 
+  handleOnCloseCardTableSwitch = (event) => {
+    this.props.changeCardTableSwitch(false)
+  }
+
   render () {
     return (
       <CardDetail
@@ -306,8 +286,8 @@ class CardDetailContainer extends React.Component {
         handleOnChangedCardComponentTitle={this.handleOnChangedCardComponentTitle}
         cardComponentCouldNotBeDeleted={this.props.cardDetail.cardComponentCouldNotBeDeleted}
 
-        columns={this.state.columns}
-        rows={this.state.rows}
+        columns={this.props.table.columns}
+        rows={this.props.table.rows}
 
         cardSubComponent={this.props.cardDetail.cardSubComponent}
         handleOnChangeCardSubComponent={this.handleOnChangeCardSubComponent}
@@ -327,7 +307,6 @@ class CardDetailContainer extends React.Component {
 
         handleRefEditor={this.handleRefEditor}
 
-        handleOnCloseResultModal={this.handleOnCloseResultModal}
         handleOnSaveCard={this.handleOnSaveCard}
         handleBackCardColor={this.handleBackCardColor}
         handleNextCardColor={this.handleNextCardColor}
@@ -343,6 +322,8 @@ class CardDetailContainer extends React.Component {
         cardStatus={this.props.cardDetail.cardStatus}
         cardLoading={this.props.cardDetail.cardLoading}
         handleOnDeleteCardComponent={this.handleOnDeleteCardComponent}
+
+        handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
       />
     )
   }
@@ -353,7 +334,8 @@ function mapStateToProps (state) {
     ...cardBuilderCatalogsSelector(state),
     ...cardBuilderSelectedSelector(state),
     cardDetail: cardBuilderCardDetailSelector(state),
-    switches: cardBuilderSwitchesSelector(state)
+    switches: cardBuilderSwitchesSelector(state),
+    table: cardBuilderTableSelector(state)
   }
 }
 
