@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import styled, { withTheme } from 'styled-components'
 
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
 import Fab from '@material-ui/core/Fab'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 import CardItem from '../CardItem'
 import TextEditor from '../TextEditor'
@@ -54,6 +55,32 @@ const MenuProps = {
   }
 }
 
+const LinearProgressWrapper = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: rgba(254,254,254,.5);
+  transition: background-color .5s ease;
+`
+const LinearProgressSavingWrapper = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  transition: background-color .5s ease;
+`
+
 export default class CardDetail extends React.Component {
   renderSelectValue = (value) => value
 
@@ -62,9 +89,30 @@ export default class CardDetail extends React.Component {
     return simpleValues.join(', ')
   }
 
+  renderLoading = () => {
+    if (this.props.loading) {
+      return (
+        <LinearProgressWrapper>
+          <LinearProgress />
+        </LinearProgressWrapper>
+      )
+    }
+  }
+
+  renderSavingLoading = () => {
+    if (this.props.cardSavingSwitch) {
+      return (
+        <LinearProgressSavingWrapper>
+          <LinearProgress />
+        </LinearProgressSavingWrapper>
+      )
+    }
+  }
+
   render () {
     return (
       <div className={styles.cardDetailContainer}>
+        {this.renderLoading()}
         <div className={styles.wrapperCardHelp}>
           <NotePaper elevation={1}>
             <div className={styles.helpContainer}>
@@ -208,8 +256,9 @@ export default class CardDetail extends React.Component {
             color="secondary"
             aria-label="Add"
             onClick={this.props.handleSendQuery}
+            disabled={this.props.loading}
           >
-            <Icon size="2" color="white">send</Icon>
+            <Icon size="2" color="white" disabled={this.props.loading}>send</Icon>
           </Fab>
         </div>
         <Dialog
@@ -226,7 +275,7 @@ export default class CardDetail extends React.Component {
               <div className={styles.toolbarModalButtonsWrapper}>
                 <IconButton
                   aria-label="close"
-                  onClick={this.props.handleOnCloseResultModal}
+                  onClick={this.props.handleOnCloseCardTableSwitch}
                 >
                   <Icon color="white" size="1.5">close</Icon>
                 </IconButton>
@@ -255,13 +304,22 @@ export default class CardDetail extends React.Component {
           >
             <DialogTitle id="confirmation-dialog-title">Save this card</DialogTitle>
             <DialogContent>
+              {this.renderSavingLoading()}
               Do you want to save this card?
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.props.handleOnCancelSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnCancelSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Cancel
               </Button>
-              <Button onClick={this.props.handleOnConfirmSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnConfirmSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Ok
               </Button>
             </DialogActions>

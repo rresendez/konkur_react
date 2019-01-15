@@ -69,3 +69,23 @@ export async function updateCardComponent (id, payload) {
     throw (data)
   }
 }
+
+export async function validateCard (payload) {
+  try {
+    const response = await _axios.post('/cards/validate-query', payload)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
+
+export async function createCard (payload) {
+  try {
+    const response = await _axios.post('/cards', payload)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}

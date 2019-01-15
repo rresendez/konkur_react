@@ -64,6 +64,7 @@
   grid-template-rows: repeat(5, auto);
   justify-items: stretch;
   align-items: stretch;
+  position: relative;
 }
 
 :local .wrapperCardHelp {

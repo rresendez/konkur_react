@@ -6,29 +6,39 @@ import * as actions from './actions'
 
 const initialState = fromJS({
   api: {
-
+    // catalogs
     jobs: [],
     schedules: [],
     priorities: [],
     cardComponents: [],
-    selectedJobs: [],
 
+    // card selections
+    selectedJobs: [],
     selectedCardComponent: 0,
     selectedPriority: 0,
     selectedSchedule: 0,
 
-    cardSubComponent: '',
+    // card attributes
     cardTitle: '',
     cardDataLevel: '',
     cardItemsCount: 0,
     cardLastUpdateDate: '',
+    cardStatus: 'empty',
+    cardTableSwitch: false,
+    cardSaveModalSwitch: false,
+    cardStatement: '',
+    cardColumns: [],
+    cardRows: [],
+    loading: false,
+    cardSavingSwitch: false,
 
+    // cardComponent integration values
+    cardSubComponent: '',
     cardLastCardComponentModified: {},
     cardFirstTimeChangedColor: false,
     cardComponentColorCouldNotBeSaved: true,
     cardComponentEditable: false,
     cardComponentTitle: '',
-    cardStatus: 'empty',
     cardLoading: false,
     isUpdate: false
   },
@@ -191,6 +201,34 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardComponentTitle'], '')
       .setIn(['api', 'cardComponentColorCouldNotBeSaved'], false)
       .setIn(['api', 'isUpdate'], false)
+  }
+
+  if (action.type === actions.CHANGE_GLOBAL_CARD_LOADING) {
+    return state
+      .setIn(['api', 'loading'], action.payload)
+  }
+
+  if (action.type === actions.SAVE_TABLE_SCHEMA) {
+    return state
+      .setIn(['api', 'cardColumns'], action.payload.cardColumns)
+      .setIn(['api', 'cardRows'], action.payload.cardRows)
+      .setIn(['api', 'loading'], false)
+      .setIn(['api', 'cardTableSwitch'], true)
+  }
+
+  if (action.type === actions.CHANGE_CARD_TABLE_SWITCH) {
+    return state
+      .setIn(['api', 'cardTableSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_MODAL_SWTICH) {
+    return state
+      .setIn(['api', 'cardSaveModalSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_SAVING_SWITCH) {
+    return state
+      .setIn(['api', 'cardSavingSwitch'], action.payload)
   }
 
   return state
