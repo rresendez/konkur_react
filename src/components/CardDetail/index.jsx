@@ -68,6 +68,18 @@ const LinearProgressWrapper = styled.div`
   background-color: rgba(254,254,254,.5);
   transition: background-color .5s ease;
 `
+const LinearProgressSavingWrapper = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  transition: background-color .5s ease;
+`
 
 export default class CardDetail extends React.Component {
   renderSelectValue = (value) => value
@@ -83,6 +95,16 @@ export default class CardDetail extends React.Component {
         <LinearProgressWrapper>
           <LinearProgress />
         </LinearProgressWrapper>
+      )
+    }
+  }
+
+  renderSavingLoading = () => {
+    if (this.props.cardSavingSwitch) {
+      return (
+        <LinearProgressSavingWrapper>
+          <LinearProgress />
+        </LinearProgressSavingWrapper>
       )
     }
   }
@@ -282,13 +304,22 @@ export default class CardDetail extends React.Component {
           >
             <DialogTitle id="confirmation-dialog-title">Save this card</DialogTitle>
             <DialogContent>
+              {this.renderSavingLoading()}
               Do you want to save this card?
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.props.handleOnCancelSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnCancelSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Cancel
               </Button>
-              <Button onClick={this.props.handleOnConfirmSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnConfirmSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Ok
               </Button>
             </DialogActions>

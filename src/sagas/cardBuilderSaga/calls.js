@@ -79,3 +79,13 @@ export async function validateCard (payload) {
     throw (data)
   }
 }
+
+export async function createCard (payload) {
+  try {
+    const response = await _axios.post('/cards', payload)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}

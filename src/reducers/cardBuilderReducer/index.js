@@ -30,6 +30,7 @@ const initialState = fromJS({
     cardColumns: [],
     cardRows: [],
     loading: false,
+    cardSavingSwitch: false,
 
     // cardComponent integration values
     cardSubComponent: '',
@@ -218,6 +219,16 @@ export default function initReducer (state = initialState, action) {
   if (action.type === actions.CHANGE_CARD_TABLE_SWITCH) {
     return state
       .setIn(['api', 'cardTableSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_MODAL_SWTICH) {
+    return state
+      .setIn(['api', 'cardSaveModalSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_SAVING_SWITCH) {
+    return state
+      .setIn(['api', 'cardSavingSwitch'], action.payload)
   }
 
   return state

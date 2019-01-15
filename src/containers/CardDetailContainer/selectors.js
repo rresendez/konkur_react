@@ -87,7 +87,8 @@ export const cardBuilderSwitchesSelector = createSelector(
     return {
       cardTableSwitch: cardBuilderReducerSelector.api.cardTableSwitch,
       cardSaveModalSwitch: cardBuilderReducerSelector.api.cardSaveModalSwitch,
-      loading: cardBuilderReducerSelector.api.loading
+      loading: cardBuilderReducerSelector.api.loading,
+      cardSavingSwitch: cardBuilderReducerSelector.api.cardSavingSwitch
     }
   }
 )

@@ -44,20 +44,45 @@ class CardDetailContainer extends React.Component {
   }
 
   handleOnSaveCard = (event) => {
-    console.log('handleOnSaveCard')
-    this.setState(prevState => ({
-      dialogSaveSwitch: !prevState.dialogSaveSwitch
-    }))
+    this.props.changeCardModalSwitch(true)
   }
 
   handleOnCancelSaveCard = (event) => {
-    this.setState(prevState => ({
-      dialogSaveSwitch: !prevState.dialogSaveSwitch
-    }))
+    this.props.changeCardModalSwitch(false)
   }
 
-  handleOnConfirmSaveCard = (event) => {
-    this.props.history.push(`/`)
+  handleOnConfirmSaveCard = async (event) => {
+    const statementValue = this.refEditor.editor.getValue()
+    const cardComponentCatalog = this.props.cardComponentCatalog
+    const selectedCardComponent = this.props.selectedCardComponent
+    const selectedJobs = this.props.selectedJobs
+    const selectedPriority = this.props.selectedPriority
+    const selectedSchedule = this.props.selectedSchedule
+    const cardTitle = this.props.cardDetail.cardTitle
+    const cardSubComponent = this.props.cardDetail.cardSubComponent
+    const cardDataLevel = this.props.cardDetail.cardDataLevel
+    const tableSchema = this.props.table.columns
+    const payload = {
+      selectedCardComponent: cardComponentCatalog[selectedCardComponent],
+      selectedJobs,
+      selectedPriority,
+      selectedSchedule,
+      statementValue,
+      cardSubComponent,
+      cardTitle,
+      cardDataLevel,
+      tableSchema,
+      router: {
+        history: this.props.history,
+        location: this.props.location,
+        match: this.props.match
+      }
+    }
+    await this.props.sagaSaveCard(payload)
+    debugger
+    await this.props.changeCardTableSwitch(false)
+    await this.props.changeCardModalSwitch(false)
+    debugger
   }
 
   handleBackCardColor = (event) => {
@@ -324,6 +349,7 @@ class CardDetailContainer extends React.Component {
         handleOnDeleteCardComponent={this.handleOnDeleteCardComponent}
 
         handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
+        cardSavingSwitch={this.props.switches.cardSavingSwitch}
       />
     )
   }
