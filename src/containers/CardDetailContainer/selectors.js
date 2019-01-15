@@ -71,3 +71,33 @@ export const cardBuilderCardDetailSelector = createSelector(
     }
   }
 )
+
+export const cardBuilderCardSelector = createSelector(
+  cardBuilderReducerSelector,
+  (cardBuilderReducerSelector) => {
+    return {
+      defaultValue: cardBuilderReducerSelector.api.cardTableSwitch
+    }
+  }
+)
+
+export const cardBuilderSwitchesSelector = createSelector(
+  cardBuilderReducerSelector,
+  (cardBuilderReducerSelector) => {
+    return {
+      cardTableSwitch: cardBuilderReducerSelector.api.cardTableSwitch,
+      cardSaveModalSwitch: cardBuilderReducerSelector.api.cardSaveModalSwitch,
+      loading: cardBuilderReducerSelector.api.loading
+    }
+  }
+)
+
+export const cardBuilderTableSelector = createSelector(
+  cardBuilderReducerSelector,
+  (cardBuilderReducerSelector) => {
+    return {
+      columns: cardBuilderReducerSelector.api.cardSchema,
+      rows: cardBuilderReducerSelector.api.cardRows
+    }
+  }
+)

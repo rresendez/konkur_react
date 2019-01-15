@@ -4,6 +4,7 @@ export const SAGA_CANCEL_CARD_COMPONENT_MODIFICATION = 'cardBuilderReducer/SAGA_
 export const SAGA_CREATE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_CREATE_CARD_COMPONENT'
 export const SAGA_DELETE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_DELETE_CARD_COMPONENT'
 export const SAGA_UPDATE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_UPDATE_CARD_COMPONENT'
+export const SAGA_VALIDATE_CARD = 'cardBuilderReducer/SAGA_VALIDATE_CARD'
 
 export const SAVE_CATALOGS = 'cardBuilderReducer/SAVE_CATALOGS'
 export const CHANGE_IS_CALL_IN_PROGRESS = 'cardBuilderReducer/CHANGE_IS_CALL_IN_PROGRESS'
@@ -26,6 +27,8 @@ export const DELETE_CARD_COMPONENT = 'cardBuilderReducer/DELETE_CARD_COMPONENT'
 export const CHANGE_CARD_EDITABLE_UPDATE = 'cardBuilderReducer/CHANGE_CARD_EDITABLE_UPDATE'
 export const SAVE_UPDATED_CARD_COMPONENT = 'cardBuilderReducer/SAVE_UPDATED_CARD_COMPONENT'
 export const CHANGE_CARD_COMPONENT_EDITABLE_FOR_NEW = 'cardBuilderReducer/CHANGE_CARD_COMPONENT_EDITABLE_FOR_NEW'
+export const CHANGE_GLOBAL_CARD_LOADING = 'cardBuilderReducer/CHANGE_GLOBAL_CARD_LOADING'
+export const SAVE_TABLE_SCHEMA = 'cardBuilderReducer/SAVE_TABLE_SCHEMA'
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -53,6 +56,21 @@ export const sagaDeleteCardComponent = (payload) => ({
 
 export const sagaUpdateCardComponent = (payload) => ({
   type: SAGA_UPDATE_CARD_COMPONENT,
+  payload
+})
+
+export const sagaValidateCard = (payload) => ({
+  type: SAGA_VALIDATE_CARD,
+  payload
+})
+
+export const saveTableSchema = (payload) => ({
+  type: SAVE_TABLE_SCHEMA,
+  payload
+})
+
+export const changeGlobalCardLoading = (payload) => ({
+  type: CHANGE_GLOBAL_CARD_LOADING,
   payload
 })
 

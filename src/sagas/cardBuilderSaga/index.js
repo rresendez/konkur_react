@@ -11,7 +11,7 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 
 import {
   getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
-  deleteCardComponent, updateCardComponent
+  deleteCardComponent, updateCardComponent, validateCard
 } from './calls'
 
 function * genInitialFetch () {
@@ -161,6 +161,45 @@ function * genUpdateCardComponent (action) {
   }
 }
 
+function * genValidateCard (action) {
+  try {
+    yield put(cRActions.changeGlobalCardLoading(true))
+    let selectedJobs
+    const payload = {}
+    if (action.payload.selectedJobs.length === 1) {
+      if (action.payload.selectedJobs[0].name === '---') {
+        selectedJobs = []
+      } else {
+        selectedJobs = [action.payload.selectedJobs[0].id]
+      }
+    } else {
+      selectedJobs = action.payload.selectedJobs.map((job) => job.id)
+    }
+    payload.jobList = selectedJobs
+    payload.subComponent = action.payload.cardSubComponent
+    payload.title = action.payload.cardTitle
+    payload.level = action.payload.cardDataLevel
+    payload.cardComponent = action.payload.selectedCardComponent.id
+    payload.priority = action.payload.selectedPriority.id
+    payload.schedule = action.payload.selectedSchedule.id
+    payload.sourceStatement = action.payload.statementValue
+    const response = yield validateCard(payload)
+
+    const reducerPayload = {
+      cardColumns: response.data.columns,
+      cardRows: response.data.rows
+    }
+
+    yield put(cRActions.saveTableSchema(reducerPayload))
+  } catch (error) {
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.message
+    }))
+    yield put(cRActions.changeGlobalCardLoading(false))
+  }
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
@@ -168,7 +207,8 @@ function * defaultSaga () {
     takeLatest(cRActions.SAGA_CANCEL_CARD_COMPONENT_MODIFICATION, genCancelCardComponentModification),
     takeLatest(cRActions.SAGA_CREATE_CARD_COMPONENT, genCreateCardComponent),
     takeLatest(cRActions.SAGA_DELETE_CARD_COMPONENT, genDeleteCardComponent),
-    takeLatest(cRActions.SAGA_UPDATE_CARD_COMPONENT, genUpdateCardComponent)
+    takeLatest(cRActions.SAGA_UPDATE_CARD_COMPONENT, genUpdateCardComponent),
+    takeLatest(cRActions.SAGA_VALIDATE_CARD, genValidateCard)
   ])
 }
 

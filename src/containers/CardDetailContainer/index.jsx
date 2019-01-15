@@ -9,15 +9,13 @@ import CardDetail from '../../components/CardDetail'
 
 import {
   cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
-  cardBuilderCardDetailSelector
+  cardBuilderCardDetailSelector, cardBuilderSwitchesSelector
 } from './selectors'
 
 class CardDetailContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.state.dialogSwitch = false
-    this.state.dialogSaveSwitch = false
     this.state.howToSwitch = false
     this.state.file = {
       buffer: null,
@@ -96,13 +94,26 @@ class CardDetailContainer extends React.Component {
   }
 
   handleSendQuery = (event) => {
-    this.setState(prevState => ({
-      dialogSwitch: !prevState.dialogSwitch
-    }))
-    console.log('handleSendQuery')
-    console.log(this.refEditor.editor.getValue())
+    const statementValue = this.refEditor.editor.getValue()
     const cardComponentCatalog = this.props.cardComponentCatalog
-    const selectedCardComponent = this.props.card
+    const selectedCardComponent = this.props.selectedCardComponent
+    const selectedJobs = this.props.selectedJobs
+    const selectedPriority = this.props.selectedPriority
+    const selectedSchedule = this.props.selectedSchedule
+    const cardTitle = this.props.cardDetail.cardTitle
+    const cardSubComponent = this.props.cardDetail.cardSubComponent
+    const cardDataLevel = this.props.cardDetail.cardDataLevel
+    const payload = {
+      selectedCardComponent: cardComponentCatalog[selectedCardComponent],
+      selectedJobs,
+      selectedPriority,
+      selectedSchedule,
+      statementValue,
+      cardTitle,
+      cardSubComponent,
+      cardDataLevel
+    }
+    this.props.sagaValidateCard(payload)
   }
 
   handleOnChangeTableArrangement = (columns) => {
@@ -266,6 +277,7 @@ class CardDetailContainer extends React.Component {
   render () {
     return (
       <CardDetail
+        loading={this.props.switches.loading}
         isCallinProgress={this.props.isCallinProgress}
 
         schedules={this.props.scheduleCatalog}
@@ -307,8 +319,8 @@ class CardDetailContainer extends React.Component {
         handleOnChangeCardDataLevel={this.handleOnChangeCardDataLevel}
 
         editorDefaultValue="/* Write your query right here :) */"
-        dialogSwitch={this.state.dialogSwitch}
-        dialogSaveSwitch={this.state.dialogSaveSwitch}
+        dialogSwitch={this.props.switches.cardTableSwitch}
+        dialogSaveSwitch={this.props.switches.cardSaveModalSwitch}
         crud={this.props.crud}
         howToSwitch={this.state.howToSwitch}
         attachedName={this.state.file.name}
@@ -340,7 +352,8 @@ function mapStateToProps (state) {
   return {
     ...cardBuilderCatalogsSelector(state),
     ...cardBuilderSelectedSelector(state),
-    cardDetail: cardBuilderCardDetailSelector(state)
+    cardDetail: cardBuilderCardDetailSelector(state),
+    switches: cardBuilderSwitchesSelector(state)
   }
 }
 
