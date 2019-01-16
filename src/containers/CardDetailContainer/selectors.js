@@ -67,7 +67,8 @@ export const cardBuilderCardDetailSelector = createSelector(
       cardStatus: cardBuilderReducer.api.cardStatus,
       cardComponentTitle: cardBuilderReducer.api.cardComponentTitle,
       cardComponentCouldNotBeDeleted: cardComponentCouldNotBeDeleted,
-      isUpdate: cardBuilderReducer.api.isUpdate
+      isUpdate: cardBuilderReducer.api.isUpdate,
+      cardId: cardBuilderReducer.api.cardId
     }
   }
 )
@@ -76,7 +77,7 @@ export const cardBuilderCardSelector = createSelector(
   cardBuilderReducerSelector,
   (cardBuilderReducerSelector) => {
     return {
-      defaultValue: cardBuilderReducerSelector.api.cardTableSwitch
+      defaultValue: cardBuilderReducerSelector.api.cardStatement
     }
   }
 )
@@ -88,7 +89,8 @@ export const cardBuilderSwitchesSelector = createSelector(
       cardTableSwitch: cardBuilderReducerSelector.api.cardTableSwitch,
       cardSaveModalSwitch: cardBuilderReducerSelector.api.cardSaveModalSwitch,
       loading: cardBuilderReducerSelector.api.loading,
-      cardSavingSwitch: cardBuilderReducerSelector.api.cardSavingSwitch
+      cardSavingSwitch: cardBuilderReducerSelector.api.cardSavingSwitch,
+      isCallInProgress: cardBuilderReducerSelector.isCallInProgress
     }
   }
 )

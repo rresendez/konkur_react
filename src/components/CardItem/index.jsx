@@ -320,38 +320,6 @@ class CardItem extends React.Component {
           </div>
         )
       }
-    } else if (this.props.selectedCardComponent !== this.props.colors.length - 1 &&
-      crud === 'update') {
-      return (
-        <div>
-          <IconButton
-            aria-label="Delete"
-            disabled={this.props.cardComponentCouldNotBeDeleted}
-          >
-            <Icon
-              auto
-              color={this.props.cardComponentColor}
-              size="1.5"
-              disabled={this.props.cardComponentCouldNotBeDeleted}
-            >
-              delete
-            </Icon>
-          </IconButton>
-
-          <IconButton
-            aria-label="Edit"
-            onClick={this.handleOnClickEditableButton}
-          >
-            <Icon
-              color={this.props.cardComponentColor}
-              size="1.5"
-              auto
-            >
-              edit
-            </Icon>
-          </IconButton>
-        </div>
-      )
     } else {
       return (
         <div>

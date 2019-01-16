@@ -19,6 +19,7 @@ const initialState = fromJS({
     selectedSchedule: 0,
 
     // card attributes
+    cardId: null,
     cardTitle: '',
     cardDataLevel: '',
     cardItemsCount: 0,
@@ -229,6 +230,24 @@ export default function initReducer (state = initialState, action) {
   if (action.type === actions.CHANGE_CARD_SAVING_SWITCH) {
     return state
       .setIn(['api', 'cardSavingSwitch'], action.payload)
+  }
+
+  if (action.type === actions.SAVE_CARD_FETCHED) {
+    return state
+      .setIn(['api', 'selectedJobs'], action.payload.selectedJobs)
+      .setIn(['api', 'selectedCardComponent'], action.payload.selectedCardComponent)
+      .setIn(['api', 'selectedPriority'], action.payload.selectedPriority)
+      .setIn(['api', 'selectedSchedule'], action.payload.selectedSchedule)
+      .setIn(['api', 'cardId'], action.payload.cardId)
+      .setIn(['api', 'cardTitle'], action.payload.cardTitle)
+      .setIn(['api', 'cardDataLevel'], action.payload.cardDataLevel)
+      .setIn(['api', 'cardItemsCount'], action.payload.cardItemsCount)
+      .setIn(['api', 'cardLastUpdateDate'], action.payload.cardLastUpdateDate)
+      .setIn(['api', 'cardStatement'], action.payload.cardStatement)
+      .setIn(['api', 'cardColumns'], action.payload.cardColumns)
+      .setIn(['api', 'cardSubComponent'], action.payload.cardSubComponent)
+      .setIn(['isCallInProgress'], action.payload.isCallInProgress)
+      .setIn(['cardStatus'], action.payload.cardStatus)
   }
 
   return state

@@ -89,3 +89,23 @@ export async function createCard (payload) {
     throw (data)
   }
 }
+
+export async function getCard (payload) {
+  try {
+    const response = await _axios.get(`/cards/${payload}`)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
+
+export async function updateCard (id, payload) {
+  try {
+    const response = await _axios.put(`/cards/${id}`, payload)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
