@@ -11,7 +11,8 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 
 import {
   getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
-  deleteCardComponent, updateCardComponent, validateCard, createCard
+  deleteCardComponent, updateCardComponent, validateCard, createCard, getCard,
+  updateCard
 } from './calls'
 
 function * genInitialFetch () {
@@ -43,6 +44,7 @@ function * genInitialFetch () {
 
     yield put(cRActions.saveCatalogs(reducerPayload))
   } catch (error) {
+
   }
 }
 
@@ -223,7 +225,14 @@ function * genCreateCard (action) {
     payload.schedule = action.payload.selectedSchedule.id
     payload.sourceStatement = action.payload.statementValue
     payload.schema = action.payload.tableSchema
-    const response = yield createCard(payload)
+
+    let response = {}
+
+    if (action.payload.cardId !== null && action.payload.cardId !== undefined) {
+      response = yield updateCard(action.payload.cardId, payload)
+    } else {
+      response = yield createCard(payload)
+    }
 
     if (response.status === 200) {
       yield put(cRActions.changeCardSavingSwitch(false))
@@ -238,6 +247,85 @@ function * genCreateCard (action) {
   }
 }
 
+function * genInitialUpdateFetch (action) {
+  try {
+    yield put(cRActions.changeIsCardInProgress(true))
+
+    const schedulesResponse = yield getSchedules()
+    const schedules = schedulesResponse.data
+
+    const jobsResponse = yield getJobs()
+    const jobs = jobsResponse.data
+
+    const prioritiesResponse = yield getPriorities()
+    const priorities = prioritiesResponse.data
+
+    const cardComponentsResponse = yield getCardComponents()
+    const cardComponents = cardComponentsResponse.data.reverse()
+
+    const cardResponse = yield getCard(action.payload)
+
+    const reducerPayload = {
+      api: {
+        jobs,
+        schedules,
+        priorities,
+        cardComponents
+      },
+      isCallInProgress: true,
+      cardStatus: 'ready'
+    }
+
+    const jobIndexes = []
+    cardResponse.data.Jobs.forEach((job) => {
+      const jobIndex = jobs.findIndex(
+        (jobItem) => jobItem.id === job.id
+      )
+      if (jobIndex !== -1) {
+        jobIndexes.push(jobIndex)
+      }
+    })
+
+    const indexOfSelectedPriority = priorities.findIndex(
+      (priority) => priority.id === cardResponse.data.Priority.id
+    )
+
+    const indexOfSchedule = schedules.findIndex(
+      (schedule) => schedule.id === cardResponse.data.Schedule.id
+    )
+
+    const indexOfCardComponent = cardComponents.findIndex(
+      (cardComponent) => cardComponent.id === cardResponse.data.CardComponent.id
+    )
+
+    const cardReducerPayload = {
+      selectedJobs: jobIndexes,
+      selectedCardComponent: indexOfCardComponent,
+      selectedPriority: indexOfSelectedPriority,
+      selectedSchedule: indexOfSchedule,
+
+      // card attributes
+      cardId: cardResponse.data.id,
+      cardTitle: cardResponse.data.title,
+      cardDataLevel: cardResponse.data.level,
+      cardSubComponent: cardResponse.data.subComponent,
+      cardItemsCount: 0,
+      cardLastUpdateDate: cardResponse.data.createDate,
+      cardStatement: cardResponse.data.sourceStatement,
+      cardColumns: JSON.parse(cardResponse.data.schema),
+      isCallInProgress: false,
+      cardStatus: 'ready'
+    }
+    yield put(cRActions.saveCatalogs(reducerPayload))
+    yield put(cRActions.saveCardFetched(cardReducerPayload))
+  } catch (error) {
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.message
+    }))
+  }
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
@@ -247,7 +335,8 @@ function * defaultSaga () {
     takeLatest(cRActions.SAGA_DELETE_CARD_COMPONENT, genDeleteCardComponent),
     takeLatest(cRActions.SAGA_UPDATE_CARD_COMPONENT, genUpdateCardComponent),
     takeLatest(cRActions.SAGA_VALIDATE_CARD, genValidateCard),
-    takeLatest(cRActions.SAGA_SAVE_CARD, genCreateCard)
+    takeLatest(cRActions.SAGA_SAVE_CARD, genCreateCard),
+    takeLatest(cRActions.SAGA_INIT_CARDBUILDER_UPDATE, genInitialUpdateFetch)
   ])
 }
 

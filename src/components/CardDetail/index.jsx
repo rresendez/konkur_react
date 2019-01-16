@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
@@ -80,6 +80,17 @@ const LinearProgressSavingWrapper = styled.div`
   z-index: 3;
   transition: background-color .5s ease;
 `
+const GlobalLoaderWrapper = styled.div`
+flex-grow: 1;
+position: fixed;
+top: 0;
+right: 0;
+left: 0;
+bottom: 0;
+height: 100%;
+width: 100%;
+z-index: 3;
+`
 
 export default class CardDetail extends React.Component {
   renderSelectValue = (value) => value
@@ -109,7 +120,19 @@ export default class CardDetail extends React.Component {
     }
   }
 
+  renderIsCallingLoading = () => {
+    return (
+      <GlobalLoaderWrapper>
+        <LinearProgress />
+      </GlobalLoaderWrapper>
+    )
+  }
+
   render () {
+    if (this.props.isCallInProgress) {
+      return this.renderIsCallingLoading()
+    }
+
     return (
       <div className={styles.cardDetailContainer}>
         {this.renderLoading()}

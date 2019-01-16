@@ -10,7 +10,7 @@ import CardDetail from '../../components/CardDetail'
 import {
   cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
   cardBuilderCardDetailSelector, cardBuilderSwitchesSelector,
-  cardBuilderTableSelector
+  cardBuilderTableSelector, cardBuilderCardSelector
 } from './selectors'
 
 class CardDetailContainer extends React.Component {
@@ -29,7 +29,11 @@ class CardDetailContainer extends React.Component {
   }
 
   componentWillMount () {
-    this.props.sagaInitCardBuilder()
+    if (this.props.crud === 'create') {
+      this.props.sagaInitCardBuilder()
+    } else {
+      this.props.sagaInitCardBuilderUpdate(this.props.match.params.id)
+    }
   }
 
   handleRefEditor = (refComponent) => {
@@ -62,6 +66,7 @@ class CardDetailContainer extends React.Component {
     const cardSubComponent = this.props.cardDetail.cardSubComponent
     const cardDataLevel = this.props.cardDetail.cardDataLevel
     const tableSchema = this.props.table.columns
+    const cardId = this.props.cardDetail.cardId
     const payload = {
       selectedCardComponent: cardComponentCatalog[selectedCardComponent],
       selectedJobs,
@@ -72,6 +77,7 @@ class CardDetailContainer extends React.Component {
       cardTitle,
       cardDataLevel,
       tableSchema,
+      cardId,
       router: {
         history: this.props.history,
         location: this.props.location,
@@ -79,10 +85,8 @@ class CardDetailContainer extends React.Component {
       }
     }
     await this.props.sagaSaveCard(payload)
-    debugger
     await this.props.changeCardTableSwitch(false)
     await this.props.changeCardModalSwitch(false)
-    debugger
   }
 
   handleBackCardColor = (event) => {
@@ -283,8 +287,6 @@ class CardDetailContainer extends React.Component {
     return (
       <CardDetail
         loading={this.props.switches.loading}
-        isCallinProgress={this.props.isCallinProgress}
-
         schedules={this.props.scheduleCatalog}
         selectedSchedule={this.props.selectedSchedule}
         handleOnChangeSchedule={this.handleOnChangeSchedule}
@@ -323,7 +325,7 @@ class CardDetailContainer extends React.Component {
         cardDataLevel={this.props.cardDetail.cardDataLevel}
         handleOnChangeCardDataLevel={this.handleOnChangeCardDataLevel}
 
-        editorDefaultValue="/* Write your query right here :) */"
+        editorDefaultValue={this.props.defaultValue || '/* Write your query right here :) */'}
         dialogSwitch={this.props.switches.cardTableSwitch}
         dialogSaveSwitch={this.props.switches.cardSaveModalSwitch}
         crud={this.props.crud}
@@ -350,6 +352,7 @@ class CardDetailContainer extends React.Component {
 
         handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
         cardSavingSwitch={this.props.switches.cardSavingSwitch}
+        isCallInProgress={this.props.switches.isCallInProgress}
       />
     )
   }
@@ -361,7 +364,8 @@ function mapStateToProps (state) {
     ...cardBuilderSelectedSelector(state),
     cardDetail: cardBuilderCardDetailSelector(state),
     switches: cardBuilderSwitchesSelector(state),
-    table: cardBuilderTableSelector(state)
+    table: cardBuilderTableSelector(state),
+    ...cardBuilderCardSelector(state)
   }
 }
 

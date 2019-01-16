@@ -6,6 +6,7 @@ export const SAGA_DELETE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_DELETE_CARD_C
 export const SAGA_UPDATE_CARD_COMPONENT = 'cardBuilderReducer/SAGA_UPDATE_CARD_COMPONENT'
 export const SAGA_VALIDATE_CARD = 'cardBuilderReducer/SAGA_VALIDATE_CARD'
 export const SAGA_SAVE_CARD = 'cardBuilderReducer/SAGA_SAVE_CARD'
+export const SAGA_INIT_CARDBUILDER_UPDATE = 'cardBuilderReducer/SAGA_INIT_CARDBUILDER_UPDATE'
 
 export const SAVE_CATALOGS = 'cardBuilderReducer/SAVE_CATALOGS'
 export const CHANGE_IS_CALL_IN_PROGRESS = 'cardBuilderReducer/CHANGE_IS_CALL_IN_PROGRESS'
@@ -33,6 +34,12 @@ export const SAVE_TABLE_SCHEMA = 'cardBuilderReducer/SAVE_TABLE_SCHEMA'
 export const CHANGE_CARD_TABLE_SWITCH = 'cardBuilderReducer/CHANGE_CARD_TABLE_SWITCH'
 export const CHANGE_CARD_MODAL_SWTICH = 'cardBuilderReducer/CHANGE_CARD_MODAL_SWTICH'
 export const CHANGE_CARD_SAVING_SWITCH = 'cardBuilderReducer/CHANGE_CARD_SAVING_SWITCH'
+export const SAVE_CARD_FETCHED = 'cardBuilderReducer/SAVE_CARD_FETCHED'
+
+export const sagaInitCardBuilderUpdate = (payload) => ({
+  type: SAGA_INIT_CARDBUILDER_UPDATE,
+  payload
+})
 
 export const sagaInitCardBuilder = () => ({
   type: SAGA_INIT_CARDBUILDER
@@ -70,6 +77,11 @@ export const sagaValidateCard = (payload) => ({
 
 export const sagaSaveCard = (payload) => ({
   type: SAGA_SAVE_CARD,
+  payload
+})
+
+export const saveCardFetched = (payload) => ({
+  type: SAVE_CARD_FETCHED,
   payload
 })
 
