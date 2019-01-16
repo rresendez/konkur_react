@@ -45,11 +45,20 @@ const MainWrapper = styled.div`
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   background-color: rgba(222,235,247,1);
+    @media (max-width: 1200px){
+    grid-template-columns: repeat(3 , auto);
+    grid-templte-rows: repeat(7, 1fr);
+  }
 `
 const OneWrapper = styled.div`
   grid-column: 1/1;
   grid-row: 1;
   grid-row-end: 1;
+     @media (max-width: 1200px){
+  grid-column: 2/1;
+  grid-row: 5;
+  grid-row-end: 5;
+  }
   `
 const TwoWrapper = styled.div`
   grid-column: 2/2;
@@ -61,6 +70,12 @@ const TwoWrapper = styled.div`
   border-left: solid ${wBlue};
   border-right: solid ${wBlue};
   border-width: 1px;
+     @media (max-width: 1200px){
+  grid-column: 1/1;
+  grid-row: 5;
+  grid-row-end: 5;
+  width: 10rem;
+  }
   `
 const ThreeWrapper = styled.div`
   grid-column: 3/3;
@@ -69,17 +84,28 @@ const ThreeWrapper = styled.div`
   .SimpleSelect-root-74{
     margin-top: 0.5rem;
   }
+   @media (max-width: 1200px){
+      margin: 0 auto;
+      grid-column: 1/2;
+      grid-row: 3;
+      grid-row-end: 3;
+      
+    }
   `
 const FourWrapper = styled.div`
   grid-column: 4/4;
   grid-row: 1;
   grid-row-end: 3;
+     @media (max-width: 1200px){
+  grid-column: 2/3;
+  grid-row: 5;
+  grid-row-end: 5;
+  }
   `
 const ButtonWrapper = styled.div`
   grid-column: 3/3;
   grid-row: 3;
   grid-row-end: 3;
-  margin: auto;
   .MuiButtonBase-root-14{
     background-color: white;
     width: 10rem;
@@ -88,6 +114,15 @@ const ButtonWrapper = styled.div`
       color: white;
       border: 1px solid white;  
     }
+  }
+    @media (max-width: 1200px){
+  margin: auto 0;
+  grid-column: 1/1;
+  grid-row: 6;
+  grid-row-end: 6;
+  .MuiButtonBase-root-14{
+    width: 5rem;
+  }
   }
   `
 const BreadWrapper = styled.div`
@@ -99,6 +134,14 @@ const BreadWrapper = styled.div`
     margin-bottom: -4rem;
     margin-top: 0.5rem;
   }
+     @media (max-width: 1200px){
+      margin: 0 auto;
+      margin-top: 1rem;
+      grid-column: 1/1;
+      grid-row: 1;
+      grid-row-end: 1;
+      
+    }
   }
   `
 class SelectionProduct extends React.Component {

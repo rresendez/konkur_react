@@ -102,38 +102,66 @@ if (mock.lines.length > 0) {
   })
 }
 
+const Background = styled.div`
+  
+  color: rgba(222,235,247,1);
+  background-color: rgba(222,235,247,1);
+`
 const MainWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(4, auto);
   grid-column-gap: 1rem;
   background-color: rgba(222,235,247,1);
+  width: max-content;
+  @media (max-width: 768px){
+    grid-template-columns: repeat(1, auto);
+     grid-template-rows: repeat(6, auto);
+  }
 `
 const HeaderWrapper = styled.div`
   grid-column: 1/3;
   grid-row: 1;
   grid-row-end: 1;
   padding-bottom: 1rem;
+  width: 100vw;
   background-color: rgba(222,235,247,1);
-  width: 98vw;
+   @media (max-width: 768px){
+   }
 `
 const LeftUp = styled.div`
   grid-column: 1/2;
   grid-row: 2;
   grid-row-end: 2;
-  padding-left: 1rem;
+  margin-left: 1rem;
+  @media (max-width: 768px){
+    margin: 1rem;
+  }
 `
 const LeftDown = styled.div`
   grid-column: 1/2;
   grid-row: 3;
   grid-row-end: 3;
-  padding-left: 1rem;
+  margin-left: 1rem;
   margin-top: 1rem;
+  @media (max-width: 768px){
+    margin: 1rem;
+    grid-column: 1/2;
+    grid-row: 4;
+    grid-row-end: 4;
+  }
 `
 const RightUp = styled.div`
   grid-column: 2/2;
   grid-row: 2;
   grid-row-end: 2;
+  margin-right: 1rem;
+    @media (max-width: 768px){
+    margin: 1rem;
+    grid-column: 1/2;
+    grid-row: 3;
+    grid-row-end: 3;
+  }
   
 `
 const RightDown = styled.div`
@@ -141,6 +169,14 @@ const RightDown = styled.div`
   grid-row: 3;
   grid-row-end: 3;
   margin-top: 1rem;
+  margin-right: 1rem;
+  @media (max-width: 768px){
+    margin: 1rem;
+    margin-bottom: 0;
+    grid-column: 1/2;
+    grid-row: 5;
+    grid-row-end: 5;
+  }
 `
 class MockChange extends React.Component {
   constructor (props) {

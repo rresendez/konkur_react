@@ -108,7 +108,7 @@ html, body {
 }
 @media all and (max-width: 710px) {
   .breadcrumb__desc {
-    display: none;
+    font-size: 11px;
   }
 
   .breadcrumb {

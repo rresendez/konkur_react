@@ -19,6 +19,7 @@ const BaseStyled = styled.div`
   background-color: ${props => props.color || 'white'}
   zoom: 90%;
   height: 100%;
+  min-width: 724px;
   `
 const RefreshStyled = styled.div`
   grid-column: 3/3;
