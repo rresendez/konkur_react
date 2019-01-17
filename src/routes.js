@@ -22,6 +22,16 @@ const AsyncCardUpdatePage = Loadable({
   loading: Loader
 })
 
+const AsyncAdminHierarchyPage = Loadable({
+  loader: () => import('./scenes/AdminHierarchyPage'),
+  loading: Loader
+})
+
+const AsyncAdminSelectionProductPage = Loadable({
+  loader: () => import('./scenes/AdminSelectionProductPage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
@@ -41,6 +51,16 @@ const routes = [
   {
     path: '/testing',
     component: AsyncTestPage,
+    exact: true
+  },
+  {
+    path: '/admin',
+    component: AsyncAdminHierarchyPage,
+    exact: true
+  },
+  {
+    path: '/admin/products',
+    component: AsyncAdminSelectionProductPage,
     exact: true
   }
 ]
