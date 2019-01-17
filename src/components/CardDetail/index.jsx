@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
 import Fab from '@material-ui/core/Fab'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 import CardItem from '../CardItem'
 import TextEditor from '../TextEditor'
@@ -31,31 +32,6 @@ const ITEM_PADDING_TOP = 8
 
 function Transition (props) {
   return (<Slide direction="up" {...props} />)
-}
-
-const mock = {
-  colors: [
-    {
-      id: 1,
-      name: 'new category',
-      color: 'rgba(193,193,193,1)'
-    },
-    {
-      id: 2,
-      name: 'demand',
-      color: 'rgba(244,115,33,1)'
-    },
-    {
-      id: 3,
-      name: 'fulfillment',
-      color: 'rgba(255,194,32,1)'
-    },
-    {
-      id: 4,
-      name: 'inventory',
-      color: 'rgba(118,192,67,1)'
-    }
-  ]
 }
 
 const SelectedModified = withStyles({
@@ -79,42 +55,87 @@ const MenuProps = {
   }
 }
 
-let id = 0
-function createData (name, calories, fat, carbs, protein) {
-  id += 1
-  return { id, name, calories, fat, carbs, protein }
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-]
+const LinearProgressWrapper = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: rgba(254,254,254,.5);
+  transition: background-color .5s ease;
+`
+const LinearProgressSavingWrapper = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  transition: background-color .5s ease;
+`
+const GlobalLoaderWrapper = styled.div`
+flex-grow: 1;
+position: fixed;
+top: 0;
+right: 0;
+left: 0;
+bottom: 0;
+height: 100%;
+width: 100%;
+z-index: 3;
+`
 
 export default class CardDetail extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-    this.state.name = ['Carlos Abbott', 'April Tucker']
-    this.state.colors = mock.colors.reverse()
-    this.state.crud = 'create || update'
+  renderSelectValue = (value) => value
+
+  renderMultiSelectValue = (selected) => {
+    const simpleValues = selected.map((value) => value.name)
+    return simpleValues.join(', ')
+  }
+
+  renderLoading = () => {
+    if (this.props.loading) {
+      return (
+        <LinearProgressWrapper>
+          <LinearProgress />
+        </LinearProgressWrapper>
+      )
+    }
+  }
+
+  renderSavingLoading = () => {
+    if (this.props.cardSavingSwitch) {
+      return (
+        <LinearProgressSavingWrapper>
+          <LinearProgress />
+        </LinearProgressSavingWrapper>
+      )
+    }
+  }
+
+  renderIsCallingLoading = () => {
+    return (
+      <GlobalLoaderWrapper>
+        <LinearProgress />
+      </GlobalLoaderWrapper>
+    )
   }
 
   render () {
+    if (this.props.isCallInProgress) {
+      return this.renderIsCallingLoading()
+    }
+
     return (
       <div className={styles.cardDetailContainer}>
+        {this.renderLoading()}
         <div className={styles.wrapperCardHelp}>
           <NotePaper elevation={1}>
             <div className={styles.helpContainer}>
@@ -145,15 +166,20 @@ export default class CardDetail extends React.Component {
               <div className={styles.selectWrapper}>
                 <SelectedModified
                   multiple
-                  value={this.props.visibleToSelected}
-                  onChange={this.props.handleOnChangeSelectedValues}
-                  renderValue={selected => selected.join(', ')}
+                  value={this.props.selectedJobs}
+                  onChange={this.props.handleOnChangeJobs}
+                  renderValue={this.renderMultiSelectValue}
                   MenuProps={MenuProps}
                 >
-                  {this.props.visibleToData.map(name => (
-                    <MenuItem key={name} value={name}>
-                      <Checkbox checked={this.props.visibleToSelected.indexOf(name) > -1} />
-                      <ListItemText primary={name} />
+                  {this.props.jobs.map((name, idx) => (
+                    <MenuItem key={name.name} value={name.name} data-item-id={name.id} data-item-idx={idx}>
+                      <Checkbox
+                        checked={
+                          this.props.selectedJobs.findIndex(
+                            (job) => job.name === name.name) === -1 ? 0 : 1
+                        }
+                      />
+                      <ListItemText primary={name.name} name={name.id} />
                     </MenuItem>
                   ))}
                 </SelectedModified>
@@ -165,14 +191,14 @@ export default class CardDetail extends React.Component {
               </h4>
               <div className={styles.selectWrapper}>
                 <SelectedModified
-                  value={'holi'}
-                  renderValue={(value) => (<div>holi</div>)}
-                  onChange={(event) => { }}
+                  value={this.props.selectedPriority.name}
+                  renderValue={this.renderSelectValue}
+                  onChange={this.props.handleOnChangePriority}
                   MenuProps={MenuProps}
                 >
-                  {this.props.visibleToData.map(name => (
-                    <MenuItem key={name} value={name}>
-                      <ListItemText primary={name} />
+                  {this.props.priorities.map(name => (
+                    <MenuItem key={name.name} value={name.name} data-item-id={name.id}>
+                      <ListItemText primary={name.name} />
                     </MenuItem>
                   ))}
                 </SelectedModified>
@@ -184,14 +210,14 @@ export default class CardDetail extends React.Component {
               </h4>
               <div className={styles.selectWrapper}>
                 <SelectedModified
-                  value={'holi'}
-                  renderValue={(value) => (<div>holi</div>)}
-                  onChange={(event) => { }}
+                  value={this.props.selectedSchedule.name}
+                  renderValue={this.renderSelectValue}
+                  onChange={this.props.handleOnChangeSchedule}
                   MenuProps={MenuProps}
                 >
-                  {this.props.visibleToData.map(name => (
-                    <MenuItem key={name} value={name}>
-                      <ListItemText primary={name} />
+                  {this.props.schedules.map(name => (
+                    <MenuItem key={name.name} value={name.name} data-item-id={name.id}>
+                      <ListItemText primary={name.name} />
                     </MenuItem>
                   ))}
                 </SelectedModified>
@@ -201,9 +227,34 @@ export default class CardDetail extends React.Component {
         </div>
         <div className={styles.wrapperCardItem}>
           <CardItem
-            colors={this.state.colors}
-            handleColors={this.handleColors}
             crud={this.props.crud}
+            status={this.props.cardStatus}
+            loading={this.props.cardLoading}
+
+            cardSubComponent={this.props.cardSubComponent}
+            handleOnChangeCardSubComponent={this.props.handleOnChangeCardSubComponent}
+
+            cardTitle={this.props.cardTitle}
+            handleOnChangeCardTitle={this.props.handleOnChangeCardTitle}
+
+            cardDataLevel={this.props.cardDataLevel}
+            handleOnChangeCardDataLevel={this.props.handleOnChangeCardDataLevel}
+
+            colors={this.props.cardComponents}
+            handleColors={this.handleColors}
+            selectedCardComponent={this.props.selectedCardComponent}
+            cardComponentColor={this.props.cardComponentColor}
+            handleOnChangeCardComponent={this.props.handleOnChangeCardComponent}
+            handleOnChangeCardComponentColor={this.props.handleOnChangeCardComponentColor}
+            cardComponentColorCouldNotBeSaved={this.props.cardComponentColorCouldNotBeSaved}
+            handleOnCloseEditable={this.props.handleOnCloseEditableCardItem}
+            editable={this.props.cardComponentEditable}
+            handleOnChangeEditable={this.props.handleOnChangeCardItemEditable}
+            handleOnSaveCardComponent={this.props.handleOnSaveCardComponent}
+            cardComponentTitle={this.props.cardComponentTitle}
+            handleOnChangedCardComponentTitle={this.props.handleOnChangedCardComponentTitle}
+            cardComponentCouldNotBeDeleted={this.props.cardComponentCouldNotBeDeleted}
+            handleOnDeleteCardComponent={this.props.handleOnDeleteCardComponent}
           />
           {
             this.props.crud === 'update' && (<div className={styles.wrapperHowToButton}>
@@ -228,8 +279,9 @@ export default class CardDetail extends React.Component {
             color="secondary"
             aria-label="Add"
             onClick={this.props.handleSendQuery}
+            disabled={this.props.loading}
           >
-            <Icon size="2" color="white">send</Icon>
+            <Icon size="2" color="white" disabled={this.props.loading}>send</Icon>
           </Fab>
         </div>
         <Dialog
@@ -246,7 +298,7 @@ export default class CardDetail extends React.Component {
               <div className={styles.toolbarModalButtonsWrapper}>
                 <IconButton
                   aria-label="close"
-                  onClick={this.props.handleOnCloseResultModal}
+                  onClick={this.props.handleOnCloseCardTableSwitch}
                 >
                   <Icon color="white" size="1.5">close</Icon>
                 </IconButton>
@@ -275,13 +327,22 @@ export default class CardDetail extends React.Component {
           >
             <DialogTitle id="confirmation-dialog-title">Save this card</DialogTitle>
             <DialogContent>
+              {this.renderSavingLoading()}
               Do you want to save this card?
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.props.handleOnCancelSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnCancelSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Cancel
               </Button>
-              <Button onClick={this.props.handleOnConfirmSaveCard} color="primary">
+              <Button
+                onClick={this.props.handleOnConfirmSaveCard}
+                color="primary"
+                disabled={this.props.cardSavingSwitch}
+              >
                 Ok
               </Button>
             </DialogActions>

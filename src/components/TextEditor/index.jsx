@@ -52,8 +52,8 @@ export default class TextEditor extends React.Component {
             editorProps={{
               $blockScrolling: true
             }}
-            enableBasicAutocompletion={true}
-            enableLiveAutocompletion={true}
+            enableBasicAutocompletion={false}
+            enableLiveAutocompletion={false}
             enableSnippets={true}
             wrapEnabled={true}
             width="100%"
