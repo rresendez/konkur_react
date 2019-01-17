@@ -62,7 +62,7 @@ class MockChange extends React.Component {
     this.state = {}
     this.state.status = 'ready'
     this.state.disabled = false
-    this.state.loading = true
+    this.state.loading = false
   }
   handleSelectedLine = (line) => {
     console.log('this is the state on parent')

@@ -8,18 +8,23 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '../Icon'
 
 const CardItemContainer = withStyles({
-  root: {
-    height: '2.5rem',
-    width: '25rem'
-  }
 })(Card)
 
 const H3Fixer = styled.div`
   margin-top: auto;
   display: inline-block;
-  font-size: 1.17em;
+  font-size: 0.8em;
   font-weight: bold;
   padding: 0.6rem;
+`
+const CardSize = styled.div`
+.MuiPaper-root-26{
+  height: 2.5rem;
+ width: 15rem;
+ @media (max-width: 768px){
+  width: 10rem;
+ }
+}
 `
 const StyledCancel = styled.div`
 float:right;
@@ -57,23 +62,25 @@ class LineItem extends React.Component {
         onDragStart={this.dragstartHandler}
         data-card={JSON.stringify(this.props.line)}
       >
-        <CardItemContainer>
-          <StyledCard>
-            <H3Fixer>
-              {this.props.line.department + ' '}
-              {this.props.line.name}
-            </H3Fixer>
-            <StyledCancel>
-              <IconButton>
-                <StyledButtonCancel>
-                  <Icon>
-                      cancel
-                  </Icon>
-                </StyledButtonCancel>
-              </IconButton>
-            </StyledCancel>
-          </StyledCard>
-        </CardItemContainer>
+        <CardSize>
+          <CardItemContainer>
+            <StyledCard>
+              <H3Fixer>
+                {this.props.line.department + ' '}
+                {this.props.line.name}
+              </H3Fixer>
+              <StyledCancel>
+                <IconButton>
+                  <StyledButtonCancel>
+                    <Icon>
+                        cancel
+                    </Icon>
+                  </StyledButtonCancel>
+                </IconButton>
+              </StyledCancel>
+            </StyledCard>
+          </CardItemContainer>
+        </CardSize>
       </div>
     )
   }

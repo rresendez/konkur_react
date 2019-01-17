@@ -13,10 +13,13 @@ const wYellowLight = 'rgba(255,192,0,0.75)'
 
 const BaseStyled = styled.div`
   display:grid;
-  grid-template-columns: 10% 80% 10%
+  grid-template-columns: auto auto auto;
   grid-template-row: 5% 90% 5%;
   grid-gap: 1rem;
   background-color: ${props => props.color || 'white'}
+  zoom: 90%;
+  height: 100%;
+  min-width: 724px;
   `
 const RefreshStyled = styled.div`
   grid-column: 3/3;
@@ -50,6 +53,7 @@ const ColumnStyled = styled.div`
   grid-row: 2;
   grid-row-end: 2;
   padding-top: 1rem;
+  height: 17.5rem;
   `
 const LoadingStyled = styled.div`
   grid-column: 2/2;
@@ -92,17 +96,37 @@ const EmptyContainer = styled.div`
   display: flex;
 `
 const EmptyFooterContainer = styled.div`
-  height: 4.5rem;
+  height: 11.6rem;
   width: 100%;
   padding-top: 1rem;
   grid-column: 2/2;
-  grid-row: 3;
+  grid-row: 4;
+`
+const EmptyFooterLoad = styled.div`
+  height: 13.12rem;
+  width: 100%;
+  padding-top: 1rem;
+  grid-column: 2/2;
+  grid-row: 4;
 `
 const TitleCenter = styled.div`
-  margin: auto;
+  margin: 0 auto;
+  margin-top: 7rem;
+  grid-column: 2/3;
+  grid-row: 2;
+  grid-row-end: 4;
+  height: 100%;
+  width: 100%;
 `
 const LoadingCenter = styled.div`
-  margin-top: 11.5%;
+  margin: auto;
+  margin-top: 7rem;
+  grid-column: 1/4;
+  grid-row: 2;
+  grid-row-end: 4;
+  height: 100%;
+  width: 90%;
+  padding-top: 2rem;
 `
 class LineDrop extends React.Component {
   constructor (props) {
@@ -140,56 +164,47 @@ class LineDrop extends React.Component {
   render () {
     if (this.props.loading) {
       return (
-        <div>
+        <div
+          onDrop={(event) => { this.dropHandler(event) }}
+          onDragOver={(event) => { this.dragHandler(event) }}
+        >
           <BaseStyled>
             <HeaderStyled>
               <h2>{this.props.title}</h2>
             </HeaderStyled>
-            <LoadingStyled>
-              <LoadingCenter>
-                <LinearProgress />
-              </LoadingCenter>
-            </LoadingStyled>
+            <LoadingCenter>
+              <LinearProgress></LinearProgress>
+            </LoadingCenter>
             <RefreshStyled>
-              <IconButton
-                disabled
-              >
+              <IconButton>
                 <RotateStyled>
                   <Icon
-                    color={wYellow}
+                    color={wYellowLight}
                     size={3}
                   >
-                    refresh
                   </Icon>
                 </RotateStyled>
               </IconButton>
             </RefreshStyled>
             <RightArrowStyled>
-              <IconButton
-                disabled
-              >
+              <IconButton>
                 <Icon
                   color={wYellow}
                   size={4}
                 >
-                  keyboard_arrow_right
                 </Icon>
               </IconButton>
             </RightArrowStyled>
             <LeftArrowStyled>
-              <IconButton
-                disabled
-              >
+              <IconButton>
                 <Icon
                   color={wYellow}
                   size={4}
                 >
-                  keyboard_arrow_left
                 </Icon>
               </IconButton>
             </LeftArrowStyled>
-            <EmptyFooterContainer>
-            </EmptyFooterContainer>
+            <EmptyFooterLoad></EmptyFooterLoad>
           </BaseStyled>
         </div>
       )
@@ -254,40 +269,9 @@ class LineDrop extends React.Component {
             <HeaderStyled>
               <h2>{this.props.title}</h2>
             </HeaderStyled>
-            <ColumnStyled>
-              <EmptyContainer>
-                <TitleCenter>
-                  <h1>
-                    {this.props.pleaseDrop}
-                  </h1>
-                </TitleCenter>
-              </EmptyContainer>
-            </ColumnStyled>
-            <EmptyFooterContainer>
-            </EmptyFooterContainer>
-          </BaseStyled>
-        </div>
-      )
-    } else if (this.props.disabled) {
-      return (
-        <div>
-          <BaseStyled
-            color={'lightgray'}
-          >
-            <HeaderStyled>
-              <h2>{this.props.title}</h2>
-            </HeaderStyled>
-            <ColumnStyled
-              color={'lightgray'}
-            >
-              <EmptyContainer>
-                <TitleCenter>
-                  <h1>
-                    {this.props.pleaseDrop}
-                  </h1>
-                </TitleCenter>
-              </EmptyContainer>
-            </ColumnStyled>
+            <TitleCenter>
+              <h2>{this.props.pleaseDrop}</h2>
+            </TitleCenter>
             <RefreshStyled>
               <IconButton>
                 <RotateStyled>
@@ -295,13 +279,75 @@ class LineDrop extends React.Component {
                     color={wYellowLight}
                     size={3}
                   >
-                    refresh
                   </Icon>
                 </RotateStyled>
               </IconButton>
             </RefreshStyled>
-            <EmptyFooterContainer>
-            </EmptyFooterContainer>
+            <RightArrowStyled>
+              <IconButton>
+                <Icon
+                  color={wYellow}
+                  size={4}
+                >
+                </Icon>
+              </IconButton>
+            </RightArrowStyled>
+            <LeftArrowStyled>
+              <IconButton>
+                <Icon
+                  color={wYellow}
+                  size={4}
+                >
+                </Icon>
+              </IconButton>
+            </LeftArrowStyled>
+            <EmptyFooterContainer></EmptyFooterContainer>
+          </BaseStyled>
+        </div>
+      )
+    } else if (this.props.disabled) {
+      return (
+        <div
+        >
+          <BaseStyled
+            color={'lightgray'}
+          >
+            <HeaderStyled>
+              <h2>{this.props.title}</h2>
+            </HeaderStyled>
+            <TitleCenter>
+              <h2>{this.props.pleaseDrop}</h2>
+            </TitleCenter>
+            <RefreshStyled>
+              <IconButton>
+                <RotateStyled>
+                  <Icon
+                    color={wYellowLight}
+                    size={3}
+                  >
+                  </Icon>
+                </RotateStyled>
+              </IconButton>
+            </RefreshStyled>
+            <RightArrowStyled>
+              <IconButton>
+                <Icon
+                  color={wYellow}
+                  size={4}
+                >
+                </Icon>
+              </IconButton>
+            </RightArrowStyled>
+            <LeftArrowStyled>
+              <IconButton>
+                <Icon
+                  color={wYellow}
+                  size={4}
+                >
+                </Icon>
+              </IconButton>
+            </LeftArrowStyled>
+            <EmptyFooterContainer></EmptyFooterContainer>
           </BaseStyled>
         </div>
       )
