@@ -100,6 +100,9 @@ function * genCancelCardComponentModification (action) {
       isUpdate: false
     }))
   }
+  if (action.payload.selectedCardComponent === action.payload.cardComponentCatalog.length - 1) {
+    yield put(cRActions.changeSelectedCardComponent(action.payload.selectedCardComponent - 1))
+  }
 }
 
 function * genCreateCardComponent (action) {

@@ -236,6 +236,8 @@ class CardDetailContainer extends React.Component {
 
   handleOnCloseEditableCardItem = (event) => {
     this.props.sagaCancelCardComponentModification({
+      cardComponentCatalog: this.props.cardComponentCatalog,
+      selectedCardComponent: this.props.selectedCardComponent,
       cardLastCardComponentModified: this.props.cardDetail.cardLastCardComponentModified
     })
   }
