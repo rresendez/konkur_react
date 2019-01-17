@@ -127,6 +127,7 @@ const HeaderWrapper = styled.div`
   width: 100vw;
   background-color: rgba(222,235,247,1);
    @media (max-width: 768px){
+     display: none ;
    }
 `
 const LeftUp = styled.div`
