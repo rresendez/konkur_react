@@ -18,7 +18,7 @@ const H3Fixer = styled.div`
   padding: 0.6rem;
 `
 const CardSize = styled.div`
-.MuiPaper-root-26{
+.MuiPaper-root-44{
   height: 2.5rem;
  width: 15rem;
  @media (max-width: 768px){

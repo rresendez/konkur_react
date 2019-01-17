@@ -55,14 +55,8 @@ const ColumnStyled = styled.div`
   padding-top: 1rem;
   height: 17.5rem;
   `
-const LoadingStyled = styled.div`
-  grid-column: 2/2;
-  grid-row: 2;
-  grid-row-end: 2;
-  padding-top: 1rem;
-  width: 100%;
-  height: 17.5rem;
-  width: 71rem;
+const Background = styled.div`
+  background-color: 
   `
 const LineStyled = styled.div`
   margin: 0 auto;
