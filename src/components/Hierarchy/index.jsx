@@ -100,7 +100,7 @@ class Hierarchy extends React.Component {
   }
 }
 Hierarchy.propTypes = {
-  hierarchy: PropTypes.array.isRequired,
-  handleSelectedPersonal: PropTypes.func.isRequired
+  hierarchy: PropTypes.array,
+  handleSelectedPersonal: PropTypes.func
 }
 export default Hierarchy

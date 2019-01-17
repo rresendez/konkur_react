@@ -68,7 +68,7 @@ class Personal extends React.Component {
         <CardItemContainer>
           <StyledCard personal={this.props.personal}>
             <H3Fixer>
-              <a href="">
+              <a href="www.walmart.com">
                 <h3>
                   {this.props.personal.name}
                 </h3>
@@ -87,10 +87,10 @@ class Personal extends React.Component {
   }
 }
 Personal.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  new: PropTypes.bool.isRequired,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  title: PropTypes.string,
+  new: PropTypes.bool,
   subordinates: PropTypes.array
 }
 export default Personal

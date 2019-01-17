@@ -47,6 +47,7 @@ class ManagmentUI extends React.Component {
         return (
           <PWrapper
             idx={idx}
+            key={idx}
           >
             <PersonalHierarchy
               mock={person}
@@ -55,6 +56,8 @@ class ManagmentUI extends React.Component {
             </PersonalHierarchy>
           </PWrapper>
         )
+      } else {
+        return null
       }
     })
     return rightSide
@@ -89,9 +92,9 @@ class ManagmentUI extends React.Component {
 }
 
 ManagmentUI.propTypes = {
-  hierarchy: PropTypes.array.isRequired,
-  personal: PropTypes.array.isRequired,
-  handleSelectedPersonal: PropTypes.func.isRequired
+  heirarchy: PropTypes.array,
+  personal: PropTypes.array,
+  handleSelectedPersonal: PropTypes.func
 }
 
 export default ManagmentUI
