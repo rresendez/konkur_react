@@ -4,7 +4,8 @@ export const _dev = process.env.NODE_ENV === 'development'
 
 let BASE_URL = _dev
   ? 'http://localhost:4444/v1/api'
-  : `kunkur-global-backend-module.kunkur-demo-env.kunkurinternational.wmcretailtechnology.prod.walmart.com:4444/v1/api`
+  : `kunkur-global-backend.demo.demo-kunkur-international.bootcamp.qa.walmart.com:4444/v1/api`
+
 /*
 if (!_dev) {
   if (!localStorage.getItem('token')) {
