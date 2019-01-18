@@ -85,8 +85,6 @@ class CardDetailContainer extends React.Component {
       }
     }
     await this.props.sagaSaveCard(payload)
-    await this.props.changeCardTableSwitch(false)
-    await this.props.changeCardModalSwitch(false)
   }
 
   handleBackCardColor = (event) => {
