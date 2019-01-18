@@ -238,6 +238,8 @@ function * genCreateCard (action) {
     }
 
     if (response.status === 200) {
+      yield put(cRActions.changeCardModalSwitch(false))
+      yield put(cRActions.changeCardTableSwitch(false))
       yield put(cRActions.changeCardSavingSwitch(false))
       yield action.payload.router.history.push(`/`)
     }
