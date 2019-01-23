@@ -10,7 +10,8 @@ import CardDetail from '../../components/CardDetail'
 import {
   cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
   cardBuilderCardDetailSelector, cardBuilderSwitchesSelector,
-  cardBuilderTableSelector, cardBuilderCardSelector
+  cardBuilderTableSelector, cardBuilderCardSelector,
+  cardBuilderAttachmentSelector
 } from './selectors'
 
 class CardDetailContainer extends React.Component {
@@ -138,6 +139,7 @@ class CardDetailContainer extends React.Component {
   }
 
   handleUploadDropzone = (file) => {
+    /*
     this.setState((previousState) => ({
       file: {
         buffer: file,
@@ -148,6 +150,7 @@ class CardDetailContainer extends React.Component {
         name: previousState.file.name
       }
     }))
+    */
   }
 
   handleCleanAttachment = () => {
@@ -330,7 +333,6 @@ class CardDetailContainer extends React.Component {
         dialogSaveSwitch={this.props.switches.cardSaveModalSwitch}
         crud={this.props.crud}
         howToSwitch={this.state.howToSwitch}
-        attachedName={this.state.file.name}
 
         handleRefEditor={this.handleRefEditor}
 
@@ -353,6 +355,8 @@ class CardDetailContainer extends React.Component {
         handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
         cardSavingSwitch={this.props.switches.cardSavingSwitch}
         isCallInProgress={this.props.switches.isCallInProgress}
+
+        cardAttachName={this.props.fileAttach.name}
       />
     )
   }
@@ -365,7 +369,8 @@ function mapStateToProps (state) {
     cardDetail: cardBuilderCardDetailSelector(state),
     switches: cardBuilderSwitchesSelector(state),
     table: cardBuilderTableSelector(state),
-    ...cardBuilderCardSelector(state)
+    ...cardBuilderCardSelector(state),
+    fileAttach: cardBuilderAttachmentSelector(state)
   }
 }
 

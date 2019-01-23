@@ -104,3 +104,13 @@ export const cardBuilderTableSelector = createSelector(
     }
   }
 )
+
+export const cardBuilderAttachmentSelector = createSelector(
+  cardBuilderReducerSelector,
+  (cardBuilderReducerSelector) => {
+    return {
+      name: cardBuilderReducerSelector.api.cardAttachFile.name,
+      buffer: cardBuilderReducerSelector.api.cardAttachFile.buffer
+    }
+  }
+)

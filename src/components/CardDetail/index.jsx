@@ -354,7 +354,7 @@ export default class CardDetail extends React.Component {
           handleUpload={this.props.handleUploadDropzone}
           handleCleanAttachment={this.props.handleCleanAttachment}
           handleSaveAttachment={this.props.handleSaveAttachment}
-          name={this.props.attachedName}
+          name={this.props.cardAttachName}
         />
       </div>
     )

@@ -27,11 +27,17 @@ const initialState = fromJS({
     cardStatus: 'empty',
     cardTableSwitch: false,
     cardSaveModalSwitch: false,
+    cardAttachSwitch: false,
     cardStatement: '',
     cardColumns: [],
     cardRows: [],
     loading: false,
     cardSavingSwitch: false,
+    cardAttachFile: {
+      name: '',
+      buffer: {}
+    },
+    cardAttachOldFile: {},
 
     // cardComponent integration values
     cardSubComponent: '',
@@ -246,6 +252,7 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardStatement'], action.payload.cardStatement)
       .setIn(['api', 'cardColumns'], action.payload.cardColumns)
       .setIn(['api', 'cardSubComponent'], action.payload.cardSubComponent)
+      .setIn(['api', 'cardAttachFile', 'name'], action.payload.cardAttachFile.name)
       .setIn(['isCallInProgress'], action.payload.isCallInProgress)
       .setIn(['cardStatus'], action.payload.cardStatus)
   }
