@@ -90,6 +90,7 @@ const LoadingContainer = styled.div`
   background-color: rgba(254,254,254,.8);
   box-sizing: border-box;
   padding: 1rem;
+  transition: background-color .3s ease;
 `
 
 const LinearContainer = styled.div`
