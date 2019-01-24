@@ -10,7 +10,8 @@ import CardDetail from '../../components/CardDetail'
 import {
   cardBuilderCatalogsSelector, cardBuilderSelectedSelector,
   cardBuilderCardDetailSelector, cardBuilderSwitchesSelector,
-  cardBuilderTableSelector, cardBuilderCardSelector
+  cardBuilderTableSelector, cardBuilderCardSelector,
+  cardBuilderAttachmentSelector, cardBuilderOldAttachmentSelector
 } from './selectors'
 
 class CardDetailContainer extends React.Component {
@@ -126,46 +127,32 @@ class CardDetailContainer extends React.Component {
   }
 
   handleHowtoOpen = () => {
-    this.setState({
-      howToSwitch: true
-    })
+    this.props.changeCardAttachSwitch(true)
   }
 
   handleOnCloseDropzone = () => {
-    this.setState({
-      howToSwitch: false
-    })
+    this.props.changeCardAttachSwitch(false)
   }
 
   handleUploadDropzone = (file) => {
-    this.setState((previousState) => ({
-      file: {
-        buffer: file,
-        name: file.name
+    this.props.changeCardAttachment({
+      newFile: {
+        name: file.name,
+        buffer: file
       },
-      previousFile: {
-        buffer: previousState.file.buffer,
-        name: previousState.file.name
+      oldFile: {
+        name: this.props.fileAttach.name,
+        buffer: this.props.fileAttach.buffer
       }
-    }))
-  }
-
-  handleCleanAttachment = () => {
-    this.setState((previousState) => ({
-      file: {
-        buffer: previousState.previousFile.buffer,
-        name: previousState.previousFile.name
-      }
-    }))
-  }
-
-  handleSaveAttachment = () => {
-    this.setState({
-      howToSwitch: false
     })
-    this.props.sagaSetError({
-      error: true,
-      message: 'saved attachment :)'
+  }
+
+  handleSaveAttachment = (event, loaderCallback) => {
+    this.props.sagaSaveCardAttachment({
+      newFile: this.props.fileAttach,
+      oldFile: this.props.oldFileAttach,
+      cardId: this.props.cardDetail.cardId,
+      loaderCallback: loaderCallback
     })
   }
 
@@ -329,8 +316,7 @@ class CardDetailContainer extends React.Component {
         dialogSwitch={this.props.switches.cardTableSwitch}
         dialogSaveSwitch={this.props.switches.cardSaveModalSwitch}
         crud={this.props.crud}
-        howToSwitch={this.state.howToSwitch}
-        attachedName={this.state.file.name}
+        howToSwitch={this.props.switches.cardAttachSwitch}
 
         handleRefEditor={this.handleRefEditor}
 
@@ -344,7 +330,6 @@ class CardDetailContainer extends React.Component {
         handleHowtoOpen={this.handleHowtoOpen}
         handleOnCloseDropzone={this.handleOnCloseDropzone}
         handleUploadDropzone={this.handleUploadDropzone}
-        handleCleanAttachment={this.handleCleanAttachment}
         handleSaveAttachment={this.handleSaveAttachment}
         cardStatus={this.props.cardDetail.cardStatus}
         cardLoading={this.props.cardDetail.cardLoading}
@@ -353,6 +338,9 @@ class CardDetailContainer extends React.Component {
         handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
         cardSavingSwitch={this.props.switches.cardSavingSwitch}
         isCallInProgress={this.props.switches.isCallInProgress}
+
+        cardAttachName={this.props.fileAttach.name}
+        cardAttachLoading={this.props.switches.cardAttachLoading}
       />
     )
   }
@@ -365,7 +353,9 @@ function mapStateToProps (state) {
     cardDetail: cardBuilderCardDetailSelector(state),
     switches: cardBuilderSwitchesSelector(state),
     table: cardBuilderTableSelector(state),
-    ...cardBuilderCardSelector(state)
+    ...cardBuilderCardSelector(state),
+    fileAttach: cardBuilderAttachmentSelector(state),
+    oldFileAttach: cardBuilderOldAttachmentSelector(state)
   }
 }
 

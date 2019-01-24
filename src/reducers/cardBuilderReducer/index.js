@@ -27,11 +27,18 @@ const initialState = fromJS({
     cardStatus: 'empty',
     cardTableSwitch: false,
     cardSaveModalSwitch: false,
+    cardAttachSwitch: false,
+    cardAttachLoading: false,
     cardStatement: '',
     cardColumns: [],
     cardRows: [],
     loading: false,
     cardSavingSwitch: false,
+    cardAttachFile: {
+      name: '',
+      buffer: {}
+    },
+    cardAttachOldFile: {},
 
     // cardComponent integration values
     cardSubComponent: '',
@@ -246,8 +253,26 @@ export default function initReducer (state = initialState, action) {
       .setIn(['api', 'cardStatement'], action.payload.cardStatement)
       .setIn(['api', 'cardColumns'], action.payload.cardColumns)
       .setIn(['api', 'cardSubComponent'], action.payload.cardSubComponent)
+      .setIn(['api', 'cardAttachFile', 'name'], action.payload.cardAttachFile.name)
       .setIn(['isCallInProgress'], action.payload.isCallInProgress)
       .setIn(['cardStatus'], action.payload.cardStatus)
+  }
+
+  if (action.type === actions.CHANGE_CARD_ATTACH_SWITCH) {
+    return state.setIn(['api', 'cardAttachSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_ATTACHMENT) {
+    return state
+      .setIn(['api', 'cardAttachOldFile', 'name'], action.payload.oldFile.name)
+      .setIn(['api', 'cardAttachOldFile', 'buffer'], action.payload.oldFile.buffer)
+      .setIn(['api', 'cardAttachFile', 'name'], action.payload.newFile.name)
+      .setIn(['api', 'cardAttachFile', 'buffer'], action.payload.newFile.buffer)
+  }
+
+  if (action.type === actions.CHANGE_CARD_ATTACH_LOADING) {
+    return state
+      .setIn(['api', 'cardAttachLoading'], action.payload)
   }
 
   return state
