@@ -12,7 +12,7 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 import {
   getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
   deleteCardComponent, updateCardComponent, validateCard, createCard, getCard,
-  updateCard
+  updateCard, uploadCardAttachment
 } from './calls'
 
 function * genInitialFetch () {
@@ -336,7 +336,30 @@ function * genInitialUpdateFetch (action) {
 }
 
 function * genSaveCardAttachment (action) {
+  try {
+    yield put(cRActions.changeCardAttachLoading(true))
+    const requestPayload = new FormData()
 
+    requestPayload.append('0', action.payload.newFile.buffer)
+    requestPayload.append('cardId', action.payload.cardId)
+
+    const response = yield uploadCardAttachment(requestPayload, action.payload.loaderCallback)
+
+    if (response.status === 200) {
+      yield put(cRActions.changeCardAttachLoading(false))
+      yield put(cRActions.changeCardAttachSwitch(false))
+      yield put(eRActions.sagaSetError({
+        error: true,
+        message: 'saved attachment :)'
+      }))
+    }
+  } catch (error) {
+    yield put(cRActions.changeCardAttachLoading(false))
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: 'The file could not be uploaded'
+    }))
+  }
 }
 
 function * defaultSaga () {

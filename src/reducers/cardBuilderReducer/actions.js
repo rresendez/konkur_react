@@ -38,6 +38,7 @@ export const CHANGE_CARD_SAVING_SWITCH = 'cardBuilderReducer/CHANGE_CARD_SAVING_
 export const SAVE_CARD_FETCHED = 'cardBuilderReducer/SAVE_CARD_FETCHED'
 export const CHANGE_CARD_ATTACH_SWITCH = 'cardBuilderReducer/CHANGE_CARD_ATTACH_SWITCH'
 export const CHANGE_CARD_ATTACHMENT = 'cardBuilderReducer/CHANGE_CARD_ATTACHMENT'
+export const CHANGE_CARD_ATTACH_LOADING = 'cardBuilderReducer/CHANGE_CARD_ATTACH_LOADING'
 
 export const sagaInitCardBuilderUpdate = (payload) => ({
   type: SAGA_INIT_CARDBUILDER_UPDATE,
@@ -85,6 +86,11 @@ export const sagaSaveCard = (payload) => ({
 
 export const sagaSaveCardAttachment = (payload) => ({
   type: SAGA_SAVE_CARD_ATTACHMENT,
+  payload
+})
+
+export const changeCardAttachLoading = (payload) => ({
+  type: CHANGE_CARD_ATTACH_LOADING,
   payload
 })
 

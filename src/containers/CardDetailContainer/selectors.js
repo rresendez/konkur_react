@@ -90,7 +90,9 @@ export const cardBuilderSwitchesSelector = createSelector(
       cardSaveModalSwitch: cardBuilderReducerSelector.api.cardSaveModalSwitch,
       loading: cardBuilderReducerSelector.api.loading,
       cardSavingSwitch: cardBuilderReducerSelector.api.cardSavingSwitch,
-      isCallInProgress: cardBuilderReducerSelector.isCallInProgress
+      isCallInProgress: cardBuilderReducerSelector.isCallInProgress,
+      cardAttachSwitch: cardBuilderReducerSelector.api.cardAttachSwitch,
+      cardAttachLoading: cardBuilderReducerSelector.api.cardAttachLoading
     }
   }
 )
@@ -111,6 +113,16 @@ export const cardBuilderAttachmentSelector = createSelector(
     return {
       name: cardBuilderReducerSelector.api.cardAttachFile.name,
       buffer: cardBuilderReducerSelector.api.cardAttachFile.buffer
+    }
+  }
+)
+
+export const cardBuilderOldAttachmentSelector = createSelector(
+  cardBuilderReducerSelector,
+  (cardBuilderReducerSelector) => {
+    return {
+      name: cardBuilderReducerSelector.api.cardAttachOldFile.name,
+      buffer: cardBuilderReducerSelector.api.cardAttachOldFile.buffer
     }
   }
 )

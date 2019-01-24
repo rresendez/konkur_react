@@ -5,7 +5,8 @@ import styled from 'styled-components'
 
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
-import { Fab } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 import Icon from '../Icon'
 
@@ -40,7 +41,10 @@ const Container = styled.div`
   background-color: ${props => getColor(props)};
   cursor: pointer;
   margin-bottom: 1rem;
-  `
+  padding: 1rem;
+  transition: width .3s ease;
+  position: relative;
+`
 const DialogContainer = styled.div`
   text-align: center;
   width: 100%;
@@ -62,16 +66,43 @@ const SaveButtonWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  box-sizing: border-box;
+  transition: width .3s ease;
 `
 const LabelContainer = styled.div`
   margin-top: .5rem;
-  text-align:center;
+  text-align: center;
+`
+const LoadingContainer = styled.div`
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  z-index: 20;
+  background-color: rgba(254,254,254,.8);
+  box-sizing: border-box;
+  padding: 1rem;
+`
+
+const LinearContainer = styled.div`
+  margin-top: 5rem;
+  flex-grow: 1;
 `
 
 class SimpleDialog extends React.Component {
   constructor (props) {
     super(props)
     this.dropzoneRef = React.createRef()
+    this.state = {}
+    this.state.percentUploading = 0
   }
 
   onDrop = (accepted) => {
@@ -80,50 +111,90 @@ class SimpleDialog extends React.Component {
     }
   }
 
+  handleOnPercentUploadingChange = (value) => {
+    this.setState({
+      percentUploading: value
+    })
+  }
+
+  handleSaveAttachment = (event) => {
+    this.props.handleSaveAttachment(event, this.handleOnPercentUploadingChange)
+  }
+
+  handleOnClose = (event) => {
+    if (!this.props.loading) {
+      this.props.handleOnClose(event)
+    }
+  }
+
+  renderLoading = () => {
+    if (this.props.loading) {
+      return (
+        <LoadingContainer>
+          <LinearContainer>
+            <LinearProgress
+              variant="buffer"
+              value={this.state.percentUploading}
+              valueBuffer={this.state.percentUploading}
+            />
+          </LinearContainer>
+        </LoadingContainer>
+      )
+    }
+    return null
+  }
+
   render () {
     const { classes, onClose, selectedValue, ...other } = this.props
 
     return (
-      <Dialog onClose={this.props.handleOnClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog
+        onClose={this.handleOnClose}
+        aria-labelledby="simple-dialog-title"
+        {...other}
+      >
         <DialogContainer>
           <DialogTitle>Upload a file to attach</DialogTitle>
           <Dropzone
             ref={this.dropzoneRef}
             onDrop={this.onDrop}
             multiple={false}
+            disabled={this.props.loading}
           >
-            {({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
-              return (
-                <div>
-                  <Container
-                    isDragActive={isDragActive}
-                    isDragReject={isDragReject}
-                    onClick={() => this.dropzoneRef.current.open()}
-                    {...getRootProps()}
-                  >
-                    <input {...getInputProps()} />
-                    <TitleContainer>
-                      <Icon size="4" color="black">backup</Icon>
-                    </TitleContainer>
-                  </Container>
-                  <div>Accepted file</div>
-                  <LabelContainer>
-                    <div>{this.props.name}</div>
-                  </LabelContainer>
-                </div>
-              )
-            }}
+            {
+              ({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
+                return (
+                  <div>
+                    <Container
+                      isDragActive={isDragActive}
+                      isDragReject={isDragReject}
+                      {...getRootProps()}
+                    >
+                      <input {...getInputProps()} />
+                      <TitleContainer>
+                        <Icon size="4" color="rgba(26,117,207,1)">backup</Icon>
+                      </TitleContainer>
+                      {this.renderLoading()}
+                    </Container>
+                    <LabelContainer>
+                      <div>{this.props.name}</div>
+                    </LabelContainer>
+                  </div>
+                )
+              }
+            }
           </Dropzone>
         </DialogContainer >
         {
           this.props.name !== '' && (
             <SaveButtonWrapper>
-              <Fab onClick={this.props.handleCleanAttachment} color="secondary">
-                <Icon size="2" color="white">close</Icon>
-              </Fab>
-              <Fab onClick={this.props.handleSaveAttachment} color="primary">
-                <Icon size="2" color="white">save</Icon>
-              </Fab>
+              <Button
+                disabled={this.props.loading}
+                onClick={this.handleSaveAttachment}
+                color="primary"
+              >
+                save file
+              </Button>
             </SaveButtonWrapper>
           )
         }
@@ -138,7 +209,8 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string,
   name: PropTypes.string.isRequired,
   buffer: PropTypes.array.isRequired,
-  handleBuffer: PropTypes.func.isRequired
+  handleBuffer: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
 export default SimpleDialog
