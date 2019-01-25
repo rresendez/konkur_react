@@ -18,7 +18,7 @@ const CustomHeader = withStyles({
                 fontSize:14, 
                 fontWeight: 'bold',            
             },
-            action: {
+            action:{
                 flex: '0 0 auto',
                 alignSelf: 'flex-start',
                 marginTop: -25,
