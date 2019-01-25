@@ -7,11 +7,6 @@ const AsyncCardCreatePage = Loadable({
   loading: Loader
 })
 
-const AsyncHomePage = Loadable({
-  loader: () => import('./scenes/HomePage'),
-  loading: Loader
-})
-
 const AsyncTestPage = Loadable({
   loader: () => import('./scenes/TestPage'),
   loading: Loader
@@ -32,6 +27,11 @@ const AsyncAdminSelectionProductPage = Loadable({
   loading: Loader
 })
 
+const AsyncDashbardPage = Loadable({
+  loader: () => import('./scenes/DashboardPage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
@@ -41,11 +41,6 @@ const routes = [
   {
     path: '/card/:id',
     component: AsyncCardUpdatePage,
-    exact: true
-  },
-  {
-    path: '/',
-    component: AsyncHomePage,
     exact: true
   },
   {
@@ -61,6 +56,11 @@ const routes = [
   {
     path: '/admin/products',
     component: AsyncAdminSelectionProductPage,
+    exact: true
+  },
+  {
+    path: '/',
+    component: AsyncDashbardPage,
     exact: true
   }
 ]
