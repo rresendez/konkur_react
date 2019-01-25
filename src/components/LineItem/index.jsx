@@ -8,6 +8,10 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '../Icon'
 
 const CardItemContainer = withStyles({
+  root: {
+    height: '2.5rem',
+    width: '15rem'
+  }
 })(Card)
 
 const H3Fixer = styled.div`

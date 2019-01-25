@@ -352,9 +352,9 @@ export default class CardDetail extends React.Component {
           open={this.props.howToSwitch}
           handleOnClose={this.props.handleOnCloseDropzone}
           handleUpload={this.props.handleUploadDropzone}
-          handleCleanAttachment={this.props.handleCleanAttachment}
           handleSaveAttachment={this.props.handleSaveAttachment}
-          name={this.props.attachedName}
+          name={this.props.cardAttachName}
+          loading={this.props.cardAttachLoading}
         />
       </div>
     )

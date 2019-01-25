@@ -109,3 +109,25 @@ export async function updateCard (id, payload) {
     throw (data)
   }
 }
+
+export async function uploadCardAttachment (payload, progressCallback) {
+  try {
+    const response = await _axios.request({
+      url: '/card-files',
+      method: 'post',
+      data: payload,
+      onUploadProgress: (event) => progress(event, progressCallback),
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
+
+function progress (event, progressCallback) {
+  const loaded = event.loaded
+  const total = event.total
+  progressCallback(Math.min(loaded * 100) / total)
+}

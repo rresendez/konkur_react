@@ -12,7 +12,7 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 import {
   getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
   deleteCardComponent, updateCardComponent, validateCard, createCard, getCard,
-  updateCard
+  updateCard, uploadCardAttachment
 } from './calls'
 
 function * genInitialFetch () {
@@ -319,7 +319,11 @@ function * genInitialUpdateFetch (action) {
       cardStatement: cardResponse.data.sourceStatement,
       cardColumns: JSON.parse(cardResponse.data.schema),
       isCallInProgress: false,
-      cardStatus: 'ready'
+      cardStatus: 'ready',
+      cardAttachFile: {
+        name: cardResponse.data.fileDocument || '',
+        buffer: null
+      }
     }
     yield put(cRActions.saveCatalogs(reducerPayload))
     yield put(cRActions.saveCardFetched(cardReducerPayload))
@@ -327,6 +331,33 @@ function * genInitialUpdateFetch (action) {
     yield put(eRActions.sagaSetError({
       error: true,
       message: error.message
+    }))
+  }
+}
+
+function * genSaveCardAttachment (action) {
+  try {
+    yield put(cRActions.changeCardAttachLoading(true))
+    const requestPayload = new FormData()
+
+    requestPayload.append('0', action.payload.newFile.buffer)
+    requestPayload.append('cardId', action.payload.cardId)
+
+    const response = yield uploadCardAttachment(requestPayload, action.payload.loaderCallback)
+
+    if (response.status === 200) {
+      yield put(cRActions.changeCardAttachLoading(false))
+      yield put(cRActions.changeCardAttachSwitch(false))
+      yield put(eRActions.sagaSetError({
+        error: true,
+        message: 'saved attachment :)'
+      }))
+    }
+  } catch (error) {
+    yield put(cRActions.changeCardAttachLoading(false))
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: 'The file could not be uploaded'
     }))
   }
 }
@@ -341,7 +372,8 @@ function * defaultSaga () {
     takeLatest(cRActions.SAGA_UPDATE_CARD_COMPONENT, genUpdateCardComponent),
     takeLatest(cRActions.SAGA_VALIDATE_CARD, genValidateCard),
     takeLatest(cRActions.SAGA_SAVE_CARD, genCreateCard),
-    takeLatest(cRActions.SAGA_INIT_CARDBUILDER_UPDATE, genInitialUpdateFetch)
+    takeLatest(cRActions.SAGA_INIT_CARDBUILDER_UPDATE, genInitialUpdateFetch),
+    takeLatest(cRActions.SAGA_SAVE_CARD_ATTACHMENT, genSaveCardAttachment)
   ])
 }
 
