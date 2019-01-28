@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MaterialTable from 'material-table'
+import './ItemTable.css'
 
 const ItemTable = (props) => {
 
