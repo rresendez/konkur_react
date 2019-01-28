@@ -20,6 +20,13 @@ export const materialTheme = createMuiTheme({
     secondary: {
       main: colorParams.colorSecondary
     }
+  }, 
+  overrides: {
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(250, 250, 250, 250)'
+      }
+    }
   }
 })
 
