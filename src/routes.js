@@ -32,6 +32,11 @@ const AsyncDashbardPage = Loadable({
   loading: Loader
 })
 
+const AsyncItemTablePage = Loadable({
+  loader: () => import('./scenes/ItemTablePage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
@@ -56,6 +61,11 @@ const routes = [
   {
     path: '/admin/products',
     component: AsyncAdminSelectionProductPage,
+    exact: true
+  },
+  {
+    path: '/card/detail/:id',
+    component: AsyncItemTablePage,
     exact: true
   },
   {

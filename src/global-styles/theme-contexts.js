@@ -24,7 +24,7 @@ export const materialTheme = createMuiTheme({
   overrides: {
     MuiBackdrop: {
       root: {
-        backgroundColor: 'rgba(250, 250, 250, 250)'
+        backgroundColor: colorParams.fontWhite
       }
     }
   }
