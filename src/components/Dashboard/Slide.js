@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
 import blue from '@material-ui/core/colors/blue'
 import withStyles from '@material-ui/core/styles/withStyles'
 import classNames from 'classnames'
-import CardViewList from './CardViewList';
+import CardViewList from './CardViewList'
 
 const styles = {
   root: {

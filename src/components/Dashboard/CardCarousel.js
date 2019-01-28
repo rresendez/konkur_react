@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
-import Slide from './Slide';
-import { green } from '@material-ui/core/colors';
-import AutoRotatingCarousel  from './AutoRotatingCarousel';
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import { testData } from './store.js'
+import React, { Component } from 'react'
+import Slide from './Slide'
+import AutoRotatingCarousel  from './AutoRotatingCarousel'
+import { withStyles } from '@material-ui/core/styles'
 
 const CustomCarousel = withStyles({
             root:{
                 textAlign: 'center',
-                alignItems: 'center',   
+                alignItems: 'center'   
             },
             content:{
                 width: '90%',
                 maxWidth: 1200,
-                maxHeight: 700,
+                maxHeight: 700
                 //color:'white',
                // fontSize:14, 
                 //fontWeight: 'bold',            
             },
             arrowIcon:{
-                color:'red',       
-            }, 
+                color:'red'      
+            }
              
         }    
         )(AutoRotatingCarousel);
@@ -52,10 +49,8 @@ class CardCarousel extends Component{
                 >
                     
                     <Slide  />
-                    <Slide
-                        mediaBackgroundStyle={{ backgroundColor: 'white' }}
-                     />
-                     <Slide />
+                    <Slide />
+                    <Slide />
                 </CustomCarousel>
           //  </div>
         );

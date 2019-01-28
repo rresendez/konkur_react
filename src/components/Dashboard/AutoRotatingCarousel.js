@@ -15,12 +15,12 @@ import classNames from 'classnames'
 import Carousel from './SwipableCarouselView'
 import { modulo } from './util'
 
-//added CustomDot
+// added CustomDot
 const CustomDots = withStyles({
   dot:{
-    background:'#000000',
-  },
-})(Dots);
+    background:'#000000'
+  }
+ })(Dots);
 
 const styles = {
   root: {
