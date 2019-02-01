@@ -46,7 +46,12 @@ export const customTheme = {
     warning: colorParams.colorWarning,
     error: colorParams.colorError,
     enabled: colorParams.colorEnabled,
-    forbidden: colorParams.colorForbbiden
+    forbidden: colorParams.colorForbbiden,
+    red: colorParams.colorRed,
+    yellow: colorParams.colorYellow,
+    darkblue: colorParams.colorDarkBlue,
+    mediumblue: colorParams.colorMediumBlue,
+    lightblue: colorParams.colorLightBlue
   },
   spacing: {
     defaultPadding: '1rem',

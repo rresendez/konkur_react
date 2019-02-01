@@ -14,7 +14,12 @@ class MockChange extends React.Component {
 
   render () {
     return ( 
-       <Splash></Splash>
+       <Splash
+       error={"Error #404"}
+       message={"This error happend because you are an Idiot and shouldn´t be allowed to use a computer."}
+       >
+
+       </Splash>
     )
   }
 }

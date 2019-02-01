@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import Icon from '../Icon'
-
+import Card from '@material-ui/core/Card'
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-`
-const StyledBox = styled.div`
-  border: solid black 1px;
-  justify-content: space-between;
+  `
+  const StyledBox = styled.div`
+  justify-content: start;
   padding: 1rem;
+  margin: 1rem;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -20,21 +20,39 @@ const StyledBox = styled.div`
 `
 
 const StyledCode = styled.div`
-  font-size: 10rem;
+  font-size: 9rem;
   text-transform: uppercase;
    margin: 0 auto;
+   @media only screen and (max-width: 930px ) {
+     font-size: 5rem;
+   }
 `
 
 const Header = styled.div`
   width: 100%;
+  color: ${props => props.theme.color.primary};
+  padding: 1rem;
 `
 const StyledFace = styled.div`
   display: inline-block;
-  width: 40%;
+  width: 43%;
+   padding: 1rem;
 `
-const StyledFace2 = styled.div`
+const StyledMsgBox = styled.div`
   display: inline-block;
-  width: 40%;
+  width: 35vw;
+  height: 100%;
+  background-color: ${props => props.theme.color.red};
+  box-sizing: border-box;
+  overflow: hide;
+  p{
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: white;
+    @media only screen and (max-width: 930px ) {
+     font-size: 1.2rem;
+   }
+  }
 `
 
 
@@ -51,23 +69,24 @@ class Splash extends React.Component {
        <StyledBox>
            <StyledCode>
          <Header>
-           Error #404
+           {this.props.error}
          </Header>
            </StyledCode>
            <StyledFace>
           <Icon
             size="10"
+            color={props => props.theme.color.yellow}
           >
             sentiment_dissatisfied
               </Icon>
            </StyledFace>
-           <StyledFace2>
-          <Icon
-            size="10"
-          >
-            sentiment_dissatisfied
-              </Icon>
-           </StyledFace2>
+           <Card>
+             <StyledMsgBox>
+          <p>
+          {this.props.message}
+          </p>
+             </StyledMsgBox>
+           </Card>
        </StyledBox>
      </Container>
     )
