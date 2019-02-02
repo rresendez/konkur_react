@@ -92,6 +92,27 @@ width: 100%;
 z-index: 3;
 `
 
+const FabWrapper = styled.div`
+  bottom: 0;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  position: fixed;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const FabButtonWrapper = styled.div`
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+
 export default class CardDetail extends React.Component {
   renderSelectValue = (value) => value
 
@@ -126,6 +147,16 @@ export default class CardDetail extends React.Component {
         <LinearProgress />
       </GlobalLoaderWrapper>
     )
+  }
+
+  renderDeleteLoading = () => {
+    if (this.props.cardDeleteLoading) {
+      return (
+        <LinearProgressSavingWrapper>
+          <LinearProgress />
+        </LinearProgressSavingWrapper>
+      )
+    }
   }
 
   render () {
@@ -274,16 +305,37 @@ export default class CardDetail extends React.Component {
             defaultValue={this.props.editorDefaultValue}
           />
         </div>
-        <div className={styles.fabWrapper}>
-          <Fab
-            color="secondary"
-            aria-label="Add"
-            onClick={this.props.handleSendQuery}
-            disabled={this.props.loading}
-          >
-            <Icon size="2" color="white" disabled={this.props.loading}>send</Icon>
-          </Fab>
-        </div>
+        <FabWrapper>
+          {
+            this.props.crud === 'update' && (
+              <FabButtonWrapper>
+                  <Fab
+                  color="primary"
+                  aria-label="delete"
+                  onClick={this.props.handleOnDeleteCard}
+                >
+                  <Icon
+                    color="rgba(0,0,0,1)"
+                    auto
+                    size="2"
+                  >
+                    delete
+                  </Icon>
+                </Fab>
+              </FabButtonWrapper>
+            )
+          }
+          <FabButtonWrapper>
+            <Fab
+              color="secondary"
+              aria-label="Add"
+              onClick={this.props.handleSendQuery}
+              disabled={this.props.loading}
+            >
+              <Icon size="2" color="white" disabled={this.props.loading}>send</Icon>
+            </Fab>
+          </FabButtonWrapper>
+        </FabWrapper>
         <Dialog
           fullScreen
           open={this.props.dialogSwitch}
@@ -356,6 +408,35 @@ export default class CardDetail extends React.Component {
           name={this.props.cardAttachName}
           loading={this.props.cardAttachLoading}
         />
+        <Dialog
+            disableBackdropClick
+            disableEscapeKeyDown
+            maxWidth={false}
+            open={this.props.cardDeleteSwitch}
+            aria-labelledby="confirmation-dialog-title-delete"
+          > 
+            {this.renderDeleteLoading()}
+            <DialogTitle id="confirmation-dialog-title-delete">Delete this card</DialogTitle>
+            <DialogContent>
+              Do you want to delete this card? It will be set as disabled, will not appear on dashboard and after seven days it will be delete forever.
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.props.handleOnCancelDeleteCard}
+                color="primary"
+                disabled={this.props.cardDeleteLoading}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={this.props.handleOnConfirmDeleteCard}
+                color="primary"
+                disabled={this.props.cardDeleteLoading}
+              >
+                Ok
+              </Button>
+            </DialogActions>
+          </Dialog>
       </div>
     )
   }

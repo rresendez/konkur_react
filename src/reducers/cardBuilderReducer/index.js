@@ -48,7 +48,9 @@ const initialState = fromJS({
     cardComponentEditable: false,
     cardComponentTitle: '',
     cardLoading: false,
-    isUpdate: false
+    isUpdate: false,
+    cardDeleteLoading: false,
+    cardDeleteDialogSwitch: false
   },
   isCallInProgress: false,
   error: false,
@@ -273,6 +275,16 @@ export default function initReducer (state = initialState, action) {
   if (action.type === actions.CHANGE_CARD_ATTACH_LOADING) {
     return state
       .setIn(['api', 'cardAttachLoading'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_DELETE_DIALOG_SWITCH) {
+    return state
+      .setIn(['api', 'cardDeleteDialogSwitch'], action.payload)
+  }
+
+  if (action.type === actions.CHANGE_CARD_DELETE_LOADING) {
+    return state
+      .setIn(['api', 'cardDeleteLoading'], action.payload)
   }
 
   return state
