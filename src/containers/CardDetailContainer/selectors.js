@@ -92,7 +92,9 @@ export const cardBuilderSwitchesSelector = createSelector(
       cardSavingSwitch: cardBuilderReducerSelector.api.cardSavingSwitch,
       isCallInProgress: cardBuilderReducerSelector.isCallInProgress,
       cardAttachSwitch: cardBuilderReducerSelector.api.cardAttachSwitch,
-      cardAttachLoading: cardBuilderReducerSelector.api.cardAttachLoading
+      cardAttachLoading: cardBuilderReducerSelector.api.cardAttachLoading,
+      cardDeleteLoading: cardBuilderReducerSelector.api.cardDeleteLoading,
+      cardDeleteDialogSwitch: cardBuilderReducerSelector.api.cardDeleteDialogSwitch
     }
   }
 )

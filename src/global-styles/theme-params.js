@@ -8,7 +8,8 @@ const colorParams = {
   colorWarning: 'rgba(255,235,59,1)',
   colorError: 'rgba(176,0,32,1)',
   colorEnabled: 'rgba(118,255,3,1)',
-  colorForbbiden: 'rgba(176,0,32,1)'
+  colorForbbiden: 'rgba(176,0,32,1)',
+  colorBackgroundShadow: 'rgba(254,254,254,.5)'
 }
 
 const fontParams = {

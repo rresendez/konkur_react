@@ -270,6 +270,22 @@ class CardDetailContainer extends React.Component {
     this.props.changeCardTableSwitch(false)
   }
 
+  handleOnConfirmDeleteCard = async (event) => {
+    const payload = {
+      cardId: this.props.cardDetail.cardId,
+      router: this.props.history,
+    }
+    await this.props.sagaDeleteCard(payload)
+  }
+
+  handleOnCancelDeleteCard = (event) => {
+    this.props.changeCardDeleteDialogSwitch(false)
+  }
+
+  handleOnDeleteCard = (event) => {
+    this.props.changeCardDeleteDialogSwitch(true)
+  }
+
   render () {
     return (
       <CardDetail
@@ -334,6 +350,7 @@ class CardDetailContainer extends React.Component {
         cardStatus={this.props.cardDetail.cardStatus}
         cardLoading={this.props.cardDetail.cardLoading}
         handleOnDeleteCardComponent={this.handleOnDeleteCardComponent}
+        handleOnDeleteCard={this.handleOnDeleteCard}
 
         handleOnCloseCardTableSwitch={this.handleOnCloseCardTableSwitch}
         cardSavingSwitch={this.props.switches.cardSavingSwitch}
@@ -341,6 +358,11 @@ class CardDetailContainer extends React.Component {
 
         cardAttachName={this.props.fileAttach.name}
         cardAttachLoading={this.props.switches.cardAttachLoading}
+        cardDeleteLoading={this.props.switches.cardDeleteLoading}
+        cardDeleteSwitch={this.props.switches.cardDeleteDialogSwitch}
+        handleOnConfirmDeleteCard={this.handleOnConfirmDeleteCard}
+        handleOnCancelDeleteCard={this.handleOnCancelDeleteCard}
+        handleOnDeleteCard={this.handleOnDeleteCard}
       />
     )
   }
