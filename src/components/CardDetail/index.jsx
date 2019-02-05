@@ -57,14 +57,14 @@ const MenuProps = {
 
 const LinearProgressWrapper = styled.div`
   flex-grow: 1;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   height: 100%;
   width: 100%;
-  z-index: 3;
+  z-index: 9999;
   background-color: rgba(254,254,254,.5);
   transition: background-color .5s ease;
 `
@@ -125,7 +125,7 @@ export default class CardDetail extends React.Component {
     if (this.props.loading) {
       return (
         <LinearProgressWrapper>
-          <LinearProgress />
+          <LinearProgress color="secondary" />
         </LinearProgressWrapper>
       )
     }
