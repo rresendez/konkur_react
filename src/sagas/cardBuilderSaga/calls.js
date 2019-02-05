@@ -126,6 +126,16 @@ export async function uploadCardAttachment (payload, progressCallback) {
   }
 }
 
+export async function deleteCard (id) {
+  try {
+    const response = await _axios.delete(`/cards/${id}`)
+    return response
+  } catch (error) {
+    const data = error.response.data
+    throw (data)
+  }
+}
+
 function progress (event, progressCallback) {
   const loaded = event.loaded
   const total = event.total

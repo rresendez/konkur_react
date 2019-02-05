@@ -12,7 +12,7 @@ import * as eRActions from '../../reducers/errorReducer/actions'
 import {
   getSchedules, getJobs, getPriorities, getCardComponents, createCardComponent,
   deleteCardComponent, updateCardComponent, validateCard, createCard, getCard,
-  updateCard, uploadCardAttachment
+  updateCard, uploadCardAttachment, deleteCard
 } from './calls'
 
 function * genInitialFetch () {
@@ -362,6 +362,15 @@ function * genSaveCardAttachment (action) {
   }
 }
 
+function * genDeleteCard (action) {
+  yield put(cRActions.changeCardDeleteLoading(true))
+  const response = yield deleteCard(action.payload.cardId)
+  yield put(cRActions.changeCardDeleteLoading(false))
+  yield put(cRActions.changeCardDeleteDialogSwitch(false))
+  action.payload.router.push('/')
+
+}
+
 function * defaultSaga () {
   yield all([
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER, genInitialFetch),
@@ -373,7 +382,8 @@ function * defaultSaga () {
     takeLatest(cRActions.SAGA_VALIDATE_CARD, genValidateCard),
     takeLatest(cRActions.SAGA_SAVE_CARD, genCreateCard),
     takeLatest(cRActions.SAGA_INIT_CARDBUILDER_UPDATE, genInitialUpdateFetch),
-    takeLatest(cRActions.SAGA_SAVE_CARD_ATTACHMENT, genSaveCardAttachment)
+    takeLatest(cRActions.SAGA_SAVE_CARD_ATTACHMENT, genSaveCardAttachment),
+    takeLatest(cRActions.SAGA_DELETE_CARD, genDeleteCard)
   ])
 }
 

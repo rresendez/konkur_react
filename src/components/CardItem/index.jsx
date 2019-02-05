@@ -48,6 +48,10 @@ const Title = styled.div`
   letter-spacing: .5rem;
   text-transform: uppercase;
   padding: .5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: ${props => props.theme.util.remCalc(180)};
+  white-space: nowrap;
 `
 
 const TitleWrapper = styled.div`
