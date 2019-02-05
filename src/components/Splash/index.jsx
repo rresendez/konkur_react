@@ -30,7 +30,7 @@ const StyledCode = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.typography.colorLightGray};
   padding: 1rem;
 `
 const StyledFace = styled.div`
@@ -42,7 +42,7 @@ const StyledMsgBox = styled.div`
   display: inline-block;
   width: 35vw;
   height: 100%;
-  background-color: ${props => props.theme.color.red};
+  background-color: ${props => props.theme.color.mediumblue};
   box-sizing: border-box;
   overflow: hide;
   p{
