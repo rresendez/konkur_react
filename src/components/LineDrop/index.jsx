@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '../Icon'
 import { withStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import Card from '@material-ui/core/Card'
 
 import styled from 'styled-components'
 
@@ -158,10 +159,7 @@ class LineDrop extends React.Component {
   render () {
     if (this.props.loading) {
       return (
-        <div
-          onDrop={(event) => { this.dropHandler(event) }}
-          onDragOver={(event) => { this.dragHandler(event) }}
-        >
+      <Card>
           <BaseStyled>
             <HeaderStyled>
               <h2>{this.props.title}</h2>
@@ -200,7 +198,7 @@ class LineDrop extends React.Component {
             </LeftArrowStyled>
             <EmptyFooterLoad></EmptyFooterLoad>
           </BaseStyled>
-        </div>
+        </Card>
       )
     } else if (this.props.status === 'ready' && !this.props.disabled) {
       return (
@@ -208,6 +206,7 @@ class LineDrop extends React.Component {
           onDrop={(event) => { this.dropHandler(event) }}
           onDragOver={(event) => { this.dragHandler(event) }}
         >
+          <Card>
           <BaseStyled>
             <HeaderStyled>
               <h2>{this.props.title}</h2>
@@ -251,6 +250,7 @@ class LineDrop extends React.Component {
               <h3>{this.props.bottomText}</h3>
             </BottomStyled>
           </BaseStyled>
+          </Card>
         </div>
       )
     } else if (this.props.status === 'empty' && !this.props.disabled) {
@@ -259,6 +259,7 @@ class LineDrop extends React.Component {
           onDrop={(event) => { this.dropHandler(event) }}
           onDragOver={(event) => { this.dragHandler(event) }}
         >
+        <Card>
           <BaseStyled>
             <HeaderStyled>
               <h2>{this.props.title}</h2>
@@ -297,10 +298,12 @@ class LineDrop extends React.Component {
             </LeftArrowStyled>
             <EmptyFooterContainer></EmptyFooterContainer>
           </BaseStyled>
+          </Card>
         </div>
       )
     } else if (this.props.disabled) {
       return (
+        <Card>
         <div
         >
           <BaseStyled
@@ -344,6 +347,7 @@ class LineDrop extends React.Component {
             <EmptyFooterContainer></EmptyFooterContainer>
           </BaseStyled>
         </div>
+        </Card>
       )
     }
   }

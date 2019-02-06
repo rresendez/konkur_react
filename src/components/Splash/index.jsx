@@ -42,7 +42,7 @@ const StyledMsgBox = styled.div`
   display: inline-block;
   width: 35vw;
   height: 100%;
-  background-color: ${props => props.theme.color.mediumblue};
+  background-color: ${props => props.theme.color.primary};
   box-sizing: border-box;
   overflow: hide;
   p{
@@ -69,13 +69,13 @@ class Splash extends React.Component {
        <StyledBox>
            <StyledCode>
          <Header>
-           {this.props.error}
+           Error #{this.props.error}
          </Header>
            </StyledCode>
            <StyledFace>
           <Icon
             size="10"
-            color={props => props.theme.color.yellow}
+            color={props => props.theme.color.secondary}
           >
             sentiment_dissatisfied
               </Icon>
