@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
 
 import Icon from '../Icon'
 import SimpleSelect from '../Select'
@@ -44,7 +45,6 @@ const MainWrapper = styled.div`
   grid-templte-rows: repeat(3, 1fr);
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
-  background-color: rgba(222,235,247,1);
     @media (max-width: 1200px){
     grid-template-columns: repeat(3 , auto);
     grid-templte-rows: repeat(7, 1fr);
@@ -106,6 +106,7 @@ const ButtonWrapper = styled.div`
   grid-column: 3/3;
   grid-row: 3;
   grid-row-end: 3;
+  padding: 1rem;
   .MuiButtonBase-root-14{
     background-color: white;
     width: 10rem;
@@ -161,7 +162,7 @@ class SelectionProduct extends React.Component {
 
   render () {
     return (
-      <div>
+        <Card>
         <MainWrapper>
           <OneWrapper>
             <Back>
@@ -229,7 +230,7 @@ class SelectionProduct extends React.Component {
             <Breadcrumbs></Breadcrumbs>
           </BreadWrapper>
         </MainWrapper>
-      </div>
+      </Card>
     )
   }
 }
