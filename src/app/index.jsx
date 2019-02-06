@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import NotificationContainer from '../containers/NotificationContainer'
 
@@ -13,9 +13,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className={styles.appRoot}>
-          {routes.map((route) => (
-            <Route key={route.path} {...route} />
-          ))}
+          <Switch>
+            {routes.map((route) => (
+              <Route key={route.path} {...route} />
+            ))}
+          </Switch>
           <NotificationContainer />
         </div>
       </BrowserRouter>
