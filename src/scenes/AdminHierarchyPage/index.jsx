@@ -1,10 +1,15 @@
 import React from 'react'
+
 import TestHierarchy from '../TestHierarchy'
 
-export default function AdminHirearchyPage (props) {
+import SceneHOC from '../../components/SceneHOC'
+
+function AdminHirearchyPage (props) {
   return (
     <div>
       <TestHierarchy />
     </div>
   )
 }
+
+export default SceneHOC(AdminHirearchyPage)

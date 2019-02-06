@@ -1,10 +1,14 @@
 import React from 'react'
+
+import SceneHOC from '../../components/SceneHOC'
 import CardCarousel from '../../components/Dashboard/CardCarousel'
 
-export default function DashboardPage (props) {
+function DashboardPage (props) {
   return (
     <div>
       <CardCarousel />
     </div>
   )
 }
+
+export default SceneHOC(DashboardPage)
