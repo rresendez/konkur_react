@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import MediaQuery from 'react-responsive'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -29,12 +30,40 @@ const LoginInformationContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin-right: ${props => props.theme.spacing.defaultMargin};
+  margin-right: .5rem;
 `
 
 const TitleWrapper = styled.div`
   box-sizing: border-box;
   margin-left: .5rem;
+`
+
+const UsernameWrapper = styled.div`
+  font-size: ${props => {
+    if (props.isAdmin) return '.8rem'
+    return '1rem'
+  }};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 25.25rem) {
+    max-width: 5rem;
+  }
+`
+
+const UserLabelWrapper = styled.div`
+  font-size: ${props => {
+    if (props.isAdmin) return '.8rem'
+    return '1rem'
+  }};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 25.25rem) {
+    max-width: 5rem;
+  }
 `
 
 class Header extends React.Component {
@@ -62,21 +91,25 @@ class Header extends React.Component {
               {this.props.title}
               </TitleWrapper>
             </TitleContainer>
-            <LoginInformationContainer>
-              <div>
-                {this.props.username}
-              </div>
-              {
-                this.props.isAdmin && (
-                  <div>
-                    Admin view
-                  </div>
-                )
-              }
-            </LoginInformationContainer>
-            <IconButton aria-label="Menu">
-              <Icon auto color="rgba(0,0,0,0)">account_circle</Icon>
-            </IconButton>
+            <MediaQuery query="(min-width: 23.5rem)">
+              <LoginInformationContainer>
+                <UsernameWrapper isAdmin={this.props.isAdmin}>
+                  {this.props.username}
+                </UsernameWrapper>
+                {
+                  this.props.isAdmin && (
+                    <UserLabelWrapper isAdmin={this.props.isAdmin}>
+                      Admin
+                    </UserLabelWrapper>
+                  )
+                }
+              </LoginInformationContainer>
+            </MediaQuery>
+            <MediaQuery query="(min-width: 23.5rem)">
+              <IconButton aria-label="Menu">
+                <Icon auto color="rgba(0,0,0,0)">account_circle</Icon>
+              </IconButton>
+            </MediaQuery>
           </Toolbar>
         </AppBar>
       </HeaderContainer>
@@ -86,8 +119,8 @@ class Header extends React.Component {
 
 Header.defaultProps = {
   title: 'KUNKUR 3.0',
-  isAdmin: false,
-  username: 'Brian Upward'
+  isAdmin: true,
+  username: 'Jesus Cruz Barroso'
 }
 
 export default Header

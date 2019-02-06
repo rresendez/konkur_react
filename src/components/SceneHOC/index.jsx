@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import MediaQuery from 'react-responsive'
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
 
 import Icon from '../Icon'
 import Header from '../Header'
@@ -28,9 +31,40 @@ const DrawerContainer = styled.div`
   min-width: 15.625rem;
 `
 
+const LoginContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+`
+
+const UserDataWrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`
+const UserInfoWrapper = styled.div`
+  box-sizing: border-box;
+  margin-top: .5rem;
+`
+
+const UserWrapper = styled.div`
+  box-sizing: border-box;
+`
+
+const IconWrapper = styled.div`
+  box-sizing: border-box;
+  margin-right: .5rem;
+`
+
 export default function SceneHOC (WrappedComponent) {
   return class SceneHOC extends React.Component {
-    static defaultProps = {}
+    static defaultProps = {
+      username: 'jesus miguel cruz',
+      isAdmin: true
+    }
     static propTypes = {}
 
     constructor (props) {
@@ -59,6 +93,12 @@ export default function SceneHOC (WrappedComponent) {
       })
     }
 
+    hanldeOnOpenMenu = (event) => {
+      this.setState({
+        open: true
+      })
+    }
+
     renderItems = () => {
       return (
         <List>
@@ -68,7 +108,7 @@ export default function SceneHOC (WrappedComponent) {
             </ListItem>
             <ListItem button>
               <ListItemIcon><Icon size="1.5">supervisor_account</Icon></ListItemIcon>
-              <ListItemText primary="Admin module" />
+              <ListItemText primary="Admin" />
             </ListItem>
         </List>
       )
@@ -84,13 +124,35 @@ export default function SceneHOC (WrappedComponent) {
             <SwipeableDrawer
               open={this.state.open}
               onClose={this.handleOnCloseMenu}
-              // onOpen={this.handleOnClickMenu('left', true)}
+              onOpen={this.hanldeOnOpenMenu}
             >
               <DrawerContainer
                 tabIndex={0}
                 role="button"
                 onKeyDown={this.handleOnCloseMenu}
               >
+                <MediaQuery query="(max-width: 23.5rem)">
+                  <LoginContainer>
+                    <IconWrapper>
+                      <IconButton aria-label="user">
+                        <Icon size="1.5">account_circle</Icon>
+                      </IconButton>
+                    </IconWrapper>
+                    <UserDataWrapper>
+                      <UserWrapper>
+                        {this.props.username}
+                      </UserWrapper>
+                      {
+                        this.props.isAdmin && (
+                          <UserInfoWrapper>
+                            Admin view
+                          </UserInfoWrapper>
+                        )
+                      }
+                    </UserDataWrapper>
+                  </LoginContainer>
+                </MediaQuery>
+                <Divider />
                 {this.renderItems()}
               </DrawerContainer>
             </SwipeableDrawer>
@@ -101,3 +163,4 @@ export default function SceneHOC (WrappedComponent) {
     }
   }
 }
+
