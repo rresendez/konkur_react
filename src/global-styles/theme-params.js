@@ -13,8 +13,7 @@ const colorParams = {
   colorYellow: 'rgba(255,194,32)',
   colorDarkBlue: 'rgba(0,76,145)',
   colorMediumBlue: 'rgba(0,125,198)',
-  colorLightBlue: 'rgba(120,185,231)'
-  colorForbbiden: 'rgba(176,0,32,1)',
+  colorLightBlue: 'rgba(120,185,231)',
   colorBackgroundShadow: 'rgba(254,254,254,.5)'
 }
 
