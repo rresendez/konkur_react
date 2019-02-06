@@ -37,6 +37,16 @@ const AsyncItemTablePage = Loadable({
   loading: Loader
 })
 
+const AsyncNoMatchPage = Loadable({
+  loader: () => import('./scenes/NoMatchPage'),
+  loading: Loader
+})
+
+const AsyncNoAuthPage = Loadable({
+  loader: () => import('./scenes/NoAuthPage'),
+  loading: Loader
+})
+
 const routes = [
   {
     path: '/card',
@@ -69,10 +79,18 @@ const routes = [
     exact: true
   },
   {
+    path: '/auth-error',
+    component: AsyncNoAuthPage,
+    exact: true
+  },
+  {
     path: '/',
     component: AsyncDashbardPage,
     exact: true
-  }
+  },
+  {
+    component: AsyncNoMatchPage
+  },
 ]
 
 export default routes
