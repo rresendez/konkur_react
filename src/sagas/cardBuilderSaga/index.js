@@ -44,7 +44,11 @@ function * genInitialFetch () {
 
     yield put(cRActions.saveCatalogs(reducerPayload))
   } catch (error) {
-
+    yield put(eRActions.sagaSetError({
+      error: true,
+      message: error.data.message,
+      statusCode: error.status
+    }))
   }
 }
 
@@ -122,7 +126,8 @@ function * genCreateCardComponent (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
     yield put(cRActions.changeCardLoading(false))
   }
@@ -137,7 +142,8 @@ function * genDeleteCardComponent (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
     yield put(cRActions.changeCardLoading(false))
   }
@@ -160,7 +166,8 @@ function * genUpdateCardComponent (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
     yield put(cRActions.changeCardLoading(false))
   }
@@ -199,7 +206,8 @@ function * genValidateCard (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
     yield put(cRActions.changeGlobalCardLoading(false))
   }
@@ -246,7 +254,8 @@ function * genCreateCard (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
     yield put(cRActions.changeCardSavingSwitch(false))
   }
@@ -257,10 +266,13 @@ function * genInitialUpdateFetch (action) {
     yield put(cRActions.changeIsCardInProgress(true))
 
     const schedulesResponse = yield getSchedules()
+    debugger
     const schedules = schedulesResponse.data
 
     const jobsResponse = yield getJobs()
+    debugger
     const jobs = jobsResponse.data
+    debugger
 
     const prioritiesResponse = yield getPriorities()
     const priorities = prioritiesResponse.data
@@ -269,7 +281,7 @@ function * genInitialUpdateFetch (action) {
     const cardComponents = cardComponentsResponse.data.reverse()
 
     const cardResponse = yield getCard(action.payload)
-
+    debugger
     const reducerPayload = {
       api: {
         jobs,
@@ -330,7 +342,8 @@ function * genInitialUpdateFetch (action) {
   } catch (error) {
     yield put(eRActions.sagaSetError({
       error: true,
-      message: error.message
+      message: error.data.message,
+      statusCode: error.status
     }))
   }
 }
@@ -357,7 +370,8 @@ function * genSaveCardAttachment (action) {
     yield put(cRActions.changeCardAttachLoading(false))
     yield put(eRActions.sagaSetError({
       error: true,
-      message: 'The file could not be uploaded'
+      message: error.data.message,
+      statusCode: error.status
     }))
   }
 }
