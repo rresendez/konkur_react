@@ -83,6 +83,9 @@ const StyledMsgBox = styled.div`
      letter-spacing: 0.5rem;
      line-height: 2rem;
    }
+    @media only screen and (max-width: 440px ) {
+     letter-spacing: 0.3rem;
+   }
   }
 `
 
