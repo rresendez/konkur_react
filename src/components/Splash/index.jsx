@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Icon from '../Icon'
 import Card from '@material-ui/core/Card'
 import wlmt from './star.png'
+
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -25,7 +27,6 @@ const Container = styled.div`
 const StyledCode = styled.div`
   font-size: 9rem;
   letter-spacing: 1rem;
-  color: red;
   text-transform: uppercase;
    margin: 0 auto;
    @media only screen and (max-width: 930px ) {
@@ -33,6 +34,19 @@ const StyledCode = styled.div`
    }
     @media only screen and (max-width: 400px ) {
      font-size: 3rem;
+     margin-bottom: 1rem;
+   }
+`
+
+const StyledCode2 = styled.div`
+  font-size: 2rem;
+  text-transform: uppercase;
+   margin: 3rem auto;
+   @media only screen and (max-width: 930px ) {
+     font-size: 1.5rem;
+   }
+    @media only screen and (max-width: 400px ) {
+     font-size: 1rem;
      margin-bottom: 1rem;
    }
 `
@@ -58,6 +72,22 @@ const Header = styled.div`
      top: 13px;
    }
   }
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  #number{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    font-family: 'Bookman';
+    font-size: 10rem;
+    color: black;
+  }
+  #count {
+    display: inline-block;
+    color: ${props => props.color}
+  }
 `
 const StyledFace = styled.div`
   display: inline-block;
@@ -74,10 +104,15 @@ const StyledMsgBox = styled.div`
   background-color: ${props => props.theme.color.primary};
   box-sizing: border-box;
   overflow: hide;
+  [class~="MuiPaper-rounded"] {
+    border-radius: 25%;
+    display:none;
+  }
   p{
     padding: 1rem;
     font-size: 1.5rem;
     color: white;
+    text-align: center;
     @media only screen and (max-width: 930px ) {
      font-size: 1.2rem;
      letter-spacing: 0.5rem;
@@ -94,8 +129,37 @@ class Splash extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.state.time = 10
+    this.state.color = 'rgba(253, 187, 48, 1)'
   }
 
+  changeTime () {
+    setInterval( () => {
+      console.log(this.state.time)
+      let current = this.state.time
+      current = current - 1
+      if(current % 2 !== 0 && current < 6) {
+        this.setState({
+          color: 'rgba(230, 43, 30)'
+        })
+      } else {
+        this.setState({
+          color: 'rgba(253, 187, 48, 1)'
+        })
+      }
+      if(current === 0) {
+        console.log('this is the end')
+        window.location.href = '//localhost:3000'
+      }
+      this.setState({
+        time: current,
+      })
+    }, 1000)
+  }
+
+  componentDidMount(){
+    this.changeTime();
+  }
 
   render() {
     return (
@@ -103,13 +167,14 @@ class Splash extends React.Component {
        <StyledBox>
            <StyledCode>
          <Header>
-              Err<img src={wlmt} alt="" />r #{this.props.error}
+              Err<img src={wlmt} alt="" />r <div id="number">{this.props.error}</div>  
          </Header>
            </StyledCode>
            <StyledFace>
           <Icon
             size="10"
-            color={props => props.theme.color.secondary}
+            id="face"
+            color={this.state.color}
           >
             sentiment_dissatisfied
               </Icon>
@@ -121,6 +186,10 @@ class Splash extends React.Component {
           </p>
              </StyledMsgBox>
            </Card>
+           <StyledCode2>
+            <Header color={this.state.color}> <a href="//localhost:3000">Unless you click here, this site will self destruct in</a>   <div id="count">{this.state.time}</div>
+          </Header>
+           </StyledCode2>
        </StyledBox>
      </Container>
     )
