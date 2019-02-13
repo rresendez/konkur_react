@@ -7,12 +7,14 @@ import {
 import * as eRActions from '../../reducers/errorReducer/actions'
 
 function * genSetError (action) {
-  yield put(eRActions.setError({
-    error: action.payload.error,
-    message: action.payload.message,
-    codeError: action.payload.codeError,
-    statusError: action.payload.statusError
-  }))
+  if (action.payload.statusCode !== 404) {
+    yield put(eRActions.setError({
+      error: action.payload.error,
+      message: action.payload.message,
+      codeError: action.payload.codeError,
+      statusCode: action.payload.statusCode
+    }))
+  }
 }
 
 function * genCleanMessage (action) {
@@ -20,7 +22,7 @@ function * genCleanMessage (action) {
     error: false,
     message: '',
     codeError: '',
-    statusError: 0
+    statusCode: 0
   }))
   window.clearInterval(action.payload)
 }
