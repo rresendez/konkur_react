@@ -2,8 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import Icon from '../Icon'
 import Card from '@material-ui/core/Card'
+import { withStyles } from '@material-ui/core/styles'
 import wlmt from './star.png'
 
+const CardItemContainer = withStyles({
+  root: {
+    borderRadius: '25%',
+  }
+})(Card)
+
+const IconDelay = withStyles({
+  root: {
+    transition: "color 0.5s ease",
+  }
+})(Icon)
 
 const Container = styled.div`
   width: 100%;
@@ -22,6 +34,11 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+   @media only screen and (max-width: 400px ) {
+     #itemcontainer {
+       margin: auto;
+     }
+   }
 `
 
 const StyledCode = styled.div`
@@ -33,7 +50,6 @@ const StyledCode = styled.div`
      font-size: 5rem;
    }
     @media only screen and (max-width: 400px ) {
-     font-size: 3rem;
      margin-bottom: 1rem;
    }
 `
@@ -47,7 +63,7 @@ const StyledCode2 = styled.div`
    }
     @media only screen and (max-width: 400px ) {
      font-size: 1rem;
-     margin-bottom: 1rem;
+     margin: 1rem;
    }
 `
 
@@ -68,7 +84,7 @@ const Header = styled.div`
      top: 10px;
    }
     @media only screen and (max-width: 400px ) {
-     height: 4rem;
+     height: 5rem;
      top: 13px;
    }
   }
@@ -83,16 +99,32 @@ const Header = styled.div`
     font-family: 'Bookman';
     font-size: 10rem;
     color: black;
+       @media only screen and (max-width: 930px ) {
+     font-size: 6rem;
+        
+   }
+    @media only screen and (max-width: 400px ) {
+    margin: 3rem 4rem;
+    }
   }
   #count {
     display: inline-block;
-    color: ${props => props.color}
+    color: ${props => props.color};
+    transition: color 0.5s ease;
   }
 `
 const StyledFace = styled.div`
   display: inline-block;
   width: 43%;
    padding: 1rem;
+   @media only screen and (max-width: 440px ) {
+     display: flex;
+     align-content: center;
+     #face {
+       margin: 5rem;
+       margin-top: 4rem;
+     }
+   }
 `
 const StyledMsgBox = styled.div`
   display: inline-block;
@@ -134,7 +166,7 @@ class Splash extends React.Component {
   }
 
   changeTime () {
-    setInterval( () => {
+  let interval =  setInterval( () => {
       console.log(this.state.time)
       let current = this.state.time
       current = current - 1
@@ -149,10 +181,11 @@ class Splash extends React.Component {
       }
       if(current === 0) {
         console.log('this is the end')
-        window.location.href = '//localhost:3000'
+        console.log(clearInterval(interval))
+        window.location.href = window.location.origin.concat('/')
       }
       this.setState({
-        time: current,
+        time: current, 
       })
     }, 1000)
   }
@@ -171,21 +204,23 @@ class Splash extends React.Component {
          </Header>
            </StyledCode>
            <StyledFace>
-          <Icon
+          <IconDelay
             size="10"
             id="face"
             color={this.state.color}
           >
             sentiment_dissatisfied
-              </Icon>
+              </IconDelay>
            </StyledFace>
-           <Card>
+           <CardItemContainer
+           id="itemcontainer"
+           >
              <StyledMsgBox>
           <p>
           {this.props.message}
           </p>
              </StyledMsgBox>
-           </Card>
+           </CardItemContainer>
            <StyledCode2>
             <Header color={this.state.color}> <a href="//localhost:3000">Unless you click here, this site will self destruct in</a>   <div id="count">{this.state.time}</div>
           </Header>
