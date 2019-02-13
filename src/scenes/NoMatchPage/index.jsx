@@ -11,4 +11,4 @@ function NoMatchPage (props) {
   )
 }
 
-export default SceneHOC(NoMatchPage)
+export default NoMatchPage

@@ -5,7 +5,7 @@ export async function getSchedules () {
     const response = await _axios.get('/schedules')
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -15,7 +15,7 @@ export async function getJobs () {
     const response = await _axios.get('/jobs')
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -25,7 +25,7 @@ export async function getPriorities () {
     const response = await _axios.get('/priorities')
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -35,7 +35,7 @@ export async function getCardComponents () {
     const response = await _axios.get('/card-components')
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -45,7 +45,7 @@ export async function createCardComponent (payload) {
     const response = await _axios.post('/card-components', payload)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -55,7 +55,7 @@ export async function deleteCardComponent (id) {
     const response = await _axios.delete(`/card-components/${id}`)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -65,7 +65,7 @@ export async function updateCardComponent (id, payload) {
     const response = await _axios.put(`/card-components/${id}`, payload)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -75,7 +75,7 @@ export async function validateCard (payload) {
     const response = await _axios.post('/cards/validate-query', payload)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -85,7 +85,7 @@ export async function createCard (payload) {
     const response = await _axios.post('/cards', payload)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -95,7 +95,7 @@ export async function getCard (payload) {
     const response = await _axios.get(`/cards/${payload}`)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -105,7 +105,7 @@ export async function updateCard (id, payload) {
     const response = await _axios.put(`/cards/${id}`, payload)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -121,7 +121,7 @@ export async function uploadCardAttachment (payload, progressCallback) {
     })
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
@@ -131,7 +131,7 @@ export async function deleteCard (id) {
     const response = await _axios.delete(`/cards/${id}`)
     return response
   } catch (error) {
-    const data = error.response.data
+    const data = error.response
     throw (data)
   }
 }
