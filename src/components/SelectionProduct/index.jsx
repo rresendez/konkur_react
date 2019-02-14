@@ -213,6 +213,7 @@ class SelectionProduct extends React.Component {
               <Icon
                 size="3"
                 color={wBlue}
+                onClick={this.props.handleOpenDialog}
               >
             save
               </Icon>
